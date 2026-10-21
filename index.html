@@ -72,16 +72,13 @@ button{font:inherit;color:inherit}
 
 /* ---------- 01 HOME ---------- */
 .home{position:relative;height:100svh;min-height:540px;overflow:hidden;background:#000}
-.home__bg{position:absolute;inset:0;z-index:0;container-type:size;background:#000 url("assets/img/paint-film-poster.jpg") center/cover no-repeat}
-.home__yt{position:absolute;top:50%;left:50%;width:calc((max(100cqh,56.25cqw) + 180px) * 1.7778);height:calc(max(100cqh,56.25cqw) + 180px);transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:0;transition:opacity 1.6s}
+.home__bg{position:absolute;inset:0;z-index:0;overflow:hidden;background:#05090b}
+.home__bg::before{content:"";position:absolute;inset:-60px;background:url("assets/img/paint-film-poster.jpg") center/cover no-repeat;filter:blur(40px) brightness(.4) saturate(1.2)}
+/* Video + matching still are sized/positioned by layoutHero() so the logo sits between the menu and the buttons */
+.home__poster,.home__yt{position:absolute;left:0;top:50%;width:100%;transform:translateY(-50%);border:0;pointer-events:none;-webkit-mask-image:linear-gradient(180deg,transparent,#000 9%,#000 91%,transparent),linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(180deg,transparent,#000 9%,#000 91%,transparent),linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask-composite:source-in;mask-composite:intersect}
+.home__poster{z-index:1;height:auto}
+.home__yt{z-index:2;aspect-ratio:16/9;opacity:0;transition:opacity .8s ease}
 .home__yt.is-live{opacity:1}
-/* Portrait screens (phones, tablets upright): show the whole 16:9 film as a band instead of cropping it to a sliver */
-@media (max-aspect-ratio:4/3){
-  .home__bg{background:#05090b}
-  .home__bg::before{content:"";position:absolute;inset:-60px;background:url("assets/img/paint-film-poster.jpg") center/cover no-repeat;filter:blur(40px) brightness(.45) saturate(1.2)}
-  .home__bg::after{content:"";position:absolute;z-index:1;left:0;top:42%;width:100%;height:56.25cqw;transform:translateY(-50%);background:url("assets/img/paint-film-poster.jpg") center/contain no-repeat}
-  .home__yt{z-index:2;top:42%;width:100cqw;height:56.25cqw;transform:translate(-50%,-50%);-webkit-mask-image:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent)}
-}
 .home::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,18,22,.55) 0,rgba(7,18,22,0) 22%,rgba(7,18,22,0) 62%,rgba(7,18,22,.85) 100%);pointer-events:none}
 .home__ctas{position:absolute;z-index:3;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 34px);display:flex;flex-direction:column;align-items:center;gap:22px;padding-left:var(--gutter);padding-right:var(--gutter-r)}
 .home__btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;transition:transform 1s var(--ease),opacity 1s}
@@ -301,7 +298,7 @@ button{font:inherit;color:inherit}
 <main>
   <!-- 01 HOME LANDING -->
   <section class="home" id="home" aria-label="iNCO Creative Hub">
-    <div class="home__bg" id="homeBg" aria-hidden="true"><!-- YouTube header background is injected here --></div>
+    <div class="home__bg" id="homeBg" aria-hidden="true"><img class="home__poster" id="homePoster" src="assets/img/paint-film-poster.jpg" alt=""><!-- YouTube header background is injected here --></div>
     <h1 class="sr">iNCO Creative Hub</h1>
     <div class="home__ctas">
       <div class="home__btns">
@@ -717,19 +714,32 @@ $("#enqForm").addEventListener("submit",function(e){
 document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ closeProject(); closeDrawer(); setMenu(false); } });
 
 /* ---------- 01 HOME: muted looping YouTube background ----------
-   YouTube's own UI (title, logo, suggestions, controls) is kept out of sight by:
-   - oversizing the player so its top/bottom bars are cropped off (CSS),
-   - revealing the video only once it is playing and its start-up title has faded,
-   - fading back to the poster whenever it pauses or ends (when suggestions appear),
-   - looping by seeking to 0 just before the end, so the end screen never shows. */
-var home=$("#home"), homeBg=$("#homeBg"), heroYt=null, heroLive=false, heroInView=true;
-var heroDur=0, heroLooping=false, heroRevealT=null, portraitMQ=window.matchMedia("(max-aspect-ratio:4/3)");
+   Framing: the video is scaled/positioned so the iNCO logo (final frames) sits between the menu and the buttons.
+   YouTube UI: YouTube shows its title/controls for ~3s whenever playback starts or loops, so the video stays
+   hidden (the matching logo still shows instead) from just before the end of each loop until 3.6s into the next.
+   It also fades out whenever it pauses/ends (when YouTube shows suggestions). */
+var home=$("#home"), homeBg=$("#homeBg"), homePoster=$("#homePoster"), heroYt=null, heroInView=true;
+var LOGO = { w:0.64, h:0.44, cx:0.495, cy:0.38 };     // logo box as a fraction of the 16:9 video frame
+var POSTER = { top:0.14, aspect:486/1184 };             // where the still sits inside the video frame
+var REVEAL_AT = 3.6, HIDE_AT = 7.45;                    // seconds into each loop
+var heroDur=0, heroCt=0, heroState=-1, heroLooping=false, heroAllowAt=REVEAL_AT;
+function layoutHero(){
+  var hb=home.getBoundingClientRect(), W=hb.width, Hc=hb.height;
+  var navB = ($(".nav__in") ? $(".nav__in").getBoundingClientRect().height : 72) + 16;
+  var ctaT = $(".home__btns").getBoundingClientRect().top - hb.top - 24;
+  var band = Math.max(ctaT - navB, Math.min(Hc, window.innerHeight)*0.3), mid = navB + band/2;
+  var H = Math.min(band*0.8/LOGO.h, (W*0.9)/(LOGO.w*16/9));   // logo fills ~80% of the gap (breathing room), never wider than the screen
+  var Wv = H*16/9, left = W/2 - LOGO.cx*Wv, top = mid - LOGO.cy*H;
+  if (heroYt){ heroYt.style.cssText="left:"+left+"px;top:"+top+"px;width:"+Wv+"px;height:"+H+"px;transform:none"; }
+  homePoster.style.cssText="left:"+left+"px;top:"+(top+POSTER.top*H)+"px;width:"+Wv+"px;height:"+(Wv*POSTER.aspect)+"px;transform:none";
+}
+layoutHero();
+if (window.ResizeObserver) new ResizeObserver(layoutHero).observe(home); else window.addEventListener("resize",layoutHero);
 function heroCmd(func,args){ if(heroYt&&heroYt.contentWindow){ try{ heroYt.contentWindow.postMessage(JSON.stringify({event:"command",func:func,args:args||[]}),"*"); }catch(e){} } }
-function heroHide(){ clearTimeout(heroRevealT); heroRevealT=null; if(heroYt) heroYt.classList.remove("is-live"); }
-function heroReveal(){
-  if (!heroYt || heroYt.classList.contains("is-live") || heroRevealT) return;
-  // the title overlay shows for the first few seconds of playback; on portrait it isn't cropped, so wait it out
-  heroRevealT=setTimeout(function(){ heroRevealT=null; heroYt.classList.add("is-live"); }, portraitMQ.matches ? (heroLive ? 1500 : 3500) : 600);
+function heroVis(){
+  if (!heroYt) return;
+  var show = heroState===1 && heroInView && !motionPaused && heroCt>=heroAllowAt && heroCt<HIDE_AT;
+  heroYt.classList.toggle("is-live", show);
 }
 function startHeroYT(){
   if (heroYt || !HERO_YT_ID || reduce.matches) return;
@@ -739,33 +749,38 @@ function startHeroYT(){
   heroYt.allow="autoplay; encrypted-media; picture-in-picture"; heroYt.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
   heroYt.src="https://www.youtube-nocookie.com/embed/"+HERO_YT_ID+"?autoplay=1&mute=1&controls=0&disablekb=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&fs=0&cc_load_policy=0&enablejsapi=1"+origin;
   heroYt.addEventListener("load",function(){ try{ heroYt.contentWindow.postMessage(JSON.stringify({event:"listening",id:"incohero",channel:"widget"}),"*"); }catch(e){} heroCmd("mute"); });
-  homeBg.appendChild(heroYt);
+  homeBg.appendChild(heroYt); layoutHero();
 }
 window.addEventListener("message",function(e){
   if (!heroYt || e.source!==heroYt.contentWindow) return;
   var d; try{ d = typeof e.data==="string" ? JSON.parse(e.data) : e.data; }catch(x){ return; }
-  if (!d || !d.info) return;
+  if (!d || d.info===undefined || d.info===null) return;
   var info = d.info;
   if (typeof info==="object"){
     if (info.duration) heroDur = info.duration;
-    if (typeof info.currentTime==="number" && heroDur){
-      if (info.currentTime > heroDur-1 && !heroLooping){ heroLooping=true; heroCmd("seekTo",[0,true]); heroCmd("playVideo"); }
-      else if (info.currentTime < heroDur-2) heroLooping=false;
+    if (typeof info.currentTime==="number"){
+      heroCt = info.currentTime;
+      if (heroDur && heroCt > heroDur-1 && !heroLooping){ heroLooping=true; heroAllowAt=REVEAL_AT; heroCmd("seekTo",[0,true]); heroCmd("playVideo"); }
+      else if (heroCt < 2) heroLooping=false;
     }
   }
   var state = d.event==="onStateChange" ? info : (typeof info==="object" ? info.playerState : undefined);
-  if (state===1){
-    heroCmd("mute");
-    if (motionPaused || !heroInView){ heroCmd("pauseVideo"); return; }
-    heroReveal(); heroLive=true;
-  } else if (state===0){ heroHide(); heroCmd("seekTo",[0,true]); heroCmd("playVideo"); }
-  else if (state===2 || state===-1){ heroHide(); }
+  if (typeof state==="number" && state!==heroState){
+    // after any resume YouTube flashes its controls again, so wait ~3.5s of playback before showing
+    if (state===1 && heroState!==3 && heroState!==-1) heroAllowAt = Math.max(heroAllowAt, heroCt+3.5);
+    if (state===1 && heroAllowAt>=HIDE_AT && heroCt<1) heroAllowAt=REVEAL_AT;
+    heroState = state;
+    if (state===1){ heroCmd("mute"); if (motionPaused || !heroInView) heroCmd("pauseVideo"); }
+    else if (state===0){ heroAllowAt=REVEAL_AT; heroCmd("seekTo",[0,true]); heroCmd("playVideo"); }
+  }
+  heroVis();
 });
 new IntersectionObserver(function(es){
   es.forEach(function(en){
     heroInView = en.isIntersecting;
     if (heroInView){ if (!motionPaused) { startHeroYT(); heroCmd("playVideo"); } }
     else heroCmd("pauseVideo");
+    heroVis();
   });
 }).observe(home);
 if (!motionPaused) startHeroYT();
@@ -891,7 +906,7 @@ function applyMotion(){
   if (motionPaused){ walk.pause(); ytCmd("pauseVideo"); heroCmd("pauseVideo"); }
   else if (inView){ if (ytLive) ytCmd("playVideo"); else { var pp=walk.play(); if(pp&&pp.catch) pp.catch(function(){}); } startYT(); }
 }
-mBtn.addEventListener("click",function(){ motionPaused=!motionPaused; applyMotion(); });
+mBtn.addEventListener("click",function(){ motionPaused=!motionPaused; applyMotion(); heroVis(); });
 applyMotion();
 })();
 </script>
