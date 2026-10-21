@@ -72,12 +72,8 @@ button{font:inherit;color:inherit}
 
 /* ---------- 01 HOME ---------- */
 .home{position:relative;height:100svh;min-height:540px;overflow:hidden;background:#000}
-.home__bg{position:absolute;inset:0;z-index:0;overflow:hidden;background:#05090b}
-.home__bg::before{content:"";position:absolute;inset:-60px;background:url("assets/img/paint-film-poster.jpg") center/cover no-repeat;filter:blur(40px) brightness(.4) saturate(1.2)}
-/* Video + matching still are sized/positioned by layoutHero() so the logo sits between the menu and the buttons */
-.home__poster,.home__yt{position:absolute;left:0;top:50%;width:100%;transform:translateY(-50%);border:0;pointer-events:none}
-.home__poster{z-index:1;height:auto}
-.home__yt{z-index:2;aspect-ratio:16/9;opacity:0;transition:opacity .8s ease}
+.home__bg{position:absolute;inset:0;z-index:0;container-type:size;background:#000 url("assets/img/paint-film-poster.jpg") center/cover no-repeat}
+.home__yt{position:absolute;top:50%;left:50%;width:max(100cqw,177.78cqh);height:max(100cqh,56.25cqw);transform:translate(-50%,-50%) scale(1.08);border:0;pointer-events:none;opacity:0;transition:opacity 1.6s}
 .home__yt.is-live{opacity:1}
 .home::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,18,22,.55) 0,rgba(7,18,22,0) 22%,rgba(7,18,22,0) 62%,rgba(7,18,22,.85) 100%);pointer-events:none}
 .home__ctas{position:absolute;z-index:3;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 34px);display:flex;flex-direction:column;align-items:center;gap:22px;padding-left:var(--gutter);padding-right:var(--gutter-r)}
@@ -90,7 +86,7 @@ button{font:inherit;color:inherit}
 .work{position:relative;min-height:100svh;overflow:hidden;display:flex;flex-direction:column;isolation:isolate}
 .work__bg{position:absolute;inset:0;z-index:-1;container-type:size;background:#05090b url("assets/img/walkthrough-poster.jpg") center/cover}
 .work__bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.work__yt{position:absolute;top:50%;left:50%;width:calc((max(100cqh,56.25cqw) + 180px) * 1.7778);height:calc(max(100cqh,56.25cqw) + 180px);transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:0;transition:opacity 1.6s}
+.work__yt{position:absolute;top:50%;left:50%;width:max(100cqw,177.78cqh);height:max(100cqh,56.25cqw);transform:translate(-50%,-50%) scale(1.08);border:0;pointer-events:none;opacity:0;transition:opacity 1.6s}
 .work__yt.is-live{opacity:1}
 .work__bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 58%,rgba(7,18,22,.35) 0,rgba(7,18,22,.78) 70%),linear-gradient(180deg,rgba(7,18,22,.75),rgba(7,18,22,.2) 30%,rgba(7,18,22,.35) 70%,var(--ink))}
 .work__head{padding-top:calc(env(safe-area-inset-top,0px) + 112px)}
@@ -298,7 +294,7 @@ button{font:inherit;color:inherit}
 <main>
   <!-- 01 HOME LANDING -->
   <section class="home" id="home" aria-label="iNCO Creative Hub">
-    <div class="home__bg" id="homeBg" aria-hidden="true"><img class="home__poster" id="homePoster" src="assets/img/paint-film-poster.jpg" alt=""><!-- YouTube header background is injected here --></div>
+    <div class="home__bg" id="homeBg" aria-hidden="true"><!-- YouTube header background is injected here --></div>
     <h1 class="sr">iNCO Creative Hub</h1>
     <div class="home__ctas">
       <div class="home__btns">
@@ -713,79 +709,31 @@ $("#enqForm").addEventListener("submit",function(e){
 });
 document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ closeProject(); closeDrawer(); setMenu(false); } });
 
-/* ---------- 01 HOME: muted looping YouTube background ----------
-   Framing: the video is scaled/positioned so the iNCO logo (final frames) sits between the menu and the buttons.
-   Full-bleed (covers the whole header) wherever the logo still fits between the menu and buttons; on
-   narrow portrait screens it runs as a full-width band so the logo isn't cropped.
-   The full video always plays; it only fades out if it pauses/ends (when YouTube shows suggestions). */
-var home=$("#home"), homeBg=$("#homeBg"), homePoster=$("#homePoster"), heroYt=null, heroInView=true;
-var LOGO = { w:0.64, h:0.44, cx:0.495, cy:0.38 };     // logo box as a fraction of the 16:9 video frame
-var POSTER = { top:0.14, aspect:486/1184 };             // where the still sits inside the video frame
-var heroDur=0, heroCt=0, heroState=-1, heroLooping=false;
-function layoutHero(){
-  var hb=home.getBoundingClientRect(), W=hb.width, Hc=hb.height;
-  var navB = ($(".nav__in") ? $(".nav__in").getBoundingClientRect().height : 72) + 16;
-  var ctaT = $(".home__btns").getBoundingClientRect().top - hb.top - 24;
-  var band = Math.max(ctaT - navB, Math.min(Hc, window.innerHeight)*0.3), mid = navB + band/2;
-  var Hcover = Math.max(Hc, W*9/16);                        // smallest size that fills the whole header
-  var H, top;
-  if (LOGO.h*Hcover <= band*0.92 && LOGO.w*Hcover*16/9 <= W*0.94){
-    // full-bleed; zoom a little more (up to +180px) when there's room, which also crops YouTube's top/bottom bars
-    H = Math.max(Hcover, Math.min(Hcover+180, band*0.92/LOGO.h, W*0.94/(LOGO.w*16/9)));
-    top = Math.min(0, Math.max(Hc-H, mid - LOGO.cy*H));      // logo centred in the gap, header always covered
-  } else {
-    H = Math.min(band*0.8/LOGO.h, (W*0.9)/(LOGO.w*16/9));     // portrait phones: full-width band, logo uncropped
-    top = mid - LOGO.cy*H;
-  }
-  var Wv = H*16/9, left = W/2 - LOGO.cx*Wv;
-  if (heroYt){ heroYt.style.cssText="left:"+left+"px;top:"+top+"px;width:"+Wv+"px;height:"+H+"px;transform:none"; }
-  homePoster.style.cssText="left:"+left+"px;top:"+(top+POSTER.top*H)+"px;width:"+Wv+"px;height:"+(Wv*POSTER.aspect)+"px;transform:none";
-}
-layoutHero();
-if (window.ResizeObserver) new ResizeObserver(layoutHero).observe(home); else window.addEventListener("resize",layoutHero);
-function heroCmd(func,args){ if(heroYt&&heroYt.contentWindow){ try{ heroYt.contentWindow.postMessage(JSON.stringify({event:"command",func:func,args:args||[]}),"*"); }catch(e){} } }
-function heroVis(){
-  if (!heroYt) return;
-  var show = heroState===1 && heroInView && !motionPaused;
-  heroYt.classList.toggle("is-live", show);
-}
+/* ---------- 01 HOME: muted looping YouTube background ---------- */
+var home=$("#home"), homeBg=$("#homeBg"), heroYt=null, heroLive=false, heroInView=true;
+function heroCmd(func){ if(heroYt&&heroYt.contentWindow){ try{ heroYt.contentWindow.postMessage(JSON.stringify({event:"command",func:func,args:[]}),"*"); }catch(e){} } }
 function startHeroYT(){
   if (heroYt || !HERO_YT_ID || reduce.matches) return;
   var origin = /^https?:/.test(location.protocol) ? "&origin="+encodeURIComponent(location.origin) : "";
   heroYt = document.createElement("iframe");
   heroYt.className="home__yt"; heroYt.title="Header background film"; heroYt.tabIndex=-1;
   heroYt.allow="autoplay; encrypted-media; picture-in-picture"; heroYt.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
-  heroYt.src="https://www.youtube-nocookie.com/embed/"+HERO_YT_ID+"?autoplay=1&mute=1&controls=0&disablekb=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&fs=0&cc_load_policy=0&enablejsapi=1"+origin;
+  heroYt.src="https://www.youtube-nocookie.com/embed/"+HERO_YT_ID+"?autoplay=1&mute=1&loop=1&playlist="+HERO_YT_ID+"&controls=0&disablekb=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&fs=0&enablejsapi=1"+origin;
   heroYt.addEventListener("load",function(){ try{ heroYt.contentWindow.postMessage(JSON.stringify({event:"listening",id:"incohero",channel:"widget"}),"*"); }catch(e){} heroCmd("mute"); });
-  homeBg.appendChild(heroYt); layoutHero();
+  homeBg.appendChild(heroYt);
 }
 window.addEventListener("message",function(e){
   if (!heroYt || e.source!==heroYt.contentWindow) return;
   var d; try{ d = typeof e.data==="string" ? JSON.parse(e.data) : e.data; }catch(x){ return; }
-  if (!d || d.info===undefined || d.info===null) return;
-  var info = d.info;
-  if (typeof info==="object"){
-    if (info.duration) heroDur = info.duration;
-    if (typeof info.currentTime==="number"){
-      heroCt = info.currentTime;
-      if (heroDur && heroCt > heroDur-0.3 && !heroLooping){ heroLooping=true; heroCmd("seekTo",[0,true]); heroCmd("playVideo"); }
-      else if (heroCt < 2) heroLooping=false;
-    }
-  }
-  var state = d.event==="onStateChange" ? info : (typeof info==="object" ? info.playerState : undefined);
-  if (typeof state==="number" && state!==heroState){
-    heroState = state;
-    if (state===1){ heroCmd("mute"); if (motionPaused || !heroInView) heroCmd("pauseVideo"); }
-    else if (state===0){ heroCmd("seekTo",[0,true]); heroCmd("playVideo"); }
-  }
-  heroVis();
+  if (!d) return;
+  var state = d.event==="onStateChange" ? d.info : (d.info && d.info.playerState);
+  if (state===1 && !heroLive){ heroLive=true; heroYt.classList.add("is-live"); heroCmd("mute"); if (motionPaused || !heroInView) heroCmd("pauseVideo"); }
 });
 new IntersectionObserver(function(es){
   es.forEach(function(en){
     heroInView = en.isIntersecting;
     if (heroInView){ if (!motionPaused) { startHeroYT(); heroCmd("playVideo"); } }
     else heroCmd("pauseVideo");
-    heroVis();
   });
 }).observe(home);
 if (!motionPaused) startHeroYT();
@@ -911,7 +859,7 @@ function applyMotion(){
   if (motionPaused){ walk.pause(); ytCmd("pauseVideo"); heroCmd("pauseVideo"); }
   else if (inView){ if (ytLive) ytCmd("playVideo"); else { var pp=walk.play(); if(pp&&pp.catch) pp.catch(function(){}); } startYT(); }
 }
-mBtn.addEventListener("click",function(){ motionPaused=!motionPaused; applyMotion(); heroVis(); });
+mBtn.addEventListener("click",function(){ motionPaused=!motionPaused; applyMotion(); });
 applyMotion();
 })();
 </script>
