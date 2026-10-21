@@ -408,8 +408,8 @@ button{font:inherit;color:inherit}
   <section class="home" id="home" aria-label="iNCO Creative Hub">
     <div class="home__bg" id="homeBg" aria-hidden="true">
       <video class="home__film" id="film" muted loop playsinline preload="auto" poster="assets/img/paint-film-start.jpg">
-        <source src="assets/video/paint-film.webm" type="video/webm">
         <source src="assets/video/paint-film.mp4" type="video/mp4">
+        <source src="assets/video/paint-film.webm" type="video/webm">
       </video>
     </div>
     <h1 class="sr">iNCO Creative Hub</h1>
@@ -426,8 +426,8 @@ button{font:inherit;color:inherit}
   <section class="work" id="work" aria-labelledby="workTitle">
     <div class="work__bg" aria-hidden="true">
       <video id="walk" muted loop playsinline preload="none" poster="assets/img/walkthrough-poster.jpg">
-        <source src="assets/video/walkthrough.webm" type="video/webm">
         <source src="assets/video/walkthrough.mp4" type="video/mp4">
+        <source src="assets/video/walkthrough.webm" type="video/webm">
       </video>
       <!-- YouTube background is injected here when the section comes into view -->
     </div>
@@ -750,7 +750,7 @@ button{font:inherit;color:inherit}
 /* ===== CONFIG ===== Swap the YouTube background here (11-character video id). */
 var YT_ID = "TSe4M-KJiYQ";
 var YT_START = 0;
-/* Header (Home) background: muted, looping YouTube video. */
+/* Header (Home) background: the original paint film from assets/video (MP4 first, WebM fallback). */
 
 var doc = document.documentElement;
 doc.classList.add("js");
@@ -879,7 +879,7 @@ function fill(i){
   $("#mTitle").textContent = p.title;
   $("#mDesc").textContent = p.desc;
   mMedia.innerHTML = p.video
-    ? '<video poster="assets/img/'+p.img+'" muted playsinline controls autoplay loop><source src="assets/video/'+p.video.replace('.mp4','.webm')+'" type="video/webm"><source src="assets/video/'+p.video+'" type="video/mp4"></video>'
+    ? '<video poster="assets/img/'+p.img+'" muted playsinline controls autoplay loop><source src="assets/video/'+p.video+'" type="video/mp4"><source src="assets/video/'+p.video.replace('.mp4','.webm')+'" type="video/webm"></video>'
     : '<img src="assets/img/'+p.img+'" alt="'+p.title+'">';
 }
 function openProject(i, fromEl){
