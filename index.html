@@ -73,7 +73,7 @@ button{font:inherit;color:inherit}
 /* ---------- 01 HOME ---------- */
 .home{position:relative;height:100svh;min-height:540px;overflow:hidden;background:#000}
 .home__bg{position:absolute;inset:0;z-index:0;container-type:size;background:#000 url("assets/img/paint-film-poster.jpg") center/cover no-repeat}
-.home__yt{position:absolute;top:50%;left:50%;width:calc((max(100cqh,56.25cqw) + 260px) * 1.7778);height:calc(max(100cqh,56.25cqw) + 260px);transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:0;transition:opacity 1.6s}
+.home__yt{position:absolute;top:50%;left:50%;width:calc((max(100cqh,56.25cqw) + 180px) * 1.7778);height:calc(max(100cqh,56.25cqw) + 180px);transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:0;transition:opacity 1.6s}
 .home__yt.is-live{opacity:1}
 /* Portrait screens (phones, tablets upright): show the whole 16:9 film as a band instead of cropping it to a sliver */
 @media (max-aspect-ratio:4/3){
@@ -93,7 +93,7 @@ button{font:inherit;color:inherit}
 .work{position:relative;min-height:100svh;overflow:hidden;display:flex;flex-direction:column;isolation:isolate}
 .work__bg{position:absolute;inset:0;z-index:-1;container-type:size;background:#05090b url("assets/img/walkthrough-poster.jpg") center/cover}
 .work__bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.work__yt{position:absolute;top:50%;left:50%;width:calc((max(100cqh,56.25cqw) + 260px) * 1.7778);height:calc(max(100cqh,56.25cqw) + 260px);transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:0;transition:opacity 1.6s}
+.work__yt{position:absolute;top:50%;left:50%;width:calc((max(100cqh,56.25cqw) + 180px) * 1.7778);height:calc(max(100cqh,56.25cqw) + 180px);transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:0;transition:opacity 1.6s}
 .work__yt.is-live{opacity:1}
 .work__bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 58%,rgba(7,18,22,.35) 0,rgba(7,18,22,.78) 70%),linear-gradient(180deg,rgba(7,18,22,.75),rgba(7,18,22,.2) 30%,rgba(7,18,22,.35) 70%,var(--ink))}
 .work__head{padding-top:calc(env(safe-area-inset-top,0px) + 112px)}
