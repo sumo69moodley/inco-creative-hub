@@ -59,7 +59,7 @@ button{font:inherit;color:inherit}
 /* ---------- NAV ---------- */
 .nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;transition:background .5s,backdrop-filter .5s,box-shadow .5s}
 .nav__in{display:flex;align-items:center;justify-content:space-between;gap:24px;height:72px;max-width:1400px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
-.nav__logo{display:block;width:96px;opacity:0;transform:translateY(-6px);transition:opacity .5s,transform .5s var(--ease);pointer-events:none}
+.nav__logo{display:block;width:96px;transition:opacity .5s,transform .5s var(--ease)}
 .nav__logo img{width:100%;height:auto}
 .nav.is-solid{background:rgba(7,18,22,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
 .nav.is-solid .nav__logo{opacity:1;transform:none;pointer-events:auto}
@@ -72,23 +72,15 @@ button{font:inherit;color:inherit}
 
 /* ---------- 01 HOME ---------- */
 .home{position:relative;height:100svh;min-height:540px;overflow:hidden;background:#000}
-.home::before{content:"";position:absolute;inset:-60px;background:url("assets/img/paint-film-poster.jpg") center/cover no-repeat;filter:blur(40px) brightness(.45) saturate(1.2)}
-.home__film,.home__still{position:absolute;left:0;top:50%;width:100%;height:max(41.05vw,74%);transform:translateY(-50%);object-fit:cover;-webkit-mask-image:linear-gradient(180deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(180deg,transparent,#000 9%,#000 91%,transparent)}
-.home__film{transition:opacity .9s ease}
-.home.is-settled .home__film{opacity:0}
-.home__still{opacity:0;transition:opacity .9s ease}
-.home.is-settled .home__still{opacity:1}
-.home::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,18,22,.55) 0,rgba(7,18,22,0) 22%,rgba(7,18,22,0) 62%,rgba(7,18,22,.85) 100%);pointer-events:none}
-.home__skip{position:absolute;z-index:3;top:calc(env(safe-area-inset-top,0px) + 88px);right:max(24px,env(safe-area-inset-right,0px));background:rgba(7,18,22,.35);border:1px solid rgba(255,255,255,.35);font-family:var(--display);letter-spacing:.2em;font-size:.7rem;padding:.7em 1.1em;cursor:pointer;border-radius:2px;transition:opacity .5s,background .25s}
-.home__skip:hover{background:rgba(7,18,22,.7)}
-.home__skip[aria-hidden="true"]{opacity:0;pointer-events:none}
+.home__bg{position:absolute;inset:0;z-index:0;container-type:size;background:#000 url("assets/img/paint-film-poster.jpg") center/cover no-repeat}
+.home__yt{position:absolute;top:50%;left:50%;width:max(100cqw,177.78cqh);height:max(100cqh,56.25cqw);transform:translate(-50%,-50%) scale(1.08);border:0;pointer-events:none;opacity:0;transition:opacity 1.6s}
+.home__yt.is-live{opacity:1}
+.home::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,18,22,.55) 0,rgba(7,18,22,0) 22%,rgba(7,18,22,0) 62%,rgba(7,18,22,.85) 100%);pointer-events:none}
 .home__ctas{position:absolute;z-index:3;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 34px);display:flex;flex-direction:column;align-items:center;gap:22px;padding-left:var(--gutter);padding-right:var(--gutter-r)}
 .home__btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;transition:transform 1s var(--ease),opacity 1s}
-.home.is-playing .home__btns{opacity:.55;transform:translateY(8px)}
 .scrollcue{font-family:var(--display);font-size:.68rem;letter-spacing:.3em;color:rgba(255,255,255,.8);text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:10px}
 .scrollcue i{width:1px;height:34px;background:linear-gradient(var(--fg),transparent);animation:cue 2.2s var(--ease) infinite;transform-origin:top}
 @keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
-.home__bar{position:absolute;z-index:3;left:0;bottom:0;height:2px;background:var(--orange);width:0}
 
 /* ---------- 02 WORK ---------- */
 .work{position:relative;min-height:100svh;overflow:hidden;display:flex;flex-direction:column;isolation:isolate}
@@ -254,8 +246,6 @@ button{font:inherit;color:inherit}
   .spaces__grid{grid-template-columns:1fr}
 }
 @media (max-width:760px){
-  .home__film,.home__still{height:41.05vw;top:44%}
-  .home__skip{top:calc(env(safe-area-inset-top,0px) + 84px)}
   .stage{perspective:none;min-height:auto;display:block;cursor:auto;padding-block:20px 10px}
   .ring{--cw:62vw;width:auto;height:auto;transform:none!important;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px var(--gutter-r) 24px var(--gutter);scrollbar-width:none}
   .ring::-webkit-scrollbar{display:none}
@@ -304,13 +294,8 @@ button{font:inherit;color:inherit}
 <main>
   <!-- 01 HOME LANDING -->
   <section class="home" id="home" aria-label="iNCO Creative Hub">
-    <img class="home__still" src="assets/img/paint-film-poster.jpg" alt="" aria-hidden="true">
-    <video class="home__film" id="film" muted playsinline preload="auto" poster="assets/img/paint-film-start.jpg" aria-label="Paint film: paint falls and rises into the iNCO Creative Hub logo">
-      <source src="assets/video/paint-film.webm" type="video/webm">
-      <source src="assets/video/paint-film.mp4" type="video/mp4">
-    </video>
+    <div class="home__bg" id="homeBg" aria-hidden="true"><!-- YouTube header background is injected here --></div>
     <h1 class="sr">iNCO Creative Hub</h1>
-    <button class="home__skip" id="skip" type="button">SKIP INTRO</button>
     <div class="home__ctas">
       <div class="home__btns">
         <a class="btn btn--orange" href="#work">Explore our work</a>
@@ -318,7 +303,6 @@ button{font:inherit;color:inherit}
       </div>
       <a class="scrollcue" href="#work">SCROLL TO DISCOVER<i></i></a>
     </div>
-    <div class="home__bar" id="filmBar"></div>
   </section>
 
   <!-- 02 OUR WORK -->
@@ -532,6 +516,8 @@ button{font:inherit;color:inherit}
 /* ===== CONFIG ===== Swap the YouTube background here (11-character video id). */
 var YT_ID = "LCmsrVOXzZc";
 var YT_START = 4;
+/* Header (Home) background: muted, looping YouTube video. */
+var HERO_YT_ID = "6T8q9ErDrdI";
 
 var doc = document.documentElement;
 doc.classList.add("js");
@@ -723,23 +709,34 @@ $("#enqForm").addEventListener("submit",function(e){
 });
 document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ closeProject(); closeDrawer(); setMenu(false); } });
 
-/* ---------- 01 HOME: paint film once per visit ---------- */
-var film=$("#film"), home=$("#home"), skip=$("#skip"), bar=$("#filmBar");
-function settle(){
-  home.classList.add("is-settled"); // cross-fade to the final logo frame
-  setTimeout(function(){ film.pause(); }, 900);
-  home.classList.remove("is-playing"); skip.setAttribute("aria-hidden","true"); skip.tabIndex=-1;
-  bar.style.width="0"; store.set("inco-intro","1");
+/* ---------- 01 HOME: muted looping YouTube background ---------- */
+var home=$("#home"), homeBg=$("#homeBg"), heroYt=null, heroLive=false, heroInView=true;
+function heroCmd(func){ if(heroYt&&heroYt.contentWindow){ try{ heroYt.contentWindow.postMessage(JSON.stringify({event:"command",func:func,args:[]}),"*"); }catch(e){} } }
+function startHeroYT(){
+  if (heroYt || !HERO_YT_ID || reduce.matches) return;
+  var origin = /^https?:/.test(location.protocol) ? "&origin="+encodeURIComponent(location.origin) : "";
+  heroYt = document.createElement("iframe");
+  heroYt.className="home__yt"; heroYt.title="Header background film"; heroYt.tabIndex=-1;
+  heroYt.allow="autoplay; encrypted-media; picture-in-picture"; heroYt.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
+  heroYt.src="https://www.youtube-nocookie.com/embed/"+HERO_YT_ID+"?autoplay=1&mute=1&loop=1&playlist="+HERO_YT_ID+"&controls=0&disablekb=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&fs=0&enablejsapi=1"+origin;
+  heroYt.addEventListener("load",function(){ try{ heroYt.contentWindow.postMessage(JSON.stringify({event:"listening",id:"incohero",channel:"widget"}),"*"); }catch(e){} heroCmd("mute"); });
+  homeBg.appendChild(heroYt);
 }
-function showPoster(){ film.preload="none"; settle(); }
-if (store.get("inco-intro") || reduce.matches){ showPoster(); }
-else {
-  home.classList.add("is-playing");
-  var p = film.play(); if (p && p.catch) p.catch(function(){ showPoster(); });
-  film.addEventListener("timeupdate",function(){ if(film.duration) bar.style.width=(film.currentTime/film.duration*100)+"%"; });
-  film.addEventListener("ended",settle);
-}
-skip.addEventListener("click",settle);
+window.addEventListener("message",function(e){
+  if (!heroYt || e.source!==heroYt.contentWindow) return;
+  var d; try{ d = typeof e.data==="string" ? JSON.parse(e.data) : e.data; }catch(x){ return; }
+  if (!d) return;
+  var state = d.event==="onStateChange" ? d.info : (d.info && d.info.playerState);
+  if (state===1 && !heroLive){ heroLive=true; heroYt.classList.add("is-live"); heroCmd("mute"); if (motionPaused || !heroInView) heroCmd("pauseVideo"); }
+});
+new IntersectionObserver(function(es){
+  es.forEach(function(en){
+    heroInView = en.isIntersecting;
+    if (heroInView){ if (!motionPaused) { startHeroYT(); heroCmd("playVideo"); } }
+    else heroCmd("pauseVideo");
+  });
+}).observe(home);
+if (!motionPaused) startHeroYT();
 
 /* ---------- NAV: solid after hero, scroll-spy, mobile menu ---------- */
 var nav=$("#nav"), menuBtn=$("#menuBtn");
@@ -858,7 +855,8 @@ function applyMotion(){
   mBtn.setAttribute("aria-pressed",motionPaused?"true":"false");
   $("#motionTxt").textContent = motionPaused ? "Play motion" : "Pause motion";
   $("#motionIco").innerHTML = motionPaused ? '<path d="M7 4.5v15l13-7.5z"/>' : '<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>';
-  if (motionPaused){ walk.pause(); ytCmd("pauseVideo"); }
+  if (!motionPaused && heroInView){ startHeroYT(); heroCmd("playVideo"); }
+  if (motionPaused){ walk.pause(); ytCmd("pauseVideo"); heroCmd("pauseVideo"); }
   else if (inView){ if (ytLive) ytCmd("playVideo"); else { var pp=walk.play(); if(pp&&pp.catch) pp.catch(function(){}); } startYT(); }
 }
 mBtn.addEventListener("click",function(){ motionPaused=!motionPaused; applyMotion(); });
