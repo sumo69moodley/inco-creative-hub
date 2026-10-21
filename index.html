@@ -208,6 +208,97 @@ button{font:inherit;color:inherit}
 .facilities{display:grid;grid-template-columns:auto 1fr;gap:18px 40px;align-items:center;margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
 .facilities p{margin:0;color:var(--muted)}
 
+
+/* ---------- services spreads: hub detail ---------- */
+.pg-list{list-style:none;margin:0;padding:0;display:grid;gap:7px;font-size:.86rem;color:var(--muted)}
+.pg-list li{position:relative;padding-left:18px;line-height:1.4}
+.pg-list li::before{content:"";position:absolute;left:0;top:.5em;width:7px;height:7px;border-radius:50%;background:var(--orange)}
+.pg-foot{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;padding-top:6px}
+.pg-text .pg-foot .btn{margin-top:0}
+.pg-from{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,2.4vw,2rem);line-height:1}
+.pg-from small{display:block;font-weight:500;font-size:.62rem;letter-spacing:.2em;color:var(--muted);margin-bottom:4px;text-transform:uppercase}
+
+/* ---------- spaces: sets gallery + hub intro ---------- */
+.spaces .lede{margin-top:6px}
+.sets{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.4vw,18px);margin-top:30px}
+.set{position:relative;margin:0;overflow:hidden;background:var(--panel);aspect-ratio:4/3}
+.set img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}
+.set:hover img{transform:scale(1.06)}
+.set figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 16px 12px;font-family:var(--display);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;background:linear-gradient(transparent,rgba(7,18,22,.85))}
+.hubintro{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(24px,4vw,60px);align-items:center;margin-top:clamp(36px,5vw,60px);padding-top:clamp(26px,3vw,40px);border-top:1px solid var(--line)}
+.hubintro h3{font-family:var(--display);font-weight:700;font-stretch:112%;text-transform:uppercase;font-size:clamp(1.8rem,3.4vw,2.8rem);line-height:1;margin:.25em 0 .35em}
+.hubintro p{color:var(--muted);margin:0 0 1.2em;max-width:56ch}
+.stats{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
+.stats li{background:var(--ink);padding:18px 20px}
+.stats b{display:block;font-family:var(--display);font-weight:700;font-size:clamp(2rem,3.6vw,2.8rem);line-height:1;color:var(--orange)}
+.stats li:nth-child(even) b{color:var(--teal-hi)}
+.stats span{font-size:.82rem;color:var(--muted)}
+
+/* ---------- 05 rates & packages ---------- */
+.pricing{padding-block:clamp(60px,8vw,110px);background:linear-gradient(180deg,var(--ink),#0a1619 50%,var(--ink))}
+.ptabs{display:flex;flex-wrap:wrap;gap:8px;margin:30px 0 26px}
+.ptabs button{font-family:var(--display);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fg);background:transparent;border:0;box-shadow:inset 0 0 0 1px var(--line);padding:.95em 1.5em;border-radius:2px;cursor:pointer;transition:background .25s,box-shadow .25s,color .25s}
+.ptabs button:hover{box-shadow:inset 0 0 0 1px var(--fg)}
+.ptabs button[aria-selected="true"]{background:var(--orange);box-shadow:none;color:#fff}
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:clamp(12px,1.6vw,20px);align-items:stretch}
+.tier{position:relative;display:flex;flex-direction:column;background:var(--panel);padding:clamp(22px,2.4vw,32px);box-shadow:inset 0 0 0 1px var(--line);border-radius:3px}
+.tier--best{box-shadow:inset 0 0 0 2px var(--orange)}
+.tier__flag{position:absolute;top:-1px;right:20px;background:var(--orange);color:#fff;font-family:var(--display);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;padding:.5em .9em;border-radius:0 0 2px 2px}
+.tier h3{font-family:var(--display);font-weight:700;font-stretch:108%;text-transform:uppercase;font-size:1.35rem;line-height:1.1;margin:0}
+.tier__sub{color:var(--muted);font-size:.9rem;margin:.4em 0 0}
+.tier__price{font-family:var(--display);font-weight:700;font-size:clamp(2rem,3.2vw,2.6rem);line-height:1;margin:18px 0 0}
+.tier__price small{display:block;font-weight:500;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-hi);margin-top:8px}
+.tier ul{list-style:none;margin:20px 0 24px;padding:16px 0 0;border-top:1px solid var(--line);display:grid;gap:9px;font-size:.9rem}
+.tier li{position:relative;padding-left:22px;line-height:1.4}
+.tier li::before{content:"";position:absolute;left:2px;top:.3em;width:10px;height:6px;border-left:2px solid var(--teal-hi);border-bottom:2px solid var(--teal-hi);transform:rotate(-45deg)}
+.tier .btn{margin-top:auto;align-self:flex-start}
+.addons{margin-top:clamp(22px,3vw,34px);padding:clamp(20px,2.4vw,30px);background:var(--panel-2);border-radius:3px}
+.addons h4{font-family:var(--display);font-weight:500;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin:0 0 12px}
+.addons dl{margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));column-gap:clamp(20px,3vw,48px)}
+.addons dl div{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+.addons dt{color:var(--fg)}
+.addons dd{margin:0;color:var(--teal-hi);font-family:var(--display);white-space:nowrap;text-align:right}
+.pricing__note{margin-top:22px;max-width:90ch;font-size:.78rem}
+
+/* ---------- 06 process ---------- */
+.process{padding-block:clamp(50px,7vw,100px)}
+.steps{list-style:none;margin:30px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.6vw,20px)}
+.steps li{padding:24px 22px;background:var(--panel);border-top:2px solid var(--orange)}
+.steps li:nth-child(even){border-top-color:var(--teal)}
+.steps span{font-family:var(--display);font-size:.78rem;letter-spacing:.2em;color:var(--muted)}
+.steps h3{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.3rem;margin:.4em 0 .3em}
+.steps p{margin:0;color:var(--muted);font-size:.92rem}
+
+/* ---------- 07 faq ---------- */
+.faq{padding-block:clamp(40px,6vw,90px)}
+.faq__list{margin-top:26px;border-top:1px solid var(--line);max-width:900px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 0;font-family:var(--display);font-size:clamp(.95rem,1.4vw,1.1rem);letter-spacing:.04em;text-transform:uppercase}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;font-size:1.5rem;line-height:1;color:var(--orange);transition:transform .3s var(--ease)}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq summary:hover{color:var(--orange)}
+.faq details p{margin:0 0 22px;color:var(--muted);max-width:70ch}
+
+/* ---------- contact: book the hub ---------- */
+.talk .h-xl{margin-top:.2em}
+.talk .lede{margin-bottom:22px}
+.talk__mail{margin:20px 0 0;display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;color:var(--muted);font-size:.86rem}
+.talk__mail a{font-family:var(--display);font-size:1.05rem;letter-spacing:.04em;color:var(--fg)}
+.talk__mail a:hover{color:var(--orange)}
+
+@media (max-width:860px){
+  .sets{grid-template-columns:1fr 1fr}
+  .hubintro{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+}
+@media (max-width:520px){
+  .steps{grid-template-columns:1fr}
+  .ptabs button{flex:1 1 40%;padding:.9em .6em}
+  .addons dl div{flex-direction:column;gap:2px}
+  .addons dd{text-align:left}
+}
+
 /* ---------- 05 CLIENTS ---------- */
 .clients{padding-top:clamp(60px,8vw,110px);position:relative;overflow:hidden}
 .clients__sticker{position:absolute;right:max(24px,7vw);top:clamp(36px,4.5vw,64px);width:clamp(90px,10vw,140px);transform:rotate(var(--spin,0deg));filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))}
@@ -219,7 +310,7 @@ button{font:inherit;color:inherit}
 .strip__set li a{text-decoration:none}
 @keyframes marquee{to{transform:translateX(-50%)}}
 .clients__note{margin-top:14px}
-.talk{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding-block:34px 60px}
+.talk{padding-block:clamp(40px,6vw,70px) 60px;border-top:1px solid var(--line);margin-top:clamp(30px,4vw,50px)}
 .talk__links{display:flex;gap:14px;align-items:center;font-family:var(--display);letter-spacing:.12em;font-size:.82rem;color:var(--muted)}
 .talk__links span[aria-hidden]{opacity:.5}
 .foot{border-top:1px solid var(--line);padding-block:26px calc(env(safe-area-inset-bottom,0px) + 84px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
@@ -305,6 +396,8 @@ button{font:inherit;color:inherit}
       <li><a href="#work" data-spy="work">WORK</a></li>
       <li><a href="#services" data-spy="services">SERVICES</a></li>
       <li><a href="#spaces" data-spy="spaces">SPACES</a></li>
+      <li><a href="#pricing" data-spy="pricing">PRICING</a></li>
+      <li><a href="#faq" data-spy="faq">FAQ</a></li>
       <li><a href="#clients" data-spy="clients">CLIENTS</a></li>
       <li><a href="#contact" data-spy="contact">CONTACT</a></li>
     </ul>
@@ -353,13 +446,13 @@ button{font:inherit;color:inherit}
   <section class="services" id="services" aria-labelledby="servTitle">
     <div class="wrap services__grid">
       <div class="rv">
-        <p class="eyebrow">Our services</p>
-        <h2 class="h-lg" id="servTitle">OUR SERVICES</h2>
-        <p class="lede">Choose a chapter</p>
+        <p class="eyebrow">What we make here</p>
+        <h2 class="h-lg" id="servTitle">Five studios.<br>One creative engine.</h2>
+        <p class="lede">Book a single discipline or run all five in a day — shoot the podcast in the morning, pull video cutdowns over lunch and finish with a portrait set before the light goes. Everything below is produced in-house by the iNCO team.</p>
         <ol class="toc" id="toc">
-          <li><button type="button" data-go="0" aria-current="true"><span>01</span>Photography</button></li>
+          <li><button type="button" data-go="0" aria-current="true"><span>01</span>Podcasting</button></li>
           <li><button type="button" data-go="1"><span>02</span>Videography</button></li>
-          <li><button type="button" data-go="2"><span>03</span>Full offering</button></li>
+          <li><button type="button" data-go="2"><span>03</span>Photography</button></li>
         </ol>
       </div>
       <div class="book rv" id="book" tabindex="0" aria-roledescription="booklet" aria-label="Services booklet. Use left and right arrow keys to turn pages.">
@@ -378,45 +471,41 @@ button{font:inherit;color:inherit}
       </div>
     </div>
     <!-- Spread content (kept in the page so text stays selectable and indexable) -->
-    <template id="spreads">
-      <div data-spread data-name="Photography">
+        <template id="spreads">
+      <div data-spread data-name="Podcasting">
         <div class="pg-text">
-          <span class="num">01 / PHOTOGRAPHY</span>
-          <h3>Photography</h3>
-          <p>Still images that tell the story.</p>
-          <p class="small">Approved scope and deliverables appear here.</p>
-          <button class="btn btn--orange" type="button" data-enquire="Photography">Enquire</button>
+          <span class="num">01 — PODCASTING</span>
+          <h3>Podcast Studio</h3>
+          <p>Purpose-built, acoustically treated sets with broadcast mics and a live four-camera switch. You talk, we run the room — and you leave with the episode already cut together.</p>
+          <ul class="pg-list"><li>Multi-camera capture with live vision mixing and ISO recordings</li><li>Broadcast condenser &amp; dynamic mics with individual audio tracks</li><li>Choice of dressed sets — gallery wall, art backdrop or lounge</li><li>Remote guest dial-in and live streaming to social platforms</li><li>Vertical shorts cut for Reels, TikTok and YouTube Shorts</li><li>Episode artwork, intro stings and distribution support</li></ul>
+          <div class="pg-foot"><p class="pg-from"><small>From</small>R2 850</p><a class="btn btn--orange" href="#pricing" data-tab="pod">Podcast packages</a></div>
         </div>
         <div class="pg-img">
-          <figure><img src="assets/img/work-03.jpg" alt="Studio shoot in front of the paint wall" loading="lazy"></figure>
-          <button class="lbl" type="button" data-open="2">SELECTED WORK</button>
+          <figure><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-podcasting-1024x1016.jpg" alt="iNCO Hub podcast set with two chairs, art backdrop and a live multi-camera monitor" loading="lazy"></figure>
         </div>
       </div>
       <div data-spread data-name="Videography">
         <div class="pg-text">
-          <span class="num">02 / VIDEOGRAPHY</span>
-          <h3>Stories<br>in motion</h3>
-          <p>Film that brings your story to life.</p>
-          <p class="small">Approved scope and deliverables appear here.</p>
-          <button class="btn btn--teal" type="button" data-enquire="Videography">Enquire about video</button>
+          <span class="num">02 — VIDEOGRAPHY</span>
+          <h3>Video Production</h3>
+          <p>From a single founder interview to a full campaign shoot. Concept, crew, cameras, lighting and edit under one roof — so the brief never gets lost between three suppliers.</p>
+          <ul class="pg-list"><li>Brand films, founder stories and customer testimonials</li><li>Product and promo shoots with cinema-grade lighting</li><li>Training, internal comms and explainer video</li><li>Event and live-stream capture, on site or in studio</li><li>Scripting, storyboards, teleprompter and direction</li><li>Full post: edit, grade, sound mix, motion graphics, subtitles</li></ul>
+          <div class="pg-foot"><p class="pg-from"><small>From</small>R6 500</p><a class="btn btn--teal" href="#pricing" data-tab="vid">Video packages</a></div>
         </div>
         <div class="pg-img">
-          <figure><img src="assets/img/work-01.jpg" alt="Studio stories session in the lounge" loading="lazy">
-            <button class="play" type="button" data-open="5" aria-label="Play selected film"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M7 4.5v15l13-7.5z"/></svg></button></figure>
-          <button class="lbl" type="button" data-open="5">SELECTED FILM / PLAY</button>
+          <figure><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-videography-1341x1536.jpg" alt="Wide view of the iNCO Hub video floor with lighting, tripods and a dressed backdrop" loading="lazy"></figure>
         </div>
       </div>
-      <div data-spread data-name="Full offering">
+      <div data-spread data-name="Photography">
         <div class="pg-text">
-          <span class="num">03 / FULL OFFERING</span>
-          <h3>Full offering</h3>
-          <p>Approved description and inclusions</p>
-          <p class="small">Complete approved services, descriptions, deliverables and any approved prices are supplied by iNCO.</p>
-          <button class="btn btn--orange" type="button" data-enquire="Full offering">Enquire</button>
+          <span class="num">03 — PHOTOGRAPHY</span>
+          <h3>Photo Studio</h3>
+          <p>Controlled light, real backdrops and no rushing. Shoot a full brand library in a day and stop borrowing stock photos that look like everyone else’s.</p>
+          <ul class="pg-list"><li>Team headshots and executive portraits</li><li>Product, packaging and flat-lay photography</li><li>Brand lifestyle libraries shot against dressed sets</li><li>Fashion, lookbook and editorial work</li><li>Event coverage and behind-the-scenes stills</li><li>Professional retouching, colour grading and web-ready exports</li></ul>
+          <div class="pg-foot"><p class="pg-from"><small>From</small>R2 200</p><a class="btn btn--orange" href="#pricing" data-tab="pho">Photo packages</a></div>
         </div>
         <div class="pg-img">
-          <figure><img src="assets/img/work-04.jpg" alt="Studio crew at work" loading="lazy"></figure>
-          <button class="lbl" type="button" data-open="3">SELECTED WORK</button>
+          <figure><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-control.jpg" alt="Live vision-mixing station showing four camera feeds" loading="lazy"></figure>
         </div>
       </div>
     </template>
@@ -425,27 +514,146 @@ button{font:inherit;color:inherit}
   <!-- 04 SPACES -->
   <section class="spaces" id="spaces" aria-labelledby="spaceTitle">
     <div class="wrap">
-      <p class="eyebrow rv">Spaces</p>
-      <h2 class="h-xl rv" id="spaceTitle">The space to create.</h2>
-      <div class="spaces__grid">
-        <figure class="shot shot--big rv"><img src="assets/img/work-04.jpg" alt="The studio floor with lighting and the gallery wall" loading="lazy"></figure>
-        <div class="spaces__side rv">
-          <figure class="shot"><img src="assets/img/work-01.jpg" alt="Lounge set during a studio session" loading="lazy"></figure>
-          <div class="visit">
-            <h3>Visit our studio</h3>
-            <p>Location and directions to be confirmed</p>
-            <div class="visit__btns">
-              <button class="btn btn--orange" type="button" data-enquire="The space">Enquire about the space</button>
-              <button class="btn btn--ghost" type="button" id="dirBtn" aria-describedby="dirNote">Directions</button>
-            </div>
-            <p class="note" id="dirNote" hidden style="margin-top:10px">Studio address and directions will appear here once confirmed by iNCO.</p>
-          </div>
+      <p class="eyebrow rv">The space</p>
+      <h2 class="h-xl rv" id="spaceTitle">Sets you don't have to build.</h2>
+      <p class="lede rv">Face brick, gallery walls, neon, leather lounges and a wall of custom art — five dressed environments you can switch between in minutes, so one booking looks like five different shoots.</p>
+      <div class="sets">
+        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-retro-set.jpg" alt="Retro gallery wall set with leather armchairs and vinyl records" loading="lazy"><figcaption>The Gallery Wall</figcaption></figure>
+        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-lounge.jpg" alt="Leather couch lounge set against a face-brick wall" loading="lazy"><figcaption>The Lounge</figcaption></figure>
+        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-detail-bag.jpg" alt="Vintage leather boxing bag and gloves against exposed brick" loading="lazy"><figcaption>The Corner</figcaption></figure>
+        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-control.jpg" alt="Live vision-mixing station showing four camera feeds" loading="lazy"><figcaption>Live Control</figcaption></figure>
+        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-monitorcam.jpg" alt="Camera monitor framing the art backdrop set" loading="lazy"><figcaption>On Camera</figcaption></figure>
+        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-space.jpg" alt="Wide view across the iNCO Creative Hub studio floor" loading="lazy"><figcaption>The Hub floor</figcaption></figure>
+      </div>
+      <div class="hubintro rv">
+        <div>
+          <p class="eyebrow">Now booking · Studio &amp; crew</p>
+          <h3>iNCO Creative Hub</h3>
+          <p>A full-service content playground in one building — podcast sets, multi-camera video and a photography studio, with the crew, kit and coffee already in place. Walk in with an idea. Walk out with content.</p>
+          <div class="visit__btns"><a class="btn btn--orange" href="#pricing">See rates &amp; packages</a><a class="btn btn--ghost" href="https://incocreative.com/contact-us/" target="_blank" rel="noopener">Book a studio tour</a></div>
         </div>
+        <ul class="stats"><li><b>4</b><span>Camera multicam</span></li><li><b>7+</b><span>Dressed sets</span></li><li><b>4</b><span>Disciplines, one roof</span></li><li><b>48h</b><span>Typical first cut</span></li></ul>
       </div>
-      <div class="facilities rv">
-        <p class="eyebrow">Facilities</p>
-        <p>Equipment, inclusions and booking details supplied by iNCO</p>
+    </div>
+  </section>
+
+  <!-- 05 RATES & PACKAGES -->
+  <section class="pricing" id="pricing" aria-labelledby="priceTitle">
+    <div class="wrap">
+      <p class="eyebrow rv">Rates &amp; packages</p>
+      <h2 class="h-xl rv" id="priceTitle">Straight pricing, no surprises.</h2>
+      <p class="lede rv">Pick a discipline below. Every package includes the studio, the crew to run it and your finished files — nothing hidden in the small print.</p>
+      <div class="ptabs rv" role="tablist" aria-label="Disciplines"><button type="button" role="tab" id="tab-pod" aria-controls="panel-pod" aria-selected="true">Podcasting</button><button type="button" role="tab" id="tab-vid" aria-controls="panel-vid" aria-selected="false" tabindex="-1">Videography</button><button type="button" role="tab" id="tab-pho" aria-controls="panel-pho" aria-selected="false" tabindex="-1">Photography</button><button type="button" role="tab" id="tab-evt" aria-controls="panel-evt" aria-selected="false" tabindex="-1">Events</button></div>
+      <div class="ppanel" id="panel-pod" role="tabpanel" aria-labelledby="tab-pod">
+        <div class="tiers">
+          <article class="tier">
+            <h3>The Mic Check</h3>
+            <p class="tier__sub">A single episode, solo or with one guest.</p>
+            <p class="tier__price">R1 499<small>per 1-hour session</small></p>
+            <ul><li>1-hour studio booking</li><li>3 cameras &amp; 2 broadcast mics</li><li>Studio engineer on the desk</li><li>Raw files handed over</li></ul>
+            <a class="btn btn--ghost" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Book this</a>
+          </article>
+          <article class="tier tier--best"><span class="tier__flag">Most booked</span>
+            <h3>The Full Show</h3>
+            <p class="tier__sub">A proper multicam episode with a panel.</p>
+            <p class="tier__price">R5 950<small>per 4-hour session</small></p>
+            <ul><li>4-hour studio booking</li><li>4 cameras, live switch + ISO records</li><li>Up to 4 broadcast mics</li><li>Fully edited episode</li><li>3 vertical shorts for social</li><li>Episode cover artwork</li><li>Multiple Episodes subject to add-on costs below</li></ul>
+            <a class="btn btn--orange" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Book this</a>
+          </article>
+          <article class="tier">
+            <h3>The Series Deal</h3>
+            <p class="tier__sub">The Full Show Package x4</p>
+            <p class="tier__price">R18 500<small>per month</small></p>
+            <ul><li>4 episodes per month</li><li>Full multicam production &amp; edit</li><li>12 vertical shorts</li><li>Priority studio scheduling</li></ul>
+            <a class="btn btn--ghost" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Book this</a>
+          </article></div>
+        <div class="addons"><h4>Add-ons</h4><dl><div><dt>Styling, makeup &amp; set design</dt><dd>Production Dependant</dd></div><div><dt>Studio Hire only</dt><dd>R1 250 / hour</dd></div><div><dt>Extra camera + operator</dt><dd>R1 450 / session</dd></div><div><dt>Live stream to socials</dt><dd>R2 400 / session</dd></div><div><dt>Extra vertical short</dt><dd>R 450 each</dd></div><div><dt>Intro/outro</dt><dd>R1 999 each</dd></div><div><dt>Live Editing</dt><dd>R 999 per Podcast</dd></div><div><dt>Distribution &amp; social media management</dt><dd>R 999 per Podcast</dd></div></dl></div>
       </div>
+      <div class="ppanel" id="panel-vid" role="tabpanel" aria-labelledby="tab-vid" hidden>
+        <div class="tiers">
+          <article class="tier">
+            <h3>Half Day</h3>
+            <p class="tier__sub">One location, one message, quick turnaround.</p>
+            <p class="tier__price">R6 500<small>up to 4 hours</small></p>
+            <ul><li>Director + camera operator</li><li>2-camera interview setup &amp; lighting</li><li>1 finished film up to 2 minutes</li><li>Licensed music &amp; subtitles</li></ul>
+            <a class="btn btn--ghost" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Book this</a>
+          </article>
+          <article class="tier tier--best"><span class="tier__flag">Best value</span>
+            <h3>Full Day</h3>
+            <p class="tier__sub">Enough runway for a real production.</p>
+            <p class="tier__price">R11 500<small>up to 9 hours</small></p>
+            <ul><li>Full crew: Director, DOP &amp; Sound</li><li>Multi-camera, cinema lighting</li><li>1 hero film up to 3 minutes</li><li>2 social cutdowns (16:9 + 9:16)</li><li>Colour grade, sound mix, motion titles</li><li>Stills pulled from the shoot</li></ul>
+            <a class="btn btn--orange" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Book this</a>
+          </article>
+          <article class="tier">
+            <h3>Campaign</h3>
+            <p class="tier__sub">Multi-day, multi-deliverable, fully scoped.</p>
+            <p class="tier__price">R28 000<small>Brief Dependant</small></p>
+            <ul><li>Full crew: Director, DOP &amp; Sound</li><li>Multi-camera, cinema lighting</li><li>Concept, script &amp; storyboard</li><li>Multi-day and multi-location shooting</li><li>Art direction</li><li>Dedicated producer end to end</li><li>Preproduction/ Storyboarding</li><li>Strategy</li></ul>
+            <a class="btn btn--ghost" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Book this</a>
+          </article></div>
+        <div class="addons"><h4>Add-ons</h4><dl><div><dt>Styling, makeup &amp; set design</dt><dd>Production Dependant</dd></div><div><dt>Location Scouting</dt><dd>Production Dependant</dd></div><div><dt>Pre-Production/ storyboarding</dt><dd>Production Dependant</dd></div><div><dt>Studio Hire only</dt><dd>R1 250 / hour</dd></div><div><dt>Extra camera + operator</dt><dd>R1 450 / session</dd></div><div><dt>Live stream to socials</dt><dd>R2 400 / session</dd></div><div><dt>Extra vertical short</dt><dd>R 450 each</dd></div><div><dt>Distribution &amp; social media management</dt><dd>R 999 per Podcast</dd></div></dl></div>
+      </div>
+      <div class="ppanel" id="panel-pho" role="tabpanel" aria-labelledby="tab-pho" hidden>
+        <div class="tiers">
+          <article class="tier">
+            <h3>The Quick Shoot</h3>
+            <p class="tier__sub">Headshots and small product runs.</p>
+            <p class="tier__price">R2 200<small>1-hour session</small></p>
+            <ul><li>1 hour in studio, 1 backdrop</li><li>Photographer &amp; lighting included</li><li>15 retouched images</li><li>Web + print exports</li><li>Files in 3 working days</li></ul>
+            <a class="btn btn--ghost" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Book this</a>
+          </article>
+          <article class="tier tier--best"><span class="tier__flag">Most booked</span>
+            <h3>The Standard</h3>
+            <p class="tier__sub">Teams, products and a change of set.</p>
+            <p class="tier__price">R4 800<small>3-hour session</small></p>
+            <ul><li>3 hours in studio, up to 3 sets</li><li>Photographer + assistant</li><li>Art direction on the day</li><li>Online gallery for selects</li><li>40 retouched images</li></ul>
+            <a class="btn btn--orange" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Book this</a>
+          </article>
+          <article class="tier">
+            <h3>Brand Library</h3>
+            <p class="tier__sub">A full year of imagery in one day.</p>
+            <p class="tier__price">R9 500<small>full day</small></p>
+            <ul><li>Full studio day, all sets available</li><li>Shot list built to your content calendar</li><li>100 retouched images</li><li>Mixed portrait, product &amp; lifestyle</li><li>Behind-the-scenes clips included</li><li>Organised, tagged asset delivery</li></ul>
+            <a class="btn btn--ghost" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Book this</a>
+          </article></div>
+        <div class="addons"><h4>Add-ons</h4><dl><div><dt>Styling, makeup &amp; set design</dt><dd>Production Dependant</dd></div><div><dt>Location Scouting</dt><dd>Production Dependant</dd></div><div><dt>Pre-Production/ storyboarding</dt><dd>Production Dependant</dd></div><div><dt>Studio Hire only</dt><dd>R1 250 / hour</dd></div><div><dt>Extra camera + operator</dt><dd>R1 450 / session</dd></div><div><dt>Live stream to socials</dt><dd>R2 400 / session</dd></div><div><dt>Extra vertical short</dt><dd>R 450 each</dd></div><div><dt>Distribution &amp; social media management</dt><dd>R 999 per Podcast</dd></div></dl></div>
+      </div>
+      <div class="ppanel" id="panel-evt" role="tabpanel" aria-labelledby="tab-evt" hidden>
+        <div class="tiers">
+          <article class="tier">
+            <h3>Event Package</h3>
+            <p class="tier__sub">For events of 80–100 pax.</p>
+            <p class="tier__price">R6 000<small>6–8 hour event</small></p>
+            <ul><li>80–100 pax</li><li>6–8 hours</li></ul>
+            <a class="btn btn--ghost" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Book this</a>
+          </article>
+          <article class="tier">
+            <h3>Event Support</h3>
+            <p class="tier__sub">Optional add-ons for your event.</p>
+            <ul><li>Catering</li><li>Seating / tables</li><li>Entertainment</li><li>Sound</li><li>Videography / photography</li><li>Lighting</li><li>Decor</li><li>Security</li></ul>
+            <a class="btn btn--ghost" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Book this</a>
+          </article></div>
+      </div>
+      <p class="note pricing__note">All prices are in South African Rand and exclude VAT. Travel outside Gauteng, talent fees, licensed music beyond our standard library and paid-media spend are quoted separately. Rates are indicative — send us the brief and we’ll price it properly.</p>
+    </div>
+  </section>
+
+  <!-- 06 PROCESS -->
+  <section class="process" id="process" aria-labelledby="procTitle">
+    <div class="wrap">
+      <p class="eyebrow rv">How it works</p>
+      <h2 class="h-xl rv" id="procTitle">Four steps, zero admin.</h2>
+      <ol class="steps"><li class="rv"><span>01</span><h3>Brief</h3><p>Tell us what you need and who it’s for. A 20-minute call is usually enough to scope it.</p></li><li class="rv"><span>02</span><h3>Plan</h3><p>We lock the date, the set, the shot list and the crew, then send one clear quote.</p></li><li class="rv"><span>03</span><h3>Shoot</h3><p>You arrive, we’re already lit and rolling. Coffee’s on. Most sessions wrap early.</p></li><li class="rv"><span>04</span><h3>Deliver</h3><p>First cut in about 48 hours, two rounds of changes included, files yours to keep.</p></li></ol>
+    </div>
+  </section>
+
+  <!-- 07 FAQ -->
+  <section class="faq" id="faq" aria-labelledby="faqTitle">
+    <div class="wrap">
+      <p class="eyebrow rv">Good to know</p>
+      <h2 class="h-xl rv" id="faqTitle">Questions we get asked.</h2>
+      <div class="faq__list rv"><details open><summary>Can I hire the studio without a crew?</summary><p>Yes. Studio-only hire is R1 250 per hour and includes the set of your choice, the lighting rig and power. You bring your own cameras and operator. A technician is on site to help you get set up.</p></details><details><summary>How many people can the space hold?</summary><p>The podcast sets are built for up to four people on camera. For larger shoots, the open floor comfortably takes a crew of twelve plus talent, with a separate lounge area for clients and a green-room corner for talent.</p></details><details><summary>How quickly do we get our files?</summary><p>Photography selects land in an online gallery the same day, with retouched files in three working days. Video and podcast first cuts are typically ready within 48 hours. Campaign work is scheduled against an agreed timeline.</p></details><details><summary>Do you shoot outside the studio?</summary><p>Often. The Hub is the base, not the limit — we shoot on location across Gauteng at no extra travel charge, and elsewhere in South Africa with travel quoted upfront.</p></details><details><summary>What do we need to bring?</summary><p>Yourself, your talking points and anything you want on camera — product, wardrobe, branding. Everything else is here: mics, cameras, lights, backdrops, teleprompter, steamer and wifi.</p></details><details><summary>Can you handle the whole content plan, not just the shoot?</summary><p>That’s the point of the Hub. iNCO is a full design and media agency, so strategy, scripting, branding, editing and distribution can all sit with one team instead of four.</p></details></div>
     </div>
   </section>
 
@@ -470,8 +678,11 @@ button{font:inherit;color:inherit}
     <div class="wrap">
       <p class="note clients__note">Logo placeholders / continuous movement to the left</p>
       <div class="talk" id="contact">
-        <button class="btn btn--orange" type="button" data-enquire="General enquiry">Let&rsquo;s talk</button>
-        <div class="talk__links"><span>Email</span><span aria-hidden="true">/</span><span>Phone</span><span aria-hidden="true">/</span><span>Social links</span></div>
+        <p class="eyebrow">Let’s make something</p>
+        <h2 class="h-xl">Book the Hub.</h2>
+        <p class="lede">Come see the space before you commit. Bring a brief, or just bring curiosity — the kettle’s on and the sets are lit.</p>
+        <div class="visit__btns"><a class="btn btn--orange" href="https://incocreative.com/contact-us/" target="_blank" rel="noopener">Book a studio tour</a><a class="btn btn--teal" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Email the team</a></div>
+        <p class="talk__mail"><a href="mailto:kovan@incocreative.com">kovan@incocreative.com</a><span>Mon–Fri, 08:00–17:00 · Studio bookings subject to availability</span></p>
       </div>
       <footer class="foot">
         <img src="assets/img/inco-logo-white.png" alt="iNCO Creative" width="421" height="163" loading="lazy">
@@ -796,7 +1007,7 @@ $$(".nav__links a").forEach(function(a){ a.addEventListener("click",function(){ 
 function onScroll(){
   var y = window.scrollY, h = home.offsetHeight;
   nav.classList.toggle("is-solid", y > h*0.6);
-  var ids=["work","services","spaces","clients","contact"], act=null, mid=y+window.innerHeight*0.45;
+  var ids=["work","services","spaces","pricing","process","faq","clients","contact"], act=null, mid=y+window.innerHeight*0.45;
   ids.forEach(function(id){ var el=document.getElementById(id); if(el && el.getBoundingClientRect().top+y<=mid) act=id; });
   if (window.innerHeight + y >= document.documentElement.scrollHeight - 4) act="contact";
   else if (act==="contact") act="clients";
@@ -889,7 +1100,7 @@ pages.addEventListener("touchstart",function(e){ sx0=e.touches[0].clientX; sy0=e
 pages.addEventListener("touchend",function(e){ if(sx0===null) return; var dx=e.changedTouches[0].clientX-sx0, dy=e.changedTouches[0].clientY-sy0; if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)*1.3) turn(pg+(dx<0?1:-1)); sx0=null; });
 
 /* ---------- 04 directions note ---------- */
-$("#dirBtn").addEventListener("click",function(){ var n=$("#dirNote"); n.hidden=!n.hidden; });
+
 
 /* ---------- reveal on scroll (content stays visible without JS) ---------- */
 if (!reduce.matches && "IntersectionObserver" in window){
@@ -898,6 +1109,28 @@ if (!reduce.matches && "IntersectionObserver" in window){
   var rio = new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.remove("pre"); rio.unobserve(en.target); } }); },{rootMargin:"0px 0px -8% 0px"});
   rv.forEach(function(el){ rio.observe(el); });
 }
+
+
+/* ---------- RATES & PACKAGES tabs ---------- */
+var ptabs=$$(".ptabs [role=tab]");
+function selectTab(key, focus){
+  ptabs.forEach(function(t){
+    var on = t.id==="tab-"+key;
+    t.setAttribute("aria-selected", on?"true":"false"); t.tabIndex = on?0:-1;
+    var panel=document.getElementById(t.getAttribute("aria-controls")); if(panel) panel.hidden=!on;
+    if(on && focus) t.focus();
+  });
+}
+ptabs.forEach(function(t,i){
+  t.addEventListener("click",function(){ selectTab(t.id.slice(4)); });
+  t.addEventListener("keydown",function(e){
+    var d = e.key==="ArrowRight"?1:e.key==="ArrowLeft"?-1:0; if(!d) return;
+    e.preventDefault(); selectTab(ptabs[(i+d+ptabs.length)%ptabs.length].id.slice(4), true);
+  });
+});
+document.addEventListener("click",function(e){
+  var a = e.target.closest && e.target.closest("[data-tab]"); if(a) selectTab(a.dataset.tab);
+});
 
 /* ---------- global motion pause ---------- */
 var mBtn=$("#motionBtn");
