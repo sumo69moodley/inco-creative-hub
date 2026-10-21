@@ -75,6 +75,13 @@ button{font:inherit;color:inherit}
 .home__bg{position:absolute;inset:0;z-index:0;container-type:size;background:#000 url("assets/img/paint-film-poster.jpg") center/cover no-repeat}
 .home__yt{position:absolute;top:50%;left:50%;width:max(100cqw,177.78cqh);height:max(100cqh,56.25cqw);transform:translate(-50%,-50%) scale(1.08);border:0;pointer-events:none;opacity:0;transition:opacity 1.6s}
 .home__yt.is-live{opacity:1}
+/* Portrait screens (phones, tablets upright): show the whole 16:9 film as a band instead of cropping it to a sliver */
+@media (max-aspect-ratio:4/3){
+  .home__bg{background:#05090b}
+  .home__bg::before{content:"";position:absolute;inset:-60px;background:url("assets/img/paint-film-poster.jpg") center/cover no-repeat;filter:blur(40px) brightness(.45) saturate(1.2)}
+  .home__bg::after{content:"";position:absolute;z-index:1;left:0;top:42%;width:100%;height:56.25cqw;transform:translateY(-50%);background:url("assets/img/paint-film-poster.jpg") center/contain no-repeat}
+  .home__yt{z-index:2;top:42%;width:100cqw;height:56.25cqw;transform:translate(-50%,-50%);-webkit-mask-image:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent)}
+}
 .home::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,18,22,.55) 0,rgba(7,18,22,0) 22%,rgba(7,18,22,0) 62%,rgba(7,18,22,.85) 100%);pointer-events:none}
 .home__ctas{position:absolute;z-index:3;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 34px);display:flex;flex-direction:column;align-items:center;gap:22px;padding-left:var(--gutter);padding-right:var(--gutter-r)}
 .home__btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;transition:transform 1s var(--ease),opacity 1s}
