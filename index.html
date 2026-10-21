@@ -75,7 +75,7 @@ button{font:inherit;color:inherit}
 .home__bg{position:absolute;inset:0;z-index:0;overflow:hidden;background:#05090b}
 .home__bg::before{content:"";position:absolute;inset:-60px;background:url("assets/img/paint-film-poster.jpg") center/cover no-repeat;filter:blur(40px) brightness(.4) saturate(1.2)}
 /* Video + matching still are sized/positioned by layoutHero() so the logo sits between the menu and the buttons */
-.home__poster,.home__yt{position:absolute;left:0;top:50%;width:100%;transform:translateY(-50%);border:0;pointer-events:none;-webkit-mask-image:linear-gradient(180deg,transparent,#000 9%,#000 91%,transparent),linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(180deg,transparent,#000 9%,#000 91%,transparent),linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask-composite:source-in;mask-composite:intersect}
+.home__poster,.home__yt{position:absolute;left:0;top:50%;width:100%;transform:translateY(-50%);border:0;pointer-events:none}
 .home__poster{z-index:1;height:auto}
 .home__yt{z-index:2;aspect-ratio:16/9;opacity:0;transition:opacity .8s ease}
 .home__yt.is-live{opacity:1}
@@ -715,21 +715,29 @@ document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ closeProj
 
 /* ---------- 01 HOME: muted looping YouTube background ----------
    Framing: the video is scaled/positioned so the iNCO logo (final frames) sits between the menu and the buttons.
-   YouTube UI: YouTube shows its title/controls for ~3s whenever playback starts or loops, so the video stays
-   hidden (the matching logo still shows instead) from just before the end of each loop until 3.6s into the next.
-   It also fades out whenever it pauses/ends (when YouTube shows suggestions). */
+   Full-bleed (covers the whole header) wherever the logo still fits between the menu and buttons; on
+   narrow portrait screens it runs as a full-width band so the logo isn't cropped.
+   The full video always plays; it only fades out if it pauses/ends (when YouTube shows suggestions). */
 var home=$("#home"), homeBg=$("#homeBg"), homePoster=$("#homePoster"), heroYt=null, heroInView=true;
 var LOGO = { w:0.64, h:0.44, cx:0.495, cy:0.38 };     // logo box as a fraction of the 16:9 video frame
 var POSTER = { top:0.14, aspect:486/1184 };             // where the still sits inside the video frame
-var REVEAL_AT = 3.6, HIDE_AT = 7.45;                    // seconds into each loop
-var heroDur=0, heroCt=0, heroState=-1, heroLooping=false, heroAllowAt=REVEAL_AT;
+var heroDur=0, heroCt=0, heroState=-1, heroLooping=false;
 function layoutHero(){
   var hb=home.getBoundingClientRect(), W=hb.width, Hc=hb.height;
   var navB = ($(".nav__in") ? $(".nav__in").getBoundingClientRect().height : 72) + 16;
   var ctaT = $(".home__btns").getBoundingClientRect().top - hb.top - 24;
   var band = Math.max(ctaT - navB, Math.min(Hc, window.innerHeight)*0.3), mid = navB + band/2;
-  var H = Math.min(band*0.8/LOGO.h, (W*0.9)/(LOGO.w*16/9));   // logo fills ~80% of the gap (breathing room), never wider than the screen
-  var Wv = H*16/9, left = W/2 - LOGO.cx*Wv, top = mid - LOGO.cy*H;
+  var Hcover = Math.max(Hc, W*9/16);                        // smallest size that fills the whole header
+  var H, top;
+  if (LOGO.h*Hcover <= band*0.92 && LOGO.w*Hcover*16/9 <= W*0.94){
+    // full-bleed; zoom a little more (up to +180px) when there's room, which also crops YouTube's top/bottom bars
+    H = Math.max(Hcover, Math.min(Hcover+180, band*0.92/LOGO.h, W*0.94/(LOGO.w*16/9)));
+    top = Math.min(0, Math.max(Hc-H, mid - LOGO.cy*H));      // logo centred in the gap, header always covered
+  } else {
+    H = Math.min(band*0.8/LOGO.h, (W*0.9)/(LOGO.w*16/9));     // portrait phones: full-width band, logo uncropped
+    top = mid - LOGO.cy*H;
+  }
+  var Wv = H*16/9, left = W/2 - LOGO.cx*Wv;
   if (heroYt){ heroYt.style.cssText="left:"+left+"px;top:"+top+"px;width:"+Wv+"px;height:"+H+"px;transform:none"; }
   homePoster.style.cssText="left:"+left+"px;top:"+(top+POSTER.top*H)+"px;width:"+Wv+"px;height:"+(Wv*POSTER.aspect)+"px;transform:none";
 }
@@ -738,7 +746,7 @@ if (window.ResizeObserver) new ResizeObserver(layoutHero).observe(home); else wi
 function heroCmd(func,args){ if(heroYt&&heroYt.contentWindow){ try{ heroYt.contentWindow.postMessage(JSON.stringify({event:"command",func:func,args:args||[]}),"*"); }catch(e){} } }
 function heroVis(){
   if (!heroYt) return;
-  var show = heroState===1 && heroInView && !motionPaused && heroCt>=heroAllowAt && heroCt<HIDE_AT;
+  var show = heroState===1 && heroInView && !motionPaused;
   heroYt.classList.toggle("is-live", show);
 }
 function startHeroYT(){
@@ -760,18 +768,15 @@ window.addEventListener("message",function(e){
     if (info.duration) heroDur = info.duration;
     if (typeof info.currentTime==="number"){
       heroCt = info.currentTime;
-      if (heroDur && heroCt > heroDur-1 && !heroLooping){ heroLooping=true; heroAllowAt=REVEAL_AT; heroCmd("seekTo",[0,true]); heroCmd("playVideo"); }
+      if (heroDur && heroCt > heroDur-0.3 && !heroLooping){ heroLooping=true; heroCmd("seekTo",[0,true]); heroCmd("playVideo"); }
       else if (heroCt < 2) heroLooping=false;
     }
   }
   var state = d.event==="onStateChange" ? info : (typeof info==="object" ? info.playerState : undefined);
   if (typeof state==="number" && state!==heroState){
-    // after any resume YouTube flashes its controls again, so wait ~3.5s of playback before showing
-    if (state===1 && heroState!==3 && heroState!==-1) heroAllowAt = Math.max(heroAllowAt, heroCt+3.5);
-    if (state===1 && heroAllowAt>=HIDE_AT && heroCt<1) heroAllowAt=REVEAL_AT;
     heroState = state;
     if (state===1){ heroCmd("mute"); if (motionPaused || !heroInView) heroCmd("pauseVideo"); }
-    else if (state===0){ heroAllowAt=REVEAL_AT; heroCmd("seekTo",[0,true]); heroCmd("playVideo"); }
+    else if (state===0){ heroCmd("seekTo",[0,true]); heroCmd("playVideo"); }
   }
   heroVis();
 });
