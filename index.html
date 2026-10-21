@@ -122,9 +122,18 @@ button{font:inherit;color:inherit}
 .work__arrow svg{width:18px;height:18px}
 .work__arrow--l{left:max(24px,env(safe-area-inset-left,0px))}
 .work__arrow--r{right:max(24px,env(safe-area-inset-right,0px))}
-.work__foot{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding-bottom:28px}
+.work__foot{display:flex;justify-content:center;align-items:flex-end;gap:16px;flex-wrap:wrap;padding-bottom:8px}
 .work__hint{font-family:var(--display);font-size:.72rem;letter-spacing:.24em;color:var(--fg);text-transform:uppercase;margin:0 auto;transition:color .3s}
 .work__hint.is-sel{color:var(--orange)}
+/* scrolling "iNCO CREATIVE HUB" band under the carousel */
+.work__mq{overflow:hidden;padding:clamp(6px,1.2vw,14px) 0 clamp(18px,2.6vw,34px);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.work__mq-track{display:flex;width:max-content;animation:marquee 26s linear infinite}
+.work__mq-set{display:flex;align-items:center;flex:none}
+.work__mq-set span{font-family:var(--display);font-weight:700;font-stretch:118%;text-transform:none;font-size:clamp(2.6rem,8vw,6.8rem);line-height:1;letter-spacing:-.01em;white-space:nowrap;color:var(--fg);padding:0 .35em}
+.work__mq-set span:nth-child(4n+3){color:transparent;-webkit-text-stroke:2px var(--fg)}
+.work__mq-set i{flex:none;width:.5em;height:.5em;font-size:clamp(2.6rem,8vw,6.8rem);border-radius:50%;background:var(--orange)}
+.work__mq-set i:nth-of-type(even){background:var(--teal)}
+.paused .work__mq-track{animation-play-state:paused}
 .work__swipe{display:none;font-family:var(--display);font-size:.75rem;letter-spacing:.18em;color:var(--fg)}
 
 /* ---------- MODAL (project) ---------- */
@@ -279,6 +288,7 @@ button{font:inherit;color:inherit}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .strip__track{animation:none}
+  .work__mq-track{animation:none}
   .scrollcue i{animation:none}
   .js .rv.pre{opacity:1;transform:none}
   *,*::before,*::after{transition-duration:.01ms!important}
@@ -334,10 +344,9 @@ button{font:inherit;color:inherit}
       <button class="work__arrow work__arrow--r" id="next" type="button" aria-label="Next project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5l7 7-7 7"/></svg></button>
     </div>
     <div class="wrap work__foot">
-      <p class="work__hint" id="hint" aria-live="polite">HOVER TO ROTATE / SELECT A PROJECT</p>
       <p class="work__swipe">Swipe to explore &gt;</p>
-      <p class="note" style="margin:0">Illustrative cards using supplied footage stills. Replace with selected portfolio photos.</p>
     </div>
+    <div class="work__mq" aria-label="iNCO Creative Hub"><div class="work__mq-track" aria-hidden="true"><div class="work__mq-set"><span>iNCO CREATIVE HUB</span><i></i><span>iNCO CREATIVE HUB</span><i></i><span>iNCO CREATIVE HUB</span><i></i><span>iNCO CREATIVE HUB</span><i></i></div><div class="work__mq-set"><span>iNCO CREATIVE HUB</span><i></i><span>iNCO CREATIVE HUB</span><i></i><span>iNCO CREATIVE HUB</span><i></i><span>iNCO CREATIVE HUB</span><i></i></div></div></div>
   </section>
 
   <!-- 03 SERVICES BOOK -->
@@ -582,8 +591,8 @@ function setHot(el){
   if (hot === el) return;
   if (hot) hot.classList.remove("is-hot");
   hot = el;
-  if (el){ el.classList.add("is-hot"); ring.classList.add("has-hot"); hint.textContent="SELECTED PROJECT / CLICK TO OPEN"; hint.classList.add("is-sel"); }
-  else { ring.classList.remove("has-hot"); hint.textContent="HOVER TO ROTATE / SELECT A PROJECT"; hint.classList.remove("is-sel"); }
+  if (el){ el.classList.add("is-hot"); ring.classList.add("has-hot"); if(hint){ hint.textContent="SELECTED PROJECT / CLICK TO OPEN"; hint.classList.add("is-sel"); } }
+  else { ring.classList.remove("has-hot"); if(hint){ hint.textContent="HOVER TO ROTATE / SELECT A PROJECT"; hint.classList.remove("is-sel"); } }
 }
 var last = performance.now();
 function tick(now){
