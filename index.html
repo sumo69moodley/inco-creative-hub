@@ -73,7 +73,7 @@ button{font:inherit;color:inherit}
 /* ---------- 01 HOME ---------- */
 .home{position:relative;height:100svh;min-height:540px;overflow:hidden;background:#000}
 .home__bg{position:absolute;inset:0;z-index:0;container-type:size;background:#000 url("assets/img/paint-film-poster.jpg") center/cover no-repeat}
-.home__yt{position:absolute;top:50%;left:50%;width:max(100cqw,177.78cqh);height:max(100cqh,56.25cqw);transform:translate(-50%,-50%) scale(1.08);border:0;pointer-events:none;opacity:0;transition:opacity 1.6s}
+.home__yt{position:absolute;top:50%;left:50%;width:calc((max(100cqh,56.25cqw) + 180px) * 1.7778);height:calc(max(100cqh,56.25cqw) + 180px);transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:0;transition:opacity 1.6s}
 .home__yt.is-live{opacity:1}
 .home::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,18,22,.55) 0,rgba(7,18,22,0) 22%,rgba(7,18,22,0) 62%,rgba(7,18,22,.85) 100%);pointer-events:none}
 .home__ctas{position:absolute;z-index:3;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 34px);display:flex;flex-direction:column;align-items:center;gap:22px;padding-left:var(--gutter);padding-right:var(--gutter-r)}
@@ -86,8 +86,18 @@ button{font:inherit;color:inherit}
 .work{position:relative;min-height:100svh;overflow:hidden;display:flex;flex-direction:column;isolation:isolate}
 .work__bg{position:absolute;inset:0;z-index:-1;container-type:size;background:#05090b url("assets/img/walkthrough-poster.jpg") center/cover}
 .work__bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.work__yt{position:absolute;top:50%;left:50%;width:max(100cqw,177.78cqh);height:max(100cqh,56.25cqw);transform:translate(-50%,-50%) scale(1.08);border:0;pointer-events:none;opacity:0;transition:opacity 1.6s}
+.work__yt{position:absolute;top:50%;left:50%;width:calc((max(100cqh,56.25cqw) + 180px) * 1.7778);height:calc(max(100cqh,56.25cqw) + 180px);transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:0;transition:opacity 1.6s}
 .work__yt.is-live{opacity:1}
+/* Portrait screens (phones, upright tablets): show each 16:9 video whole, as a full-width band,
+   instead of cropping it to a thin middle strip. A blurred copy of the artwork fills the space around it. */
+@media (max-aspect-ratio:4/3){
+  .home__bg{background:#05090b}
+  .home__bg::before{content:"";position:absolute;inset:-60px;background:url("assets/img/paint-film-poster.jpg") center/cover no-repeat;filter:blur(40px) brightness(.45) saturate(1.2)}
+  .home__bg::after{content:"";position:absolute;z-index:1;left:0;top:42%;width:100%;height:56.25cqw;transform:translateY(-50%);background:url("assets/img/paint-film-poster.jpg") center/contain no-repeat}
+  .home__yt{z-index:2;top:42%;width:100cqw;height:56.25cqw;transform:translate(-50%,-50%)}
+  .work__bg.yt-live video{filter:blur(30px) brightness(.5) saturate(1.2);transform:scale(1.15)}
+  .work__yt{width:100cqw;height:56.25cqw;transform:translate(-50%,-50%)}
+}
 .work__bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 58%,rgba(7,18,22,.35) 0,rgba(7,18,22,.78) 70%),linear-gradient(180deg,rgba(7,18,22,.75),rgba(7,18,22,.2) 30%,rgba(7,18,22,.35) 70%,var(--ink))}
 .work__head{padding-top:calc(env(safe-area-inset-top,0px) + 112px)}
 .work__head .h-lg{font-weight:300}
@@ -514,8 +524,8 @@ button{font:inherit;color:inherit}
 (function(){
 "use strict";
 /* ===== CONFIG ===== Swap the YouTube background here (11-character video id). */
-var YT_ID = "LCmsrVOXzZc";
-var YT_START = 4;
+var YT_ID = "TSe4M-KJiYQ";
+var YT_START = 0;
 /* Header (Home) background: muted, looping YouTube video. */
 var HERO_YT_ID = "6T8q9ErDrdI";
 
@@ -709,16 +719,47 @@ $("#enqForm").addEventListener("submit",function(e){
 });
 document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ closeProject(); closeDrawer(); setMenu(false); } });
 
+/* ---------- YouTube background guard (header + Our Work) ----------
+   Keeps YouTube's own UI out of sight: the video only shows once its start-up title/controls have faded,
+   fades out whenever it pauses or ends (when YouTube shows related videos), and loops by seeking back
+   just before the end so the end screen never appears. (YouTube still flashes its play button briefly on each loop.) */
+function ytGuard(getFrame, cmd, startAt, onShow){
+  var dur=0, ct=0, state=-1, looping=false, firstCt=null, ready=false;
+  function vis(){ var f=getFrame(); if(!f) return; var show = state===1 && ready; f.classList.toggle("is-live",show); if(show && onShow) onShow(); }
+  window.addEventListener("message",function(e){
+    var f=getFrame(); if (!f || e.source!==f.contentWindow) return;
+    var d; try{ d = typeof e.data==="string" ? JSON.parse(e.data) : e.data; }catch(x){ return; }
+    if (!d || d.info===undefined || d.info===null) return;
+    var info=d.info;
+    if (typeof info==="object"){
+      if (info.duration) dur=info.duration;
+      if (typeof info.currentTime==="number"){
+        ct=info.currentTime;
+        if (state===1 && firstCt===null) firstCt=ct;
+        if (!ready && firstCt!==null && ct-firstCt>=3.2) ready=true;     // start-up title/controls have faded
+        if (dur && ct>dur-0.35 && !looping){ looping=true; cmd("seekTo",[startAt,true]); cmd("playVideo"); }
+        else if (ct<dur-2) looping=false;
+      }
+    }
+    var st = d.event==="onStateChange" ? info : (typeof info==="object" ? info.playerState : undefined);
+    if (typeof st==="number"){
+      state=st;
+      if (st===0){ cmd("seekTo",[startAt,true]); cmd("playVideo"); }
+    }
+    vis();
+  });
+}
 /* ---------- 01 HOME: muted looping YouTube background ---------- */
 var home=$("#home"), homeBg=$("#homeBg"), heroYt=null, heroLive=false, heroInView=true;
-function heroCmd(func){ if(heroYt&&heroYt.contentWindow){ try{ heroYt.contentWindow.postMessage(JSON.stringify({event:"command",func:func,args:[]}),"*"); }catch(e){} } }
+function heroCmd(func,args){ if(heroYt&&heroYt.contentWindow){ try{ heroYt.contentWindow.postMessage(JSON.stringify({event:"command",func:func,args:args||[]}),"*"); }catch(e){} } }
+ytGuard(function(){ return heroYt; }, heroCmd, 0);
 function startHeroYT(){
   if (heroYt || !HERO_YT_ID || reduce.matches) return;
   var origin = /^https?:/.test(location.protocol) ? "&origin="+encodeURIComponent(location.origin) : "";
   heroYt = document.createElement("iframe");
   heroYt.className="home__yt"; heroYt.title="Header background film"; heroYt.tabIndex=-1;
   heroYt.allow="autoplay; encrypted-media; picture-in-picture"; heroYt.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
-  heroYt.src="https://www.youtube-nocookie.com/embed/"+HERO_YT_ID+"?autoplay=1&mute=1&loop=1&playlist="+HERO_YT_ID+"&controls=0&disablekb=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&fs=0&enablejsapi=1"+origin;
+  heroYt.src="https://www.youtube-nocookie.com/embed/"+HERO_YT_ID+"?autoplay=1&mute=1&controls=0&disablekb=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&fs=0&enablejsapi=1"+origin;
   heroYt.addEventListener("load",function(){ try{ heroYt.contentWindow.postMessage(JSON.stringify({event:"listening",id:"incohero",channel:"widget"}),"*"); }catch(e){} heroCmd("mute"); });
   homeBg.appendChild(heroYt);
 }
@@ -727,7 +768,7 @@ window.addEventListener("message",function(e){
   var d; try{ d = typeof e.data==="string" ? JSON.parse(e.data) : e.data; }catch(x){ return; }
   if (!d) return;
   var state = d.event==="onStateChange" ? d.info : (d.info && d.info.playerState);
-  if (state===1 && !heroLive){ heroLive=true; heroYt.classList.add("is-live"); heroCmd("mute"); if (motionPaused || !heroInView) heroCmd("pauseVideo"); }
+  if (state===1 && !heroLive){ heroLive=true; heroCmd("mute"); if (motionPaused || !heroInView) heroCmd("pauseVideo"); }
 });
 new IntersectionObserver(function(es){
   es.forEach(function(en){
@@ -757,14 +798,15 @@ window.addEventListener("scroll",onScroll,{passive:true}); onScroll();
 
 /* ---------- 02 background: walkthrough video + YouTube (loads when near) ---------- */
 var walk=$("#walk"), bg=$(".work__bg"), yt=null, ytLive=false;
-function ytCmd(func){ if(yt&&yt.contentWindow){ try{ yt.contentWindow.postMessage(JSON.stringify({event:"command",func:func,args:[]}),"*"); }catch(e){} } }
+function ytCmd(func,args){ if(yt&&yt.contentWindow){ try{ yt.contentWindow.postMessage(JSON.stringify({event:"command",func:func,args:args||[]}),"*"); }catch(e){} } }
+ytGuard(function(){ return yt; }, ytCmd, YT_START, function(){ if(!bg.classList.contains("yt-live")){ bg.classList.add("yt-live"); walk.pause(); } });
 function startYT(){
   if (yt || !YT_ID || reduce.matches) return;
   var origin = /^https?:/.test(location.protocol) ? "&origin="+encodeURIComponent(location.origin) : "";
   yt = document.createElement("iframe");
   yt.className="work__yt"; yt.title="Background film"; yt.tabIndex=-1;
   yt.allow="autoplay; encrypted-media; picture-in-picture"; yt.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
-  yt.src="https://www.youtube-nocookie.com/embed/"+YT_ID+"?autoplay=1&mute=1&loop=1&playlist="+YT_ID+"&controls=0&disablekb=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&fs=0&start="+YT_START+"&enablejsapi=1"+origin;
+  yt.src="https://www.youtube-nocookie.com/embed/"+YT_ID+"?autoplay=1&mute=1&controls=0&disablekb=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&fs=0&start="+YT_START+"&enablejsapi=1"+origin;
   yt.addEventListener("load",function(){ try{ yt.contentWindow.postMessage(JSON.stringify({event:"listening",id:"incobg",channel:"widget"}),"*"); }catch(e){} });
   bg.appendChild(yt);
 }
@@ -773,7 +815,7 @@ window.addEventListener("message",function(e){
   var d; try{ d = typeof e.data==="string" ? JSON.parse(e.data) : e.data; }catch(x){ return; }
   if (!d) return;
   var state = d.event==="onStateChange" ? d.info : (d.info && d.info.playerState);
-  if (state===1 && !ytLive){ ytLive=true; yt.classList.add("is-live"); walk.pause(); if (motionPaused) ytCmd("pauseVideo"); }
+  if (state===1 && !ytLive){ ytLive=true; ytCmd("mute"); if (motionPaused || !inView) ytCmd("pauseVideo"); }
 });
 var io = new IntersectionObserver(function(es){
   es.forEach(function(en){
