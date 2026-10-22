@@ -117,11 +117,6 @@ button{font:inherit;color:inherit}
 .reel.is-hot .reel__img{filter:none}
 .reel.is-hot .reel__cap{opacity:1;transform:none}
 .ring.has-hot .reel:not(.is-hot) .reel__img{filter:brightness(calc(.35 + .45*var(--f))) saturate(.65)}
-.work__arrow{position:absolute;top:50%;z-index:4;width:52px;height:52px;margin-top:-26px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(7,18,22,.45);backdrop-filter:blur(6px);cursor:pointer;display:grid;place-items:center;transition:background .25s,border-color .25s,transform .35s var(--ease)}
-.work__arrow:hover{background:var(--orange);border-color:var(--orange);transform:scale(1.06)}
-.work__arrow svg{width:18px;height:18px}
-.work__arrow--l{left:max(24px,env(safe-area-inset-left,0px))}
-.work__arrow--r{right:max(24px,env(safe-area-inset-right,0px))}
 .work__foot{display:flex;justify-content:center;align-items:flex-end;gap:16px;flex-wrap:wrap;padding-bottom:8px}
 .work__hint{font-family:var(--display);font-size:.72rem;letter-spacing:.24em;color:var(--fg);text-transform:uppercase;margin:0 auto;transition:color .3s}
 .work__hint.is-sel{color:var(--orange)}
@@ -398,7 +393,6 @@ button{font:inherit;color:inherit}
   .reel{position:relative;inset:auto;flex:none;width:var(--cw);height:calc(var(--cw)*1.3);transform:none!important;scroll-snap-align:center}
   .reel .reel__img{filter:none!important}
   .reel .reel__cap{opacity:1;transform:none}
-  .work__arrow{display:none}
   .work__swipe{display:block}
   .work__hint{display:none}
   .facilities{grid-template-columns:1fr}
@@ -473,8 +467,6 @@ button{font:inherit;color:inherit}
     </div>
     <div class="stage" id="stage" tabindex="0" aria-roledescription="carousel" aria-label="Project ring. Use left and right arrow keys to rotate, Enter to open the front project.">
       <div class="ring" id="ring"></div>
-      <button class="work__arrow work__arrow--l" id="prev" type="button" aria-label="Previous project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 5l-7 7 7 7"/></svg></button>
-      <button class="work__arrow work__arrow--r" id="next" type="button" aria-label="Next project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5l7 7-7 7"/></svg></button>
     </div>
     <div class="wrap work__foot">
       <p class="work__swipe">Swipe to explore &gt;</p>
@@ -875,8 +867,6 @@ function tick(now){
 }
 requestAnimationFrame(tick);
 function goStep(dir){ var base = target!==null?target:Math.round(ang/STEP)*STEP; target = base + dir*STEP; setHot(null); }
-$("#prev").addEventListener("click",function(){goStep(-1)});
-$("#next").addEventListener("click",function(){goStep(1)});
 reels.forEach(function(el){
   el.addEventListener("pointerenter",function(e){ if(e.pointerType==="mouse" && !dragging && !mobileMQ.matches) setHot(el); });
   el.addEventListener("pointerleave",function(e){ if(e.pointerType==="mouse") setHot(null); });
@@ -897,7 +887,7 @@ stage.addEventListener("keydown",function(e){
 /* drag / swipe to spin */
 var px=0, moved=0, startAng=0, vel=0, lastX=0, lastT=0;
 stage.addEventListener("pointerdown",function(e){
-  if (mobileMQ.matches || e.button>0 || e.target.closest(".work__arrow")) return;
+  if (mobileMQ.matches || e.button>0) return;
   dragging = true; moved = 0; px = lastX = e.clientX; lastT = performance.now(); startAng = ang; target = null; vel=0;
   stage.classList.add("is-drag");
 });
