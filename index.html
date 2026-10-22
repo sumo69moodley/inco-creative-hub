@@ -47,6 +47,12 @@ button{font:inherit;color:inherit}
 .h-lg{font-family:var(--display);font-weight:400;font-stretch:104%;line-height:1.08;font-size:clamp(1.9rem,4vw,3.1rem);margin:.2em 0;text-wrap:balance}
 .lede{color:var(--muted);margin:0;max-width:58ch}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.6em;border:0;cursor:pointer;text-decoration:none;font-family:var(--display);font-weight:500;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;padding:1em 1.7em;border-radius:2px;transition:transform .35s var(--ease),background .25s,box-shadow .35s var(--ease)}
+/* same shine as the step icons (7s cycle, same streak): a light streak sweeps across every call-to-action button */
+.btn{position:relative;overflow:hidden;isolation:isolate}
+.btn::after{content:"";position:absolute;inset:-20%;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.55) 50%,transparent 62%);transform:translateX(-70%);animation:btnShine 7s ease-in-out infinite;animation-delay:var(--sd,0s);pointer-events:none}
+.btn:nth-child(2){--sd:.9s}.btn:nth-child(3){--sd:1.8s}.btn:nth-child(4){--sd:2.7s}
+@keyframes btnShine{0%,45%{transform:translateX(-70%)}85%,100%{transform:translateX(70%)}}  /* same timing as icoShine, shorter path for wide buttons */
+.paused .btn::after{animation:none}
 .btn:hover{transform:translateY(-2px)}
 .btn--orange{background:var(--orange);color:#fff;box-shadow:0 10px 30px -12px rgba(226,98,43,.7)}
 .btn--orange:hover{background:var(--orange-hi)}
