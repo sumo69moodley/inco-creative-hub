@@ -312,7 +312,7 @@ button{font:inherit;color:inherit}
 }
 
 /* ---------- 05 CLIENTS ---------- */
-.clients{padding-top:clamp(60px,8vw,110px);position:relative;overflow:hidden}
+.clients{padding-block:clamp(60px,8vw,110px) clamp(40px,6vw,80px);position:relative;overflow:hidden}
 .clients__sticker{position:absolute;right:max(24px,7vw);top:clamp(20px,3vw,40px);width:clamp(150px,20vw,250px);height:auto;transform:rotate(calc(-12deg + var(--spin,0deg)));transition:transform .25s linear;filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))}
 .strip{margin-top:40px;background:var(--cream);color:#132126;overflow:hidden;padding-block:30px;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
 .strip__track{display:flex;width:max-content;animation:marquee 32s linear infinite}
@@ -419,10 +419,10 @@ button{font:inherit;color:inherit}
     <ul class="nav__links" id="navLinks">
       <li><a href="#work" data-spy="work">WORK</a></li>
       <li><a href="#services" data-spy="services">SERVICES</a></li>
+      <li><a href="#clients" data-spy="clients">CLIENTS</a></li>
       <li><a href="#spaces" data-spy="spaces">SPACES</a></li>
       <li><a href="#pricing" data-spy="pricing">PRICING</a></li>
       <li><a href="#faq" data-spy="faq">FAQ</a></li>
-      <li><a href="#clients" data-spy="clients">CLIENTS</a></li>
       <li><a href="#contact" data-spy="contact">CONTACT</a></li>
     </ul>
   </div>
@@ -543,6 +543,29 @@ button{font:inherit;color:inherit}
     </template>
   </section>
 
+  <!-- 04 CLIENTS -->
+  <section class="clients" id="clients" aria-labelledby="clientTitle">
+    <img class="clients__sticker" id="sticker" src="assets/img/sticker-integrity.png" alt="iNCO values: Innovation, Integrity, Interact" width="335" height="336" loading="lazy">
+    <div class="wrap">
+      <p class="eyebrow rv">Our clients</p>
+      <h2 class="h-xl rv" id="clientTitle">Created together.</h2>
+      <p class="lede rv">Selected brands and collaborators</p>
+    </div>
+    <div class="strip" aria-label="Client logos">
+      <div class="strip__track">
+        <ul class="strip__set">
+          <li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li>
+        </ul>
+        <ul class="strip__set" aria-hidden="true">
+          <li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap">
+      <p class="note clients__note">Logo placeholders / continuous movement to the left</p>
+    </div>
+  </section>
+
   <!-- RATES & PACKAGES (pop-up, opened from the booklet's package buttons) -->
   <dialog class="rates" id="rates" aria-labelledby="priceTitle">
     <div class="rates__frame">
@@ -637,7 +660,6 @@ button{font:inherit;color:inherit}
             <p class="tier__price">R6 000<small>6–8 hour event</small></p>
             <ul><li>80–100 pax</li><li>6–8 hours</li></ul>
             <a class="btn btn--ghost" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Book this</a>
-          </article>
           </article></div>
         <div class="addons"><h4>Add-ons</h4><p class="addons__intro">Optional add-ons for your event.</p><dl><div><dt>Catering</dt><dd>Optional</dd></div><div><dt>Seating / tables</dt><dd>Optional</dd></div><div><dt>Entertainment</dt><dd>Optional</dd></div><div><dt>Sound</dt><dd>Optional</dd></div><div><dt>Videography / photography</dt><dd>Optional</dd></div><div><dt>Lighting</dt><dd>Optional</dd></div><div><dt>Decor</dt><dd>Optional</dd></div><div><dt>Security</dt><dd>Optional</dd></div></dl></div>
       </div>
@@ -690,26 +712,9 @@ button{font:inherit;color:inherit}
     </div>
   </section>
 
-  <!-- 05 CLIENTS AND CONTACT -->
-  <section class="clients" id="clients" aria-labelledby="clientTitle">
-    <img class="clients__sticker" id="sticker" src="assets/img/sticker-integrity.png" alt="iNCO values: Innovation, Integrity, Interact" width="335" height="336" loading="lazy">
+  <!-- 08 CONTACT -->
+  <section class="closing" aria-label="Contact">
     <div class="wrap">
-      <p class="eyebrow rv">Our clients</p>
-      <h2 class="h-xl rv" id="clientTitle">Created together.</h2>
-      <p class="lede rv">Selected brands and collaborators</p>
-    </div>
-    <div class="strip" aria-label="Client logos">
-      <div class="strip__track">
-        <ul class="strip__set">
-          <li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li>
-        </ul>
-        <ul class="strip__set" aria-hidden="true">
-          <li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li>
-        </ul>
-      </div>
-    </div>
-    <div class="wrap">
-      <p class="note clients__note">Logo placeholders / continuous movement to the left</p>
       <div class="talk" id="contact">
         <p class="eyebrow">Let’s make something</p>
         <h2 class="h-xl">Book the Hub.</h2>
@@ -1018,10 +1023,9 @@ function onScroll(){
   var y = window.scrollY, h = home.offsetHeight;
   if (!reduce.matches) home.style.setProperty("--hx", Math.min(1, Math.max(0, y/h)).toFixed(3));
   nav.classList.toggle("is-solid", y > h*0.6);
-  var ids=["work","services","spaces","process","faq","clients","contact"], act=null, mid=y+window.innerHeight*0.45;
+  var ids=["work","services","clients","spaces","process","faq","contact"], act=null, mid=y+window.innerHeight*0.45;
   ids.forEach(function(id){ var el=document.getElementById(id); if(el && el.getBoundingClientRect().top+y<=mid) act=id; });
   if (window.innerHeight + y >= document.documentElement.scrollHeight - 4) act="contact";
-  else if (act==="contact") act="clients";
   $$(".nav__links a").forEach(function(a){ a.classList.toggle("is-active", a.dataset.spy===act); });
   // sticker rests tilted 12° to the left when it reaches the middle of the screen and sways gently (±8°) as it scrolls in and out
   var st=$("#sticker");
