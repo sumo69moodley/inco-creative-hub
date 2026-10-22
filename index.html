@@ -315,11 +315,15 @@ button{font:inherit;color:inherit}
 .clients{padding-block:clamp(60px,8vw,110px) clamp(40px,6vw,80px);position:relative;overflow:hidden}
 .clients__sticker{position:absolute;right:max(24px,7vw);top:clamp(20px,3vw,40px);width:clamp(150px,20vw,250px);height:auto;transform:rotate(calc(-12deg + var(--spin,0deg)));transition:transform .25s linear;filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))}
 .strip{margin-top:40px;background:var(--cream);color:#132126;overflow:hidden;padding-block:30px;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.strip__track{display:flex;width:max-content;animation:marquee 32s linear infinite}
+.strip__track{display:flex;width:max-content;animation:marquee 75s linear infinite}
 .strip:hover .strip__track,.strip:focus-within .strip__track,.paused .strip__track{animation-play-state:paused}
 .strip__set{display:flex;list-style:none;margin:0;padding:0}
 .strip__set li{flex:none;width:clamp(170px,17vw,230px);text-align:center;font-family:var(--display);font-size:.84rem;letter-spacing:.14em;font-weight:500;padding:8px 0;border-right:1px solid rgba(19,33,38,.12)}
 .strip__set li a{text-decoration:none}
+.strip__set li{display:flex;align-items:center;justify-content:center;height:96px;padding:0 22px}
+.strip__set img{display:block;max-width:100%;max-height:68px;width:auto;height:auto;object-fit:contain;mix-blend-mode:multiply;transition:transform .4s var(--ease)}
+.strip__set img.is-light{filter:invert(1) hue-rotate(180deg)}
+.strip__set li:hover img,.strip__set li:focus img{transform:scale(1.06)}
 @keyframes marquee{to{transform:translateX(-50%)}}
 .talk{padding-block:clamp(40px,6vw,70px) 60px;border-top:1px solid var(--line);margin-top:clamp(30px,4vw,50px)}
 .talk__links{display:flex;gap:14px;align-items:center;font-family:var(--display);letter-spacing:.12em;font-size:.82rem;color:var(--muted)}
@@ -402,6 +406,7 @@ button{font:inherit;color:inherit}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .strip__track{animation:none}
+  .strip{overflow-x:auto}
   .work__mq-track{animation:none}
   .scrollcue i{animation:none}
   .js .rv.pre{opacity:1;transform:none}
@@ -552,10 +557,50 @@ button{font:inherit;color:inherit}
     <div class="strip" aria-label="Client logos">
       <div class="strip__track">
         <ul class="strip__set">
-          <li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li>
+          <li tabindex="0"><img src="assets/img/client%20logos/Durban-ICC.png" alt="Durban ICC" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/Untitled%20design%20(3)%20copy.png" alt="Tourism &amp; Film KwaZulu-Natal" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/RCL-Foods.png" alt="RCL Foods" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/OK-Foods.png" alt="OK Foods" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/Samyang.png" alt="Samyang" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img class="is-light" src="assets/img/client%20logos/Harcourts%20icons-44.png" alt="Harcourts Pulse" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/KLOPPERS%20logo5.png" alt="Kloppers Inc. Attorneys" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/Untitled%20design%20(8).png" alt="NMA Attorneys" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/Lifegain-Logo-01@2x-2.png" alt="Lifegain" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/OsteoEze.png" alt="OsteoEze" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/Ultra-Pet.png" alt="Ultra Pet Veterinary Nutrition" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/Maison-Florida(MAINLOGO)-(1)_PNG.avif" alt="Maison Florida Rd" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/Masana.png" alt="Masana" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/Amintro.png" alt="Amintro" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/Chohans%20-%20Main%20logo@4x.png" alt="Chohans Spice" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/Tyson%20Properties%20Logo%20-%20National%20Marketing.png" alt="Tyson Properties" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/Untitled%20design%20(4).png" alt="Goshenite Seniors Services" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/Untitled%20design%20(5).png" alt="ABC Solar" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/Untitled%20design%20(6).png" alt="Africa Training Centre" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/Versatile-Commodity-Traders.png" alt="Versatile Commodity Traders" loading="lazy" decoding="async"></li>
+          <li tabindex="0"><img src="assets/img/client%20logos/image%20(1).png" alt="9th Ave Marina" loading="lazy" decoding="async"></li>
         </ul>
         <ul class="strip__set" aria-hidden="true">
-          <li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li>
+          <li><img src="assets/img/client%20logos/Durban-ICC.png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/Untitled%20design%20(3)%20copy.png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/RCL-Foods.png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/OK-Foods.png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/Samyang.png" alt="" loading="lazy" decoding="async"></li>
+          <li><img class="is-light" src="assets/img/client%20logos/Harcourts%20icons-44.png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/KLOPPERS%20logo5.png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/Untitled%20design%20(8).png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/Lifegain-Logo-01@2x-2.png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/OsteoEze.png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/Ultra-Pet.png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/Maison-Florida(MAINLOGO)-(1)_PNG.avif" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/Masana.png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/Amintro.png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/Chohans%20-%20Main%20logo@4x.png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/Tyson%20Properties%20Logo%20-%20National%20Marketing.png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/Untitled%20design%20(4).png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/Untitled%20design%20(5).png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/Untitled%20design%20(6).png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/Versatile-Commodity-Traders.png" alt="" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/client%20logos/image%20(1).png" alt="" loading="lazy" decoding="async"></li>
         </ul>
       </div>
     </div>
