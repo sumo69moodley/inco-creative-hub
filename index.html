@@ -342,6 +342,13 @@ button{font:inherit;color:inherit}
 .field input,.field select,.field textarea{background:var(--ink);border:1px solid var(--line);color:var(--fg);font:inherit;padding:12px 14px;border-radius:2px}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--teal-hi)}
 .drawer__msg{background:rgba(29,141,137,.15);border-left:2px solid var(--teal);padding:12px 14px;font-size:.88rem}
+.drawer__msg.is-err{background:rgba(226,98,43,.14);border-left-color:var(--orange)}
+.drawer__msg a{color:var(--fg)}
+.field__opt{text-transform:none;letter-spacing:.02em}
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:.84rem;color:var(--muted);line-height:1.45;cursor:pointer}
+.consent input{margin:.2em 0 0;accent-color:var(--orange);width:16px;height:16px;flex:none}
+#fSend[disabled]{opacity:.6;cursor:progress;transform:none}
 .drawer__x{align-self:flex-end;background:none;border:1px solid var(--line);width:40px;height:40px;border-radius:50%;cursor:pointer;display:grid;place-items:center}
 
 /* ---------- MOTION TOGGLE ---------- */
@@ -720,7 +727,7 @@ button{font:inherit;color:inherit}
         <p class="eyebrow">Let’s make something</p>
         <h2 class="h-xl">Book the Hub.</h2>
         <p class="lede">Come see the space before you commit. Bring a brief, or just bring curiosity — the kettle’s on and the sets are lit.</p>
-        <div class="visit__btns"><a class="btn btn--orange" href="https://incocreative.com/contact-us/" target="_blank" rel="noopener">Book a studio tour</a><a class="btn btn--teal" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Email the team</a></div>
+        <div class="visit__btns"><button class="btn btn--orange" type="button" data-enquire="Studio tour" aria-haspopup="dialog">Book a studio tour</button><button class="btn btn--teal" type="button" data-enquire="General enquiry" aria-haspopup="dialog">Email the team</button></div>
         <p class="talk__mail"><a href="mailto:kovan@incocreative.com">kovan@incocreative.com</a><span>Mon–Fri, 08:00–17:00 · Studio bookings subject to availability</span></p>
       </div>
       <footer class="foot">
@@ -760,16 +767,20 @@ button{font:inherit;color:inherit}
     <h2 id="dTitle">Let&rsquo;s talk</h2>
     <form id="enqForm" novalidate>
       <div style="display:flex;flex-direction:column;gap:14px">
-        <div class="field"><label for="fName">Name</label><input id="fName" name="name" autocomplete="name" required></div>
-        <div class="field"><label for="fEmail">Email</label><input id="fEmail" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="fName">Name</label><input id="fName" name="name" autocomplete="name" maxlength="80" required></div>
+        <div class="field"><label for="fEmail">Email</label><input id="fEmail" name="email" type="email" autocomplete="email" maxlength="120" required></div>
+        <div class="field"><label for="fPhone">Phone <span class="field__opt">(optional)</span></label><input id="fPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30"></div>
         <div class="field"><label for="fTopic">I&rsquo;m interested in</label>
           <select id="fTopic" name="topic">
-            <option>General enquiry</option><option>Photography</option><option>Videography</option><option>Full offering</option><option>The space</option><option>Project enquiry</option>
+            <option>General enquiry</option><option>Studio tour</option><option>Podcasting</option><option>Photography</option><option>Videography</option><option>Events</option><option>Full offering</option><option>The space</option><option>Project enquiry</option>
           </select></div>
-        <div class="field"><label for="fMsg">Message</label><textarea id="fMsg" name="message" rows="5"></textarea></div>
-        <button class="btn btn--orange" type="submit">Send enquiry</button>
-        <p class="drawer__msg" id="dMsg" hidden></p>
-        <p class="note" style="margin:0">Prototype form. How enquiries are delivered (form, email, WhatsApp or a booking platform) is still to be decided by iNCO.</p>
+        <div class="field"><label for="fMsg">Message</label><textarea id="fMsg" name="message" rows="5" maxlength="2000" required></textarea></div>
+        <!-- spam trap: hidden from people, bots fill it in -->
+        <div class="hp" aria-hidden="true"><label for="fWeb">Leave this empty</label><input id="fWeb" name="_honey" type="text" tabindex="-1" autocomplete="off"></div>
+        <label class="consent"><input id="fConsent" type="checkbox" required> <span>I agree that iNCO Creative may use these details to respond to my enquiry.</span></label>
+        <button class="btn btn--orange" type="submit" id="fSend">Send enquiry</button>
+        <p class="drawer__msg" id="dMsg" role="status" aria-live="polite" hidden></p>
+        <p class="note" style="margin:0">Sent securely (HTTPS) straight to the iNCO team at kovan@incocreative.com. Your details are only used to reply to you.</p>
       </div>
     </form>
   </div>
@@ -953,12 +964,12 @@ $("#mNext").addEventListener("click",function(){fill(cur+1)});
 document.addEventListener("click",function(e){ var o=e.target.closest("[data-open]"); if(o){ openProject(+o.dataset.open, o.closest("figure")||o); } });
 
 /* ---------- ENQUIRY DRAWER ---------- */
-var drawer=$("#drawer"), dOpener=null;
+var drawer=$("#drawer"), dOpener=null, formOpenedAt=0;
 function openDrawer(topic){
   dOpener=document.activeElement;
   if (!modal.hidden){ modal.hidden=true; modal.classList.remove("is-open"); mMedia.innerHTML=""; modalOpen=false; }
   var sel=$("#fTopic"); if(topic){ for(var i=0;i<sel.options.length;i++) if(sel.options[i].text===topic) sel.selectedIndex=i; }
-  $("#dMsg").hidden=true; drawer.hidden=false; document.body.style.overflow="hidden";
+  $("#dMsg").hidden=true; drawer.hidden=false; document.body.style.overflow="hidden"; formOpenedAt=Date.now();
   requestAnimationFrame(function(){ requestAnimationFrame(function(){ drawer.classList.add("is-open"); $("#fName").focus({preventScroll:true}); }); });
 }
 function closeDrawer(){
@@ -968,12 +979,48 @@ function closeDrawer(){
 }
 document.addEventListener("click",function(e){ var b=e.target.closest("[data-enquire]"); if(b){ e.preventDefault(); openDrawer(b.dataset.enquire); } });
 $$("[data-dclose]",drawer).forEach(function(b){b.addEventListener("click",closeDrawer)});
+/* Enquiry delivery: FormSubmit (formsubmit.co) e-mails each enquiry to kovan@incocreative.com over HTTPS.
+   Protection: hidden honeypot field, minimum fill time, length limits, consent tick, one send per minute,
+   and a pre-filled e-mail fallback if the service can't be reached. */
+var ENQ_TO="kovan@incocreative.com", ENQ_URL="https://formsubmit.co/ajax/"+ENQ_TO, sending=false;
+function enqMsg(html, err){ var m=$("#dMsg"); m.hidden=false; m.classList.toggle("is-err",!!err); m.innerHTML=html; }
+function esc(t){ return String(t).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];}); }
+function mailtoFallback(d){
+  var body="Name: "+d.name+"\nEmail: "+d.email+(d.phone?"\nPhone: "+d.phone:"")+"\nInterested in: "+d.topic+"\n\n"+d.message;
+  return "mailto:"+ENQ_TO+"?subject="+encodeURIComponent("Website enquiry: "+d.topic)+"&body="+encodeURIComponent(body);
+}
 $("#enqForm").addEventListener("submit",function(e){
   e.preventDefault();
-  var n=$("#fName"), em=$("#fEmail"), m=$("#dMsg"); m.hidden=false;
-  if(!n.value.trim()){ m.textContent="Add your name so iNCO knows who to reply to."; n.focus(); return; }
-  if(!/^\S+@\S+\.\S+$/.test(em.value)){ m.textContent="Enter an email address like name@example.com."; em.focus(); return; }
-  m.textContent="Thanks, "+n.value.trim().split(" ")[0]+". This is a prototype, so nothing was sent. The live site will route this enquiry once iNCO confirms the destination.";
+  if (sending) return;
+  var n=$("#fName"), em=$("#fEmail"), ph=$("#fPhone"), msg=$("#fMsg"), ok=$("#fConsent"), hp=$("#fWeb");
+  var d={ name:n.value.trim().slice(0,80), email:em.value.trim().slice(0,120), phone:ph.value.trim().slice(0,30),
+          topic:$("#fTopic").value, message:msg.value.trim().slice(0,2000) };
+  if (hp.value){ enqMsg("Thanks, your enquiry has been sent."); return; }            // bot: pretend success, send nothing
+  if (!d.name){ enqMsg("Add your name so iNCO knows who to reply to.",1); n.focus(); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)){ enqMsg("Enter an email address like name@example.com.",1); em.focus(); return; }
+  if (d.phone && !/^[+()\d\s-]{7,30}$/.test(d.phone)){ enqMsg("Check the phone number (digits, spaces, + and - only).",1); ph.focus(); return; }
+  if (d.message.length<10){ enqMsg("Tell us a little about what you need (at least a sentence).",1); msg.focus(); return; }
+  if (!ok.checked){ enqMsg("Please tick the box so iNCO may use your details to reply.",1); ok.focus(); return; }
+  if (Date.now()-formOpenedAt < 3000){ enqMsg("That was quick! Please check your details and press send again.",1); return; }
+  var last=0; try{ last=+sessionStorage.getItem("incoEnqSent")||0; }catch(x){}
+  if (Date.now()-last < 60000){ enqMsg("Your enquiry is already on its way. Please wait a minute before sending another.",1); return; }
+  sending=true; var btn=$("#fSend"); btn.disabled=true; btn.textContent="Sending…";
+  var payload={ name:d.name, email:d.email, phone:d.phone||"Not given", interested_in:d.topic, message:d.message,
+    _subject:"New website enquiry: "+d.topic+" ("+d.name+")", _template:"table", _captcha:"false", _honey:"" };
+  var done=function(){ sending=false; btn.disabled=false; btn.textContent="Send enquiry"; };
+  fetch(ENQ_URL,{ method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"}, body:JSON.stringify(payload) })
+    .then(function(r){ return r.json().catch(function(){ return {success:r.ok?"true":"false"}; }); })
+    .then(function(res){
+      done();
+      if (String(res.success)==="true"){
+        try{ sessionStorage.setItem("incoEnqSent", String(Date.now())); }catch(x){}
+        $("#enqForm").reset();
+        enqMsg("Thanks, "+esc(d.name.split(" ")[0])+". Your enquiry has been sent to the iNCO team. We&rsquo;ll reply to "+esc(d.email)+" soon.");
+      } else {
+        enqMsg("Sorry, the enquiry couldn&rsquo;t be sent just now. <a href=\""+mailtoFallback(d)+"\">Email it to "+ENQ_TO+" instead</a> (your message is already filled in).",1);
+      }
+    })
+    .catch(function(){ done(); enqMsg("Sorry, we couldn&rsquo;t reach the server. <a href=\""+mailtoFallback(d)+"\">Email it to "+ENQ_TO+" instead</a> (your message is already filled in).",1); });
 });
 document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ closeProject(); closeDrawer(); setMenu(false); } });
 
