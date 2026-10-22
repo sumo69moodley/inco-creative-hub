@@ -72,7 +72,7 @@ button{font:inherit;color:inherit}
 
 /* ---------- 01 HOME ---------- */
 .home{position:relative;height:100svh;min-height:540px;overflow:hidden;background:#000}
-.home__bg{position:absolute;inset:0;z-index:0;container-type:size;opacity:calc(1 - .45*var(--hx,0));transform:translateY(calc(var(--hx,0) * 8%));background:#000 url("assets/img/paint-film2-poster.jpg") center/cover no-repeat}
+.home__bg{position:absolute;inset:0;z-index:0;container-type:size;opacity:calc(1 - .45*var(--hx,0));transform:translateY(calc(var(--hx,0) * 8%));background:#000 url("assets/img/paint-film3-poster.jpg") center/cover no-repeat}
 .home__film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
 .home::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,18,22,.55) 0,rgba(7,18,22,0) 22%,rgba(7,18,22,0) 48%,rgba(7,18,22,.35) 64%,rgba(7,18,22,.72) 80%,rgba(7,18,22,.93) 92%,var(--ink) 100%);pointer-events:none}
 .home__ctas{position:absolute;z-index:3;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 34px);display:flex;flex-direction:column;align-items:center;gap:22px;padding-left:var(--gutter);padding-right:var(--gutter-r)}
@@ -91,9 +91,9 @@ button{font:inherit;color:inherit}
    instead of cropping it to a thin middle strip. A blurred copy of the artwork fills the space around it. */
 @media (max-aspect-ratio:4/3){
   .home__bg{background:#05090b}
-  .home__bg::before{content:"";position:absolute;inset:-60px;background:url("assets/img/paint-film2-poster.jpg") center/cover no-repeat;filter:blur(40px) brightness(.45) saturate(1.2)}
-  .home__bg::after{content:"";position:absolute;z-index:1;left:0;top:42%;width:100%;height:55.77cqw;transform:translateY(-50%);background:url("assets/img/paint-film2-poster.jpg") center/cover no-repeat}
-  .home__film{z-index:2;inset:auto;left:0;top:42%;width:100%;height:55.77cqw;transform:translateY(-50%)}
+  .home__bg::before{content:"";position:absolute;inset:-60px;background:url("assets/img/paint-film3-poster.jpg") center/cover no-repeat;filter:blur(40px) brightness(.45) saturate(1.2)}
+  .home__bg::after{content:"";position:absolute;z-index:1;left:0;top:42%;width:100%;height:56.25cqw;transform:translateY(-50%);background:url("assets/img/paint-film3-poster.jpg") center/cover no-repeat}
+  .home__film{z-index:2;inset:auto;left:0;top:42%;width:100%;height:56.25cqw;transform:translateY(-50%)}
   .work__bg.yt-live video{filter:blur(30px) brightness(.5) saturate(1.2);transform:scale(1.15)}
   .work__yt{width:100cqw;height:56.25cqw;transform:translate(-50%,-50%)}
 }
@@ -315,14 +315,11 @@ button{font:inherit;color:inherit}
 .clients{padding-block:clamp(60px,8vw,110px) clamp(40px,6vw,80px);position:relative;overflow:hidden}
 .clients__sticker{position:absolute;right:max(24px,7vw);top:clamp(20px,3vw,40px);width:clamp(150px,20vw,250px);height:auto;transform:rotate(calc(-12deg + var(--spin,0deg)));transition:transform .25s linear;filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))}
 .strip{margin-top:40px;background:var(--cream);color:#132126;overflow:hidden;padding-block:30px;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.strip__track{display:flex;width:max-content;animation:marquee 75s linear infinite}
+.strip__track{display:flex;width:max-content;animation:marquee 32s linear infinite}
 .strip:hover .strip__track,.strip:focus-within .strip__track,.paused .strip__track{animation-play-state:paused}
 .strip__set{display:flex;list-style:none;margin:0;padding:0}
 .strip__set li{flex:none;width:clamp(170px,17vw,230px);text-align:center;font-family:var(--display);font-size:.84rem;letter-spacing:.14em;font-weight:500;padding:8px 0;border-right:1px solid rgba(19,33,38,.12)}
 .strip__set li a{text-decoration:none}
-.strip__set li{display:flex;align-items:center;justify-content:center;height:96px;padding:0 22px}
-.strip__set img{display:block;max-width:100%;max-height:68px;width:auto;height:auto;object-fit:contain;transition:transform .4s var(--ease)}
-.strip__set li:hover img,.strip__set li:focus img{transform:scale(1.06)}
 @keyframes marquee{to{transform:translateX(-50%)}}
 .talk{padding-block:clamp(40px,6vw,70px) 60px;border-top:1px solid var(--line);margin-top:clamp(30px,4vw,50px)}
 .talk__links{display:flex;gap:14px;align-items:center;font-family:var(--display);letter-spacing:.12em;font-size:.82rem;color:var(--muted)}
@@ -405,7 +402,6 @@ button{font:inherit;color:inherit}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .strip__track{animation:none}
-  .strip{overflow-x:auto}
   .work__mq-track{animation:none}
   .scrollcue i{animation:none}
   .js .rv.pre{opacity:1;transform:none}
@@ -435,8 +431,8 @@ button{font:inherit;color:inherit}
   <!-- 01 HOME LANDING -->
   <section class="home" id="home" aria-label="iNCO Creative Hub">
     <div class="home__bg" id="homeBg" aria-hidden="true">
-      <video class="home__film" id="film" muted loop playsinline preload="auto" poster="assets/img/paint-film2-start.jpg">
-        <source src="assets/video/paint-film2-loop.mp4" type="video/mp4">
+      <video class="home__film" id="film" muted loop playsinline preload="auto" poster="assets/img/paint-film3-start.jpg">
+        <source src="assets/video/paint-film3-hd.mp4" type="video/mp4">
       </video>
     </div>
     <h1 class="sr">iNCO Creative Hub</h1>
@@ -556,50 +552,10 @@ button{font:inherit;color:inherit}
     <div class="strip" aria-label="Client logos">
       <div class="strip__track">
         <ul class="strip__set">
-          <li tabindex="0"><img src="assets/img/clients/durban-icc.png" alt="Durban ICC" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/tourism-film-kzn.png" alt="Tourism &amp; Film KwaZulu-Natal" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/rcl-foods.png" alt="RCL Foods" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/ok-foods.png" alt="OK Foods" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/samyang.png" alt="Samyang" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/harcourts-pulse.png" alt="Harcourts Pulse" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/kloppers.png" alt="Kloppers Inc. Attorneys" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/nma-attorneys.png" alt="NMA Attorneys" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/lifegain.png" alt="Lifegain" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/osteoeze.png" alt="OsteoEze" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/ultra-pet.png" alt="Ultra Pet Veterinary Nutrition" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/maison-florida.png" alt="Maison Florida Rd" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/masana.png" alt="Masana" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/amintro.png" alt="Amintro" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/chohans-spice.png" alt="Chohans Spice" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/tyson-properties.png" alt="Tyson Properties" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/goshenite.png" alt="Goshenite Seniors Services" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/abc-solar.png" alt="ABC Solar" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/africa-training-centre.png" alt="Africa Training Centre" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/versatile-commodity-traders.png" alt="Versatile Commodity Traders" loading="lazy" decoding="async"></li>
-          <li tabindex="0"><img src="assets/img/clients/9th-ave-marina.png" alt="9th Ave Marina" loading="lazy" decoding="async"></li>
+          <li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li>
         </ul>
         <ul class="strip__set" aria-hidden="true">
-          <li><img src="assets/img/clients/durban-icc.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/tourism-film-kzn.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/rcl-foods.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/ok-foods.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/samyang.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/harcourts-pulse.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/kloppers.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/nma-attorneys.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/lifegain.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/osteoeze.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/ultra-pet.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/maison-florida.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/masana.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/amintro.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/chohans-spice.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/tyson-properties.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/goshenite.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/abc-solar.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/africa-training-centre.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/versatile-commodity-traders.png" alt="" loading="lazy" decoding="async"></li>
-          <li><img src="assets/img/clients/9th-ave-marina.png" alt="" loading="lazy" decoding="async"></li>
+          <li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li>
         </ul>
       </div>
     </div>
@@ -823,7 +779,7 @@ button{font:inherit;color:inherit}
 /* ===== CONFIG ===== Swap the YouTube background here (11-character video id). */
 var YT_ID = "TSe4M-KJiYQ";
 var YT_START = 0;
-/* Header (Home) background: paint-film2 (assets/video/paint-film2-loop.mp4 = paint-film2.mp4 trimmed to 7.96s, before its dark end frame, so it loops cleanly). */
+/* Header (Home) background: paint-film3 (assets/video/paint-film3-hd.mp4 = paint-film3.MP4 trimmed to 7.96s before its dark end frame, AI-upscaled to 1920x1080). */
 
 var doc = document.documentElement;
 doc.classList.add("js");
