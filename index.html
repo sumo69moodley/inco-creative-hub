@@ -231,7 +231,18 @@ button{font:inherit;color:inherit}
 .stats span{font-size:.82rem;color:var(--muted)}
 
 /* ---------- 05 rates & packages ---------- */
-.pricing{padding-block:clamp(60px,8vw,110px);background:linear-gradient(180deg,var(--ink),#0a1619 50%,var(--ink))}
+/* ---------- RATES & PACKAGES pop-up ---------- */
+.rates{padding:0;border:0;background:transparent;color:var(--fg);width:min(1180px,calc(100vw - 32px));max-width:none;max-height:calc(100dvh - 32px);overflow:visible}
+.rates::backdrop{background:rgba(4,10,12,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.rates[open]{animation:ratesIn .45s var(--ease)}
+@keyframes ratesIn{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+.rates__frame{position:relative;display:flex;flex-direction:column;max-height:calc(100dvh - 32px);background:#000;padding:clamp(8px,1.2vw,14px);box-shadow:0 60px 120px -40px #000,0 0 0 1px rgba(255,255,255,.08)}
+.rates__scroll{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;background:var(--ink);padding:0 clamp(18px,3vw,44px) clamp(22px,3vw,40px)}
+.rates__head{padding:clamp(24px,3vw,40px) 52px 0 0}
+.rates__title{font-family:var(--display);font-weight:400;font-stretch:105%;text-transform:uppercase;line-height:1.04;font-size:clamp(1.7rem,3.2vw,2.7rem);margin:.25em 0 .3em}
+.rates .ptabs{position:sticky;top:0;z-index:2;margin:18px 0 20px;padding:12px 0;background:var(--ink);box-shadow:0 10px 16px -12px rgba(0,0,0,.8)}
+.rates__close{top:clamp(16px,2vw,24px);right:clamp(16px,2vw,24px)}
+.addons__intro{margin:-4px 0 8px;color:var(--muted);font-size:.86rem}
 .ptabs{display:flex;flex-wrap:wrap;gap:8px;margin:30px 0 26px}
 .ptabs button{font-family:var(--display);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fg);background:transparent;border:0;box-shadow:inset 0 0 0 1px var(--line);padding:.95em 1.5em;border-radius:2px;cursor:pointer;transition:background .25s,box-shadow .25s,color .25s}
 .ptabs button:hover{box-shadow:inset 0 0 0 1px var(--fg)}
@@ -291,6 +302,11 @@ button{font:inherit;color:inherit}
 @media (max-width:520px){
   .steps{grid-template-columns:1fr}
   .ptabs button{flex:1 1 40%;padding:.9em .6em}
+  .rates{width:100vw;max-height:100dvh;height:100dvh;margin:0}
+  .rates__frame{height:100%;max-height:100dvh;padding:0}
+  .rates__scroll{padding:0 16px 24px}
+  .rates__close{top:12px;right:12px}
+  .rates .ptabs{margin-right:52px}
   .addons dl div{flex-direction:column;gap:2px}
   .addons dd{text-align:left}
 }
@@ -482,7 +498,7 @@ button{font:inherit;color:inherit}
           <h3>Podcast Studio</h3>
           <p>Purpose-built, acoustically treated sets with broadcast mics and a live four-camera switch. You talk, we run the room — and you leave with the episode already cut together.</p>
           <ul class="pg-list"><li>Multi-camera capture with live vision mixing and ISO recordings</li><li>Broadcast condenser &amp; dynamic mics with individual audio tracks</li><li>Choice of dressed sets — gallery wall, art backdrop or lounge</li><li>Remote guest dial-in and live streaming to social platforms</li><li>Vertical shorts cut for Reels, TikTok and YouTube Shorts</li><li>Episode artwork, intro stings and distribution support</li></ul>
-          <div class="pg-foot"><p class="pg-from"><small>From</small>R1 499</p><a class="btn btn--orange" href="#pricing" data-tab="pod">Podcast packages</a></div>
+          <div class="pg-foot"><p class="pg-from"><small>From</small>R1 499</p><button type="button" class="btn btn--orange" data-tab="pod" aria-haspopup="dialog">Podcast packages</button></div>
         </div>
         <div class="pg-img">
           <figure><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-podcasting-1024x1016.jpg" alt="iNCO Hub podcast set with two chairs, art backdrop and a live multi-camera monitor" loading="lazy"></figure>
@@ -494,7 +510,7 @@ button{font:inherit;color:inherit}
           <h3>Video Production</h3>
           <p>From a single founder interview to a full campaign shoot. Concept, crew, cameras, lighting and edit under one roof — so the brief never gets lost between three suppliers.</p>
           <ul class="pg-list"><li>Brand films, founder stories and customer testimonials</li><li>Product and promo shoots with cinema-grade lighting</li><li>Training, internal comms and explainer video</li><li>Event and live-stream capture, on site or in studio</li><li>Scripting, storyboards, teleprompter and direction</li><li>Full post: edit, grade, sound mix, motion graphics, subtitles</li></ul>
-          <div class="pg-foot"><p class="pg-from"><small>From</small>R6 500</p><a class="btn btn--teal" href="#pricing" data-tab="vid">Video packages</a></div>
+          <div class="pg-foot"><p class="pg-from"><small>From</small>R6 500</p><button type="button" class="btn btn--teal" data-tab="vid" aria-haspopup="dialog">Video packages</button></div>
         </div>
         <div class="pg-img">
           <figure><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-videography-1341x1536.jpg" alt="Wide view of the iNCO Hub video floor with lighting, tripods and a dressed backdrop" loading="lazy"></figure>
@@ -506,7 +522,7 @@ button{font:inherit;color:inherit}
           <h3>Photo Studio</h3>
           <p>Controlled light, real backdrops and no rushing. Shoot a full brand library in a day and stop borrowing stock photos that look like everyone else’s.</p>
           <ul class="pg-list"><li>Team headshots and executive portraits</li><li>Product, packaging and flat-lay photography</li><li>Brand lifestyle libraries shot against dressed sets</li><li>Fashion, lookbook and editorial work</li><li>Event coverage and behind-the-scenes stills</li><li>Professional retouching, colour grading and web-ready exports</li></ul>
-          <div class="pg-foot"><p class="pg-from"><small>From</small>R2 200</p><a class="btn btn--orange" href="#pricing" data-tab="pho">Photo packages</a></div>
+          <div class="pg-foot"><p class="pg-from"><small>From</small>R2 200</p><button type="button" class="btn btn--orange" data-tab="pho" aria-haspopup="dialog">Photo packages</button></div>
         </div>
         <div class="pg-img">
           <figure><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-control.jpg" alt="Live vision-mixing station showing four camera feeds" loading="lazy"></figure>
@@ -518,7 +534,7 @@ button{font:inherit;color:inherit}
           <h3>Events at the Hub</h3>
           <p>Bring your people into the space. Launches, talks, screenings and brand gatherings for 80–100 guests, with the extras arranged by the same team that runs the studio.</p>
           <ul class="pg-list"><li>Hosts 80–100 guests across the Hub floor and dressed sets</li><li>6–8 hour event bookings</li><li>Catering, seating and tables arranged for you</li><li>Sound, lighting and entertainment</li><li>Decor and on-site security</li><li>Videography and photography coverage of the day</li></ul>
-          <div class="pg-foot"><p class="pg-from"><small>From</small>R6 000</p><a class="btn btn--teal" href="#pricing" data-tab="evt">Event packages</a></div>
+          <div class="pg-foot"><p class="pg-from"><small>From</small>R6 000</p><button type="button" class="btn btn--teal" data-tab="evt" aria-haspopup="dialog">Event packages</button></div>
         </div>
         <div class="pg-img">
           <figure><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-space.jpg" alt="Wide view across the iNCO Creative Hub studio floor" loading="lazy"></figure>
@@ -527,39 +543,17 @@ button{font:inherit;color:inherit}
     </template>
   </section>
 
-  <!-- 04 SPACES -->
-  <section class="spaces" id="spaces" aria-labelledby="spaceTitle">
-    <div class="wrap">
-      <p class="eyebrow rv">The space</p>
-      <h2 class="h-xl rv" id="spaceTitle">Sets you don't have to build.</h2>
-      <p class="lede rv">Face brick, gallery walls, neon, leather lounges and a wall of custom art — five dressed environments you can switch between in minutes, so one booking looks like five different shoots.</p>
-      <div class="sets">
-        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-retro-set.jpg" alt="Retro gallery wall set with leather armchairs and vinyl records" loading="lazy"><figcaption>The Gallery Wall</figcaption></figure>
-        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-lounge.jpg" alt="Leather couch lounge set against a face-brick wall" loading="lazy"><figcaption>The Lounge</figcaption></figure>
-        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-detail-bag.jpg" alt="Vintage leather boxing bag and gloves against exposed brick" loading="lazy"><figcaption>The Corner</figcaption></figure>
-        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-control.jpg" alt="Live vision-mixing station showing four camera feeds" loading="lazy"><figcaption>Live Control</figcaption></figure>
-        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-monitorcam.jpg" alt="Camera monitor framing the art backdrop set" loading="lazy"><figcaption>On Camera</figcaption></figure>
-        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-space.jpg" alt="Wide view across the iNCO Creative Hub studio floor" loading="lazy"><figcaption>The Hub floor</figcaption></figure>
-      </div>
-      <div class="hubintro rv">
-        <div>
-          <p class="eyebrow">Now booking · Studio &amp; crew</p>
-          <h3>iNCO Creative Hub</h3>
-          <p>A full-service content playground in one building — podcast sets, multi-camera video and a photography studio, with the crew, kit and coffee already in place. Walk in with an idea. Walk out with content.</p>
-          <div class="visit__btns"><a class="btn btn--orange" href="#pricing">See rates &amp; packages</a><a class="btn btn--ghost" href="https://incocreative.com/contact-us/" target="_blank" rel="noopener">Book a studio tour</a></div>
-        </div>
-        <ul class="stats"><li><b>4</b><span>Camera multicam</span></li><li><b>7+</b><span>Dressed sets</span></li><li><b>4</b><span>Disciplines, one roof</span></li><li><b>48h</b><span>Typical first cut</span></li></ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- 05 RATES & PACKAGES -->
-  <section class="pricing" id="pricing" aria-labelledby="priceTitle">
-    <div class="wrap">
-      <p class="eyebrow rv">Rates &amp; packages</p>
-      <h2 class="h-xl rv" id="priceTitle">Straight pricing, no surprises.</h2>
-      <p class="lede rv">Pick a discipline below. Every package includes the studio, the crew to run it and your finished files — nothing hidden in the small print.</p>
-      <div class="ptabs rv" role="tablist" aria-label="Disciplines"><button type="button" role="tab" id="tab-pod" aria-controls="panel-pod" aria-selected="true">Podcasting</button><button type="button" role="tab" id="tab-vid" aria-controls="panel-vid" aria-selected="false" tabindex="-1">Videography</button><button type="button" role="tab" id="tab-pho" aria-controls="panel-pho" aria-selected="false" tabindex="-1">Photography</button><button type="button" role="tab" id="tab-evt" aria-controls="panel-evt" aria-selected="false" tabindex="-1">Events</button></div>
+  <!-- RATES & PACKAGES (pop-up, opened from the booklet's package buttons) -->
+  <dialog class="rates" id="rates" aria-labelledby="priceTitle">
+    <div class="rates__frame">
+      <button class="modal__close rates__close" type="button" data-rates-close aria-label="Close rates and packages"><svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" fill="none"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+      <div class="rates__scroll" id="ratesScroll">
+        <header class="rates__head">
+      <p class="eyebrow">Rates &amp; packages</p>
+      <h2 class="rates__title" id="priceTitle">Straight pricing, no surprises.</h2>
+      <p class="lede">Pick a discipline below. Every package includes the studio, the crew to run it and your finished files — nothing hidden in the small print.</p>
+        </header>
+      <div class="ptabs" role="tablist" aria-label="Disciplines"><button type="button" role="tab" id="tab-pod" aria-controls="panel-pod" aria-selected="true">Podcasting</button><button type="button" role="tab" id="tab-vid" aria-controls="panel-vid" aria-selected="false" tabindex="-1">Videography</button><button type="button" role="tab" id="tab-pho" aria-controls="panel-pho" aria-selected="false" tabindex="-1">Photography</button><button type="button" role="tab" id="tab-evt" aria-controls="panel-evt" aria-selected="false" tabindex="-1">Events</button></div>
       <div class="ppanel" id="panel-pod" role="tabpanel" aria-labelledby="tab-pod">
         <div class="tiers">
           <article class="tier">
@@ -644,14 +638,37 @@ button{font:inherit;color:inherit}
             <ul><li>80–100 pax</li><li>6–8 hours</li></ul>
             <a class="btn btn--ghost" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Book this</a>
           </article>
-          <article class="tier">
-            <h3>Event Support</h3>
-            <p class="tier__sub">Optional add-ons for your event.</p>
-            <ul><li>Catering</li><li>Seating / tables</li><li>Entertainment</li><li>Sound</li><li>Videography / photography</li><li>Lighting</li><li>Decor</li><li>Security</li></ul>
-            <a class="btn btn--ghost" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Book this</a>
           </article></div>
+        <div class="addons"><h4>Add-ons</h4><p class="addons__intro">Optional add-ons for your event.</p><dl><div><dt>Catering</dt><dd>Optional</dd></div><div><dt>Seating / tables</dt><dd>Optional</dd></div><div><dt>Entertainment</dt><dd>Optional</dd></div><div><dt>Sound</dt><dd>Optional</dd></div><div><dt>Videography / photography</dt><dd>Optional</dd></div><div><dt>Lighting</dt><dd>Optional</dd></div><div><dt>Decor</dt><dd>Optional</dd></div><div><dt>Security</dt><dd>Optional</dd></div></dl></div>
       </div>
       <p class="note pricing__note">All prices are in South African Rand and exclude VAT. Travel outside Gauteng, talent fees, licensed music beyond our standard library and paid-media spend are quoted separately. Rates are indicative — send us the brief and we’ll price it properly.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 04 SPACES -->
+  <section class="spaces" id="spaces" aria-labelledby="spaceTitle">
+    <div class="wrap">
+      <p class="eyebrow rv">The space</p>
+      <h2 class="h-xl rv" id="spaceTitle">Sets you don't have to build.</h2>
+      <p class="lede rv">Face brick, gallery walls, neon, leather lounges and a wall of custom art — five dressed environments you can switch between in minutes, so one booking looks like five different shoots.</p>
+      <div class="sets">
+        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-retro-set.jpg" alt="Retro gallery wall set with leather armchairs and vinyl records" loading="lazy"><figcaption>The Gallery Wall</figcaption></figure>
+        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-lounge.jpg" alt="Leather couch lounge set against a face-brick wall" loading="lazy"><figcaption>The Lounge</figcaption></figure>
+        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-detail-bag.jpg" alt="Vintage leather boxing bag and gloves against exposed brick" loading="lazy"><figcaption>The Corner</figcaption></figure>
+        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-control.jpg" alt="Live vision-mixing station showing four camera feeds" loading="lazy"><figcaption>Live Control</figcaption></figure>
+        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-monitorcam.jpg" alt="Camera monitor framing the art backdrop set" loading="lazy"><figcaption>On Camera</figcaption></figure>
+        <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-space.jpg" alt="Wide view across the iNCO Creative Hub studio floor" loading="lazy"><figcaption>The Hub floor</figcaption></figure>
+      </div>
+      <div class="hubintro rv">
+        <div>
+          <p class="eyebrow">Now booking · Studio &amp; crew</p>
+          <h3>iNCO Creative Hub</h3>
+          <p>A full-service content playground in one building — podcast sets, multi-camera video and a photography studio, with the crew, kit and coffee already in place. Walk in with an idea. Walk out with content.</p>
+          <div class="visit__btns"><a class="btn btn--orange" href="#pricing">See rates &amp; packages</a><a class="btn btn--ghost" href="https://incocreative.com/contact-us/" target="_blank" rel="noopener">Book a studio tour</a></div>
+        </div>
+        <ul class="stats"><li><b>4</b><span>Camera multicam</span></li><li><b>7+</b><span>Dressed sets</span></li><li><b>4</b><span>Disciplines, one roof</span></li><li><b>48h</b><span>Typical first cut</span></li></ul>
+      </div>
     </div>
   </section>
 
@@ -1001,7 +1018,7 @@ function onScroll(){
   var y = window.scrollY, h = home.offsetHeight;
   if (!reduce.matches) home.style.setProperty("--hx", Math.min(1, Math.max(0, y/h)).toFixed(3));
   nav.classList.toggle("is-solid", y > h*0.6);
-  var ids=["work","services","spaces","pricing","process","faq","clients","contact"], act=null, mid=y+window.innerHeight*0.45;
+  var ids=["work","services","spaces","process","faq","clients","contact"], act=null, mid=y+window.innerHeight*0.45;
   ids.forEach(function(id){ var el=document.getElementById(id); if(el && el.getBoundingClientRect().top+y<=mid) act=id; });
   if (window.innerHeight + y >= document.documentElement.scrollHeight - 4) act="contact";
   else if (act==="contact") act="clients";
@@ -1129,8 +1146,28 @@ ptabs.forEach(function(t,i){
     e.preventDefault(); selectTab(ptabs[(i+d+ptabs.length)%ptabs.length].id.slice(4), true);
   });
 });
+/* pop-up: opens on the category of the button that was clicked (booklet "… packages" buttons);
+   nav "Pricing" and "See rates & packages" open it on the service showing in the booklet */
+var rates=$("#rates"), ratesScroll=$("#ratesScroll"), ratesOpener=null, BOOK_KEYS=["pod","vid","pho","evt"];
+function openRates(key, opener){
+  selectTab(key);
+  ratesOpener = opener || null;
+  if (!rates.open){ if (rates.showModal) rates.showModal(); else rates.setAttribute("open",""); }
+  document.documentElement.style.overflow="hidden";
+  ratesScroll.scrollTop = 0;
+  var t=document.getElementById("tab-"+key); if (t) t.focus({preventScroll:true});
+}
+function closeRates(){ if (rates.close) rates.close(); else { rates.removeAttribute("open"); onRatesClosed(); } }
+function onRatesClosed(){ document.documentElement.style.overflow=""; if (ratesOpener && ratesOpener.isConnected && ratesOpener.focus) ratesOpener.focus({preventScroll:true}); }
+rates.addEventListener("close", onRatesClosed);
+rates.addEventListener("click",function(e){ if (e.target===rates) closeRates(); });   // click on the dimmed backdrop
+$("[data-rates-close]").addEventListener("click", closeRates);
 document.addEventListener("click",function(e){
-  var a = e.target.closest && e.target.closest("[data-tab]"); if(a) selectTab(a.dataset.tab);
+  if (!e.target.closest) return;
+  var a = e.target.closest("[data-tab]");
+  if (a){ e.preventDefault(); openRates(a.dataset.tab, a); return; }
+  var l = e.target.closest('a[href="#pricing"]');
+  if (l){ e.preventDefault(); openRates(BOOK_KEYS[pg] || "pod", l); }
 });
 
 /* ---------- global motion pause ---------- */
