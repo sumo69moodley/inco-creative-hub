@@ -103,7 +103,7 @@ button{font:inherit;color:inherit}
 .work__head .h-lg{font-weight:300}
 .stage{position:relative;flex:1;display:flex;align-items:center;justify-content:center;min-height:clamp(380px,56vh,620px);perspective:1500px;perspective-origin:50% 42%;touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab}
 .stage.is-drag{cursor:grabbing}
-.ring{--cw:clamp(140px,min(17vw,28vh),270px);--r:460px;position:relative;width:var(--cw);height:calc(var(--cw)*1.38);transform-style:preserve-3d;will-change:transform}
+.ring{--cw:clamp(150px,min(18vw,30vh),330px);--r:460px;position:relative;width:var(--cw);height:calc(var(--cw)*1.38);transform-style:preserve-3d;will-change:transform}
 .reel{--f:1;position:absolute;inset:0;padding:0;border:0;background:#0a0f11;cursor:pointer;transform-style:preserve-3d;transform:rotateY(var(--a)) translateZ(var(--r));transition:transform .6s var(--ease),box-shadow .4s;box-shadow:0 0 0 1px var(--edge,var(--teal)),0 30px 60px -30px rgba(0,0,0,.9);border-radius:3px;overflow:hidden}
 .reel:nth-child(odd){--edge:var(--orange)}
 .reel::before,.reel::after{content:"";position:absolute;left:6px;right:6px;height:7px;z-index:2;background:repeating-linear-gradient(90deg,transparent 0 5px,rgba(243,238,229,.82) 5px 12px,transparent 12px 16px);opacity:.9;border-radius:1px}
@@ -834,8 +834,12 @@ var ang = 0, speed = 0, BASE = 7; // deg per second
 var target = null, hot = null, dragging = false, inView = false, modalOpen = false;
 function sizeRing(){
   if (mobileMQ.matches) return;
-  var cw = reels[0].getBoundingClientRect().width || 180;
-  var r = Math.round((cw/2)/Math.tan(Math.PI/N) * 1.32);
+  var cw = reels[0].offsetWidth || 180;                       // layout width (getBoundingClientRect is skewed by the 3D rotation)
+  var base = (cw/2)/Math.tan(Math.PI/N) * 1.32;              // spacing that keeps neighbouring cards close
+  var P = parseFloat(getComputedStyle(stage).perspective) || 1500;
+  var X = Math.max(0, stage.clientWidth*0.46 - cw*0.35);     // spread the ring out to ~92% of the stage width
+  var fill = X < P*0.9 ? X*P/(P - X) : base*1.5;
+  var r = Math.round(Math.max(base, Math.min(fill, base*1.5)));
   ring.style.setProperty("--r", r+"px");
 }
 function frontIndex(){ var k = Math.round(ang/STEP) % N; return (k+N)%N; }
