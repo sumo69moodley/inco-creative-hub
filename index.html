@@ -72,9 +72,9 @@ button{font:inherit;color:inherit}
 
 /* ---------- 01 HOME ---------- */
 .home{position:relative;height:100svh;min-height:540px;overflow:hidden;background:#000}
-.home__bg{position:absolute;inset:0;z-index:0;container-type:size;background:#000 url("assets/img/paint-film-poster.jpg") center/cover no-repeat}
+.home__bg{position:absolute;inset:0;z-index:0;container-type:size;opacity:calc(1 - .45*var(--hx,0));transform:translateY(calc(var(--hx,0) * 8%));background:#000 url("assets/img/paint-film-poster.jpg") center/cover no-repeat}
 .home__film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
-.home::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,18,22,.55) 0,rgba(7,18,22,0) 22%,rgba(7,18,22,0) 62%,rgba(7,18,22,.85) 100%);pointer-events:none}
+.home::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,18,22,.55) 0,rgba(7,18,22,0) 22%,rgba(7,18,22,0) 48%,rgba(7,18,22,.35) 64%,rgba(7,18,22,.72) 80%,rgba(7,18,22,.93) 92%,var(--ink) 100%);pointer-events:none}
 .home__ctas{position:absolute;z-index:3;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 34px);display:flex;flex-direction:column;align-items:center;gap:22px;padding-left:var(--gutter);padding-right:var(--gutter-r)}
 .home__btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;transition:transform 1s var(--ease),opacity 1s}
 .scrollcue{font-family:var(--display);font-size:.68rem;letter-spacing:.3em;color:rgba(255,255,255,.8);text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:10px}
@@ -82,8 +82,8 @@ button{font:inherit;color:inherit}
 @keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
 
 /* ---------- 02 WORK ---------- */
-.work{position:relative;min-height:100svh;overflow:hidden;display:flex;flex-direction:column;isolation:isolate}
-.work__bg{position:absolute;inset:0;z-index:-1;container-type:size;background:#05090b url("assets/img/walkthrough-poster.jpg") center/cover}
+.work{position:relative;min-height:100svh;overflow:hidden;display:flex;flex-direction:column;isolation:isolate;background:var(--ink)}
+.work__bg{position:absolute;inset:0;z-index:-1;container-type:size;background:#05090b url("assets/img/walkthrough-poster.jpg") center/cover;-webkit-mask-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.35) 9%,#000 30%);mask-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.35) 9%,#000 30%)}
 .work__bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .work__yt{position:absolute;top:50%;left:50%;width:calc((max(100cqh,56.25cqw) + 180px) * 1.7778);height:calc(max(100cqh,56.25cqw) + 180px);transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:0;transition:opacity 1.6s}
 .work__yt.is-live{opacity:1}
@@ -1000,6 +1000,7 @@ menuBtn.addEventListener("click",function(){ setMenu(!nav.classList.contains("me
 $$(".nav__links a").forEach(function(a){ a.addEventListener("click",function(){ setMenu(false); }); });
 function onScroll(){
   var y = window.scrollY, h = home.offsetHeight;
+  if (!reduce.matches) home.style.setProperty("--hx", Math.min(1, Math.max(0, y/h)).toFixed(3));
   nav.classList.toggle("is-solid", y > h*0.6);
   var ids=["work","services","spaces","pricing","process","faq","clients","contact"], act=null, mid=y+window.innerHeight*0.45;
   ids.forEach(function(id){ var el=document.getElementById(id); if(el && el.getBoundingClientRect().top+y<=mid) act=id; });
