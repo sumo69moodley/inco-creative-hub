@@ -315,12 +315,13 @@ button{font:inherit;color:inherit}
 /* ---------- 05 CLIENTS ---------- */
 .clients{padding-block:clamp(60px,8vw,110px) clamp(40px,6vw,80px);position:relative;overflow:hidden}
 .clients__sticker{position:absolute;right:max(24px,7vw);top:clamp(20px,3vw,40px);width:clamp(150px,20vw,250px);height:auto;transform:rotate(calc(-12deg + var(--spin,0deg)));transition:transform .25s linear;filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))}
-.strip{margin-top:40px;background:var(--cream);color:#132126;overflow:hidden;padding-block:30px;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.strip__track{display:flex;width:max-content;animation:marquee 32s linear infinite}
+.strip{margin-top:40px;overflow:hidden;padding-block:26px;border-block:1px solid var(--line);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.strip__track{display:flex;width:max-content;animation:marquee 110s linear infinite}
 .strip:hover .strip__track,.strip:focus-within .strip__track,.paused .strip__track{animation-play-state:paused}
 .strip__set{display:flex;list-style:none;margin:0;padding:0}
-.strip__set li{flex:none;width:clamp(170px,17vw,230px);text-align:center;font-family:var(--display);font-size:.84rem;letter-spacing:.14em;font-weight:500;padding:8px 0;border-right:1px solid rgba(19,33,38,.12)}
-.strip__set li a{text-decoration:none}
+.strip__set li{flex:none;display:flex;align-items:center;justify-content:center;height:96px;padding:0 clamp(24px,3vw,46px)}
+.strip__set img{display:block;width:auto;height:calc(var(--h) * var(--ls,1));max-width:none;opacity:.92;transition:opacity .3s,transform .4s var(--ease)}
+.strip__set li:hover img{opacity:1;transform:scale(1.06)}
 @keyframes marquee{to{transform:translateX(-50%)}}
 .talk{padding-block:clamp(40px,6vw,70px) 60px;border-top:1px solid var(--line);margin-top:clamp(30px,4vw,50px)}
 .talk__links{display:flex;gap:14px;align-items:center;font-family:var(--display);letter-spacing:.12em;font-size:.82rem;color:var(--muted)}
@@ -395,6 +396,8 @@ button{font:inherit;color:inherit}
   .facilities{grid-template-columns:1fr}
   .modal__box{grid-template-columns:1fr}
   .clients__sticker{display:none}
+  .strip{--ls:.72;padding-block:18px}
+  .strip__set li{height:72px;padding:0 20px}
   .work{min-height:0}
   .work__mq{margin-top:0}
   .motion span{display:none}
@@ -402,7 +405,9 @@ button{font:inherit;color:inherit}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .strip__track{animation:none}
+  .strip__track{animation:none;width:auto;flex-wrap:wrap;justify-content:center}
+  .strip__set{flex-wrap:wrap;justify-content:center}
+  .strip__set[aria-hidden]{display:none}
   .work__mq-track{animation:none}
   .scrollcue i{animation:none}
   .js .rv.pre{opacity:1;transform:none}
@@ -553,10 +558,10 @@ button{font:inherit;color:inherit}
     <div class="strip" aria-label="Client logos">
       <div class="strip__track">
         <ul class="strip__set">
-          <li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li><li tabindex="0">CLIENT LOGO</li>
+          <li><img src="assets/img/clients/durban-icc.png" alt="Durban ICC" width="276" height="180" style="--h:69px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/rcl-foods.png" alt="RCL Foods" width="84" height="180" style="--h:84px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/samyang.png" alt="Samyang" width="418" height="127" style="--h:47px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/harcourts-pulse.png" alt="Harcourts Pulse" width="428" height="180" style="--h:55px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/ok-foods.png" alt="OK Foods" width="190" height="180" style="--h:83px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/kloppers.png" alt="Kloppers Inc" width="563" height="180" style="--h:48px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/lifegain.png" alt="Lifegain" width="487" height="180" style="--h:52px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/tourism-film-kzn.png" alt="Tourism &amp; Film KwaZulu-Natal" width="364" height="106" style="--h:46px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/amintro.png" alt="Amintro" width="471" height="157" style="--h:49px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/maison-florida.png" alt="Maison Florida" width="640" height="140" style="--h:40px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/ultra-pet.png" alt="Ultra Pet" width="231" height="180" style="--h:75px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/chohans-spice.png" alt="Chohans Spice" width="519" height="180" style="--h:50px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/nma-attorneys.png" alt="NMA Attorneys" width="265" height="87" style="--h:49px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/osteoeze.png" alt="OsteoEze" width="549" height="122" style="--h:40px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/9th-ave-marina.png" alt="9th Ave Marina" width="88" height="180" style="--h:84px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/masana.png" alt="Masana" width="299" height="95" style="--h:48px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/versatile-commodity-traders.png" alt="Versatile Commodity Traders" width="355" height="89" style="--h:42px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/africa-training-centre.png" alt="Africa Training Centre" width="253" height="139" style="--h:63px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/tyson-properties.png" alt="Tyson Properties" width="122" height="170" style="--h:84px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/goshenite.png" alt="Goshenite Seniors Services" width="231" height="106" style="--h:57px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/abc-solar.png" alt="ABC Solar" width="183" height="100" style="--h:63px" loading="lazy" decoding="async"></li>
         </ul>
         <ul class="strip__set" aria-hidden="true">
-          <li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li><li>CLIENT LOGO</li>
+          <li><img src="assets/img/clients/durban-icc.png" alt="" width="276" height="180" style="--h:69px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/rcl-foods.png" alt="" width="84" height="180" style="--h:84px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/samyang.png" alt="" width="418" height="127" style="--h:47px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/harcourts-pulse.png" alt="" width="428" height="180" style="--h:55px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/ok-foods.png" alt="" width="190" height="180" style="--h:83px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/kloppers.png" alt="" width="563" height="180" style="--h:48px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/lifegain.png" alt="" width="487" height="180" style="--h:52px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/tourism-film-kzn.png" alt="" width="364" height="106" style="--h:46px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/amintro.png" alt="" width="471" height="157" style="--h:49px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/maison-florida.png" alt="" width="640" height="140" style="--h:40px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/ultra-pet.png" alt="" width="231" height="180" style="--h:75px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/chohans-spice.png" alt="" width="519" height="180" style="--h:50px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/nma-attorneys.png" alt="" width="265" height="87" style="--h:49px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/osteoeze.png" alt="" width="549" height="122" style="--h:40px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/9th-ave-marina.png" alt="" width="88" height="180" style="--h:84px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/masana.png" alt="" width="299" height="95" style="--h:48px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/versatile-commodity-traders.png" alt="" width="355" height="89" style="--h:42px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/africa-training-centre.png" alt="" width="253" height="139" style="--h:63px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/tyson-properties.png" alt="" width="122" height="170" style="--h:84px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/goshenite.png" alt="" width="231" height="106" style="--h:57px" loading="lazy" decoding="async"></li><li><img src="assets/img/clients/abc-solar.png" alt="" width="183" height="100" style="--h:63px" loading="lazy" decoding="async"></li>
         </ul>
       </div>
     </div>
