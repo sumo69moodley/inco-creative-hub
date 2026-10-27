@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..700&family=DM+Sans:opsz,wght@9..40,300..600&display=swap">
 <style>
 /* Layout: one-page cinematic scroll in five sections (Home, Work ring, Services book, Spaces, Clients) on a dark studio ground. */
-:root{
+:root{--strip-pad:26px;--sec:calc(clamp(90px,12vw,150px) - 20px);/* one gap between every section */
   --ink:#071216;          /* page ground (brief dark) */
   --panel:#10191d;        /* book pages, panels */
   --panel-2:#192428;      /* raised surface */
@@ -156,7 +156,7 @@ button{font:inherit;color:inherit}
 .modal.is-open .anim-in{opacity:1;transform:none}
 
 /* ---------- 03 SERVICES BOOK ---------- */
-.services{padding-block:calc(clamp(90px,12vw,150px) - 20px) clamp(70px,9vw,120px);background:linear-gradient(180deg,var(--ink),#0a1619 60%,var(--ink))}
+.services{padding-block:var(--sec) 0;background:linear-gradient(180deg,var(--ink),#0a1619 60%,var(--ink))}
 .services__grid{display:block;max-width:1480px}
 .services__grid>*{min-width:0}
 .book{position:relative;perspective:2400px;outline:none}
@@ -195,7 +195,7 @@ button{font:inherit;color:inherit}
 .book__ctrl .pgno{color:var(--muted);font-variant-numeric:tabular-nums;position:relative;z-index:7}
 
 /* ---------- 04 SPACES ---------- */
-.spaces{padding-block:clamp(60px,8vw,110px)}
+.spaces{padding-block:calc(var(--sec) - var(--strip-pad) - 6px) 0} /* logo strip already adds its own bottom padding (+ logo row inset) */
 .spaces__grid{display:grid;grid-template-columns:1.45fr 1fr;gap:clamp(14px,2vw,22px);margin-top:28px}
 .shot{position:relative;margin:0;overflow:hidden;background:var(--panel)}
 .shot img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 1.6s var(--ease)}
@@ -274,7 +274,7 @@ button{font:inherit;color:inherit}
 
 /* ---------- 06 process ---------- */
 .process .eyebrow,.process .h-xl{text-align:center}
-.process{padding-block:calc(clamp(90px,12vw,150px) - clamp(18px,2.6vw,34px) - 20px) 0} /* equal space above (after marquee) and below (services top padding) */
+.process{padding-block:calc(var(--sec) - clamp(18px,2.6vw,34px)) 0} /* equal space above (after marquee) and below (services top padding) */
 .steps{list-style:none;margin:30px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.6vw,20px)}
 .steps li{--c:var(--orange);padding:24px 22px;background:var(--panel);border-top:2px solid var(--c);transition:transform .4s var(--ease),box-shadow .4s}
 .steps li:nth-child(even){--c:var(--teal-hi)}
@@ -295,7 +295,7 @@ button{font:inherit;color:inherit}
 .steps p{margin:0;color:var(--muted);font-size:.92rem}
 
 /* ---------- 07 faq ---------- */
-.faq{padding-block:clamp(40px,6vw,90px)}
+.faq{padding-block:var(--sec) 0}
 .faq__list{margin-top:26px;border-top:1px solid var(--line);max-width:900px}
 .faq details{border-bottom:1px solid var(--line)}
 .faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 0;font-family:var(--display);font-size:clamp(.95rem,1.4vw,1.1rem);letter-spacing:.04em;text-transform:uppercase}
@@ -330,9 +330,9 @@ button{font:inherit;color:inherit}
 }
 
 /* ---------- 05 CLIENTS ---------- */
-.clients{padding-block:clamp(60px,8vw,110px) clamp(40px,6vw,80px);position:relative;overflow:hidden}
+.clients{padding-block:var(--sec) 0;position:relative;overflow:hidden}
 .clients__sticker{position:absolute;right:max(24px,7vw);top:clamp(20px,3vw,40px);width:clamp(150px,20vw,250px);height:auto;transform:rotate(calc(-12deg + var(--spin,0deg)));z-index:3;cursor:grab;will-change:transform;filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))}
-.strip{margin-top:40px;overflow:hidden;padding-block:26px;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.strip{margin-top:40px;overflow:hidden;padding-block:var(--strip-pad);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
 .strip__track{display:flex;width:max-content;animation:marquee 110s linear infinite}
 .strip:hover .strip__track,.strip:focus-within .strip__track,.paused .strip__track{animation-play-state:paused}
 .strip__set{display:flex;list-style:none;margin:0;padding:0}
@@ -340,7 +340,7 @@ button{font:inherit;color:inherit}
 .strip__set img{display:block;width:auto;height:calc(var(--h) * var(--ls,1));max-width:none;opacity:.92;transition:opacity .3s,transform .4s var(--ease)}
 .strip__set li:hover img{opacity:1;transform:scale(1.06)}
 @keyframes marquee{to{transform:translateX(-50%)}}
-.talk{padding-block:clamp(40px,6vw,70px) 60px;border-top:1px solid var(--line);margin-top:clamp(30px,4vw,50px)}
+.talk{padding-block:calc(var(--sec) / 2) 60px;border-top:1px solid var(--line);margin-top:calc(var(--sec) / 2)}
 .talk__links{display:flex;gap:14px;align-items:center;font-family:var(--display);letter-spacing:.12em;font-size:.82rem;color:var(--muted)}
 .talk__links span[aria-hidden]{opacity:.5}
 .foot{border-top:1px solid var(--line);padding-block:26px calc(env(safe-area-inset-bottom,0px) + 84px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
@@ -422,7 +422,8 @@ button{font:inherit;color:inherit}
   .facilities{grid-template-columns:1fr}
   .modal__box{grid-template-columns:1fr}
   .clients__sticker{display:none}
-  .strip{--ls:.72;padding-block:18px}
+  .strip{--ls:.72}
+  :root{--strip-pad:18px}
   .strip__set li{height:72px;padding:0 20px}
   .work{min-height:0}
   .work__mq{margin-top:0}
