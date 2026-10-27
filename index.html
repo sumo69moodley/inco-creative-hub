@@ -161,20 +161,20 @@ html{scroll-padding-top:72px}
 .services{padding-block:var(--sec) 0;background:linear-gradient(180deg,var(--ink),#0a1619 60%,var(--ink))}
 .services__grid{display:block;max-width:1480px}
 .services__grid>*{min-width:0}
-.book{position:relative;perspective:2400px;outline:none}
+.book{--pgpad:clamp(26px,3.6vw,58px);position:relative;perspective:2400px;outline:none} /* --pgpad: page inner spacing; the buttons sit the same distance from the content above as from the page bottom */
 .book__frame{position:relative;background:#000;padding:clamp(10px,1.4vw,18px);box-shadow:0 50px 90px -40px #000,0 0 0 1px rgba(255,255,255,.06)}
 .book__spine{position:absolute;top:clamp(10px,1.4vw,18px);bottom:clamp(10px,1.4vw,18px);left:50%;width:40px;margin-left:-20px;z-index:6;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(0,0,0,.55) 45%,rgba(255,255,255,.05) 50%,rgba(0,0,0,.45) 55%,transparent)}
 .book__pages{position:relative;display:grid;grid-template-columns:1fr 1fr;min-height:clamp(460px,40vw,640px);transform-style:preserve-3d}
 .half{position:relative;background:var(--panel);min-width:0;overflow:hidden}
 .half--l{border-right:1px solid rgba(0,0,0,.6)}
-.pg-text{height:100%;padding:clamp(26px,3.6vw,58px);display:flex;flex-direction:column;gap:16px}
+.pg-text{height:100%;padding:var(--pgpad);display:flex;flex-direction:column;gap:16px}
 .pg-text .num{font-family:var(--display);color:var(--orange);font-size:.78rem;letter-spacing:.2em}
 .pg-text h3{font-family:var(--display);font-weight:400;font-stretch:104%;text-transform:uppercase;font-size:clamp(1.8rem,3.2vw,3rem);line-height:1.05;margin:0}
 .pg-text p{margin:0;color:var(--fg)}
 .pg-text>p{font-size:1.02rem;max-width:54ch}
 .pg-text .small{color:var(--muted);font-size:.86rem}
 .pg-text .btn{margin-top:auto;align-self:flex-start}
-.pg-img{height:100%;padding:clamp(14px,2vw,26px);display:flex;flex-direction:column;gap:12px}
+.pg-img{height:100%;padding:clamp(14px,2vw,26px) clamp(14px,2vw,26px) var(--pgpad);display:flex;flex-direction:column;gap:12px}
 .pg-img figure{margin:0;flex:1;position:relative;overflow:hidden;min-height:200px}
 .pg-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}
 .pg-img figure:hover img{transform:scale(1.05)}
@@ -186,7 +186,7 @@ html{scroll-padding-top:72px}
 .leaf__face--back{transform:rotateY(180deg)}
 .leaf__shade{position:absolute;inset:0;pointer-events:none;opacity:0}
 /* page controls sit inside the booklet as its footer strip, so they read as part of the book */
-.book__ctrl{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--panel);border-top:1px solid rgba(0,0,0,.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.05);padding:clamp(10px,1.2vw,14px) clamp(16px,2.6vw,40px);font-family:var(--display);font-size:.76rem;letter-spacing:.18em;text-transform:uppercase}
+.book__ctrl{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--panel);padding:0 clamp(16px,2.6vw,40px) var(--pgpad);font-family:var(--display);font-size:.76rem;letter-spacing:.18em;text-transform:uppercase}
 .book__ctrl{--btn:var(--teal);--btn-hover:var(--orange)}
 .book[data-tone="b"] .book__ctrl{--btn:var(--orange);--btn-hover:var(--teal)} /* colours alternate page to page */
 .book__ctrl button{display:inline-flex;white-space:nowrap;align-items:center;gap:6px;background:var(--btn);border:1px solid var(--btn);border-radius:999px;cursor:pointer;padding:10px 18px;letter-spacing:inherit;font-family:inherit;font-size:inherit;text-transform:inherit;color:#fff;transition:color .25s,background-color .25s,border-color .25s}
@@ -416,7 +416,7 @@ html{scroll-padding-top:72px}
   .pg-text h3{font-size:clamp(1.6rem,2.6vw,2.3rem)}
   .pg-text>p{font-size:.95rem}
   .pg-list{gap:6px;font-size:.88rem}
-  .book__ctrl{padding-block:8px}
+  .book{--pgpad:clamp(20px,2.4vw,34px)}
 }
 @media (max-width:900px){
   .book__pages{grid-template-columns:1fr;min-height:0}
@@ -428,7 +428,8 @@ html{scroll-padding-top:72px}
   .pg-text{padding:clamp(20px,5vw,34px)}
   .pg-text h3{font-size:clamp(1.6rem,6vw,2.3rem)}
   .pg-text>p{font-size:1rem}
-  .book__ctrl{font-size:.7rem;letter-spacing:.1em;gap:8px;padding:10px 12px}
+  .book{--pgpad:clamp(20px,5vw,34px)}
+  .book__ctrl{font-size:.7rem;letter-spacing:.1em;gap:8px;padding:0 12px var(--pgpad)}
   .book__ctrl button{padding:9px 12px}
   .book__ctrl .pgno{font-size:.66rem}
 }
