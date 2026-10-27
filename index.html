@@ -46,7 +46,7 @@ button{font:inherit;color:inherit}
 .h-xl{font-family:var(--display);font-weight:400;font-stretch:105%;text-transform:uppercase;letter-spacing:.01em;line-height:1.02;font-size:clamp(2.3rem,5.6vw,4.6rem);margin:.25em 0 .2em;text-wrap:balance}
 .h-lg{font-family:var(--display);font-weight:400;font-stretch:104%;line-height:1.08;font-size:clamp(1.9rem,4vw,3.1rem);margin:.2em 0;text-wrap:balance}
 .lede{color:var(--muted);margin:0;max-width:58ch}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6em;border:0;cursor:pointer;text-decoration:none;font-family:var(--display);font-weight:500;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;padding:1em 1.7em;border-radius:2px;transition:transform .35s var(--ease),background .25s,box-shadow .35s var(--ease)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6em;border:0;cursor:pointer;text-decoration:none;font-family:var(--display);font-weight:500;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;padding:1em 1.7em;border-radius:999px;transition:transform .35s var(--ease),background .25s,box-shadow .35s var(--ease)}
 /* same shine as the step icons (7s cycle, same streak): a light streak sweeps across every call-to-action button */
 .btn{position:relative;overflow:hidden;isolation:isolate}
 .btn::after{content:"";position:absolute;inset:-20%;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.55) 50%,transparent 62%);transform:translateX(-70%);animation:btnShine 7s ease-in-out infinite;animation-delay:var(--sd,0s);pointer-events:none}
@@ -253,7 +253,7 @@ button{font:inherit;color:inherit}
 .rates__close{top:clamp(16px,2vw,24px);right:clamp(16px,2vw,24px)}
 .addons__intro{margin:-4px 0 8px;color:var(--muted);font-size:.86rem}
 .ptabs{display:flex;flex-wrap:wrap;gap:8px;margin:30px 0 26px}
-.ptabs button{font-family:var(--display);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fg);background:transparent;border:0;box-shadow:inset 0 0 0 1px var(--line);padding:.95em 1.5em;border-radius:2px;cursor:pointer;transition:background .25s,box-shadow .25s,color .25s}
+.ptabs button{font-family:var(--display);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fg);background:transparent;border:0;box-shadow:inset 0 0 0 1px var(--line);padding:.95em 1.5em;border-radius:999px;cursor:pointer;transition:background .25s,box-shadow .25s,color .25s}
 .ptabs button:hover{box-shadow:inset 0 0 0 1px var(--fg)}
 .ptabs button[aria-selected="true"]{background:var(--orange);box-shadow:none;color:#fff}
 .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:clamp(12px,1.6vw,20px);align-items:stretch}
@@ -504,7 +504,7 @@ button{font:inherit;color:inherit}
     </div>
     <div class="wrap work__head">
       <p class="eyebrow">Our work</p>
-      <h2 class="h-lg" id="workTitle">A world of creative possibilities.</h2>
+      <h2 class="h-lg" id="workTitle">A world of creative possibilities</h2>
     </div>
     <div class="stage" id="stage" tabindex="0" aria-roledescription="carousel" aria-label="Project ring. Use left and right arrow keys to rotate, Enter to open the front project.">
       <div class="ring" id="ring"></div>
@@ -519,7 +519,7 @@ button{font:inherit;color:inherit}
   <section class="process" id="process" aria-labelledby="procTitle">
     <div class="wrap">
       <p class="eyebrow rv">How it works</p>
-      <h2 class="h-xl rv" id="procTitle">Four steps, zero admin.</h2>
+      <h2 class="h-xl rv" id="procTitle">Four steps, zero admin</h2>
       <ol class="steps"><li class="rv"><div class="step__top"><span class="step__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-9l-4.5 3.5V16.5H4a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z"/><path d="M7.5 10h9M7.5 13h5.5"/></svg></span><span class="step__num">01</span></div><h3>Brief</h3><p>Tell us what you need and who it’s for. A 20-minute call is usually enough to scope it.</p></li><li class="rv"><div class="step__top"><span class="step__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/><path d="M8.8 15l2.2 2.2 4.4-4.4"/></svg></span><span class="step__num">02</span></div><h3>Plan</h3><p>We lock the date, the set, the shot list and the crew, then send one clear quote.</p></li><li class="rv"><div class="step__top"><span class="step__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="13" height="10" rx="1.5"/><path d="M15.5 10.5l5-3v9l-5-3z"/><circle cx="6.5" cy="10.5" r="1" fill="var(--orange)" stroke="none"/></svg></span><span class="step__num">03</span></div><h3>Shoot</h3><p>You arrive, we’re already lit and rolling. Coffee’s on. Most sessions wrap early.</p></li><li class="rv"><div class="step__top"><span class="step__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v11M7.5 10l4.5 4.5 4.5-4.5"/><path d="M4 14.5v4a1.5 1.5 0 0 0 1.5 1.5h13a1.5 1.5 0 0 0 1.5-1.5v-4"/></svg></span><span class="step__num">04</span></div><h3>Deliver</h3><p>First cut in about 48 hours, two rounds of changes included, files yours to keep.</p></li></ol>
     </div>
   </section>
@@ -601,7 +601,7 @@ button{font:inherit;color:inherit}
     <div class="wrap clients__head">
       <img class="clients__sticker" id="sticker" src="assets/img/sticker-integrity.png" alt="iNCO values: Innovation, Integrity, Interact" width="335" height="336" loading="lazy">
       <p class="eyebrow rv">Our clients</p>
-      <h2 class="h-xl rv" id="clientTitle">Created together.</h2>
+      <h2 class="h-xl rv" id="clientTitle">Created together</h2>
       <p class="lede rv">Selected brands and collaborators</p>
     </div>
     <div class="strip" aria-label="Client logos">
@@ -623,7 +623,7 @@ button{font:inherit;color:inherit}
       <div class="rates__scroll" id="ratesScroll">
         <header class="rates__head">
       <p class="eyebrow">Rates &amp; packages</p>
-      <h2 class="rates__title" id="priceTitle">Straight pricing, no surprises.</h2>
+      <h2 class="rates__title" id="priceTitle">Straight pricing, no surprises</h2>
       <p class="lede">Pick a discipline below. Every package includes the studio, the crew to run it and your finished files — nothing hidden in the small print.</p>
         </header>
       <div class="ptabs" role="tablist" aria-label="Disciplines"><button type="button" role="tab" id="tab-pod" aria-controls="panel-pod" aria-selected="true">Podcasting</button><button type="button" role="tab" id="tab-vid" aria-controls="panel-vid" aria-selected="false" tabindex="-1">Videography</button><button type="button" role="tab" id="tab-pho" aria-controls="panel-pho" aria-selected="false" tabindex="-1">Photography</button><button type="button" role="tab" id="tab-evt" aria-controls="panel-evt" aria-selected="false" tabindex="-1">Events</button></div>
@@ -722,7 +722,7 @@ button{font:inherit;color:inherit}
   <section class="spaces" id="spaces" aria-labelledby="spaceTitle">
     <div class="wrap">
       <p class="eyebrow rv">The space</p>
-      <h2 class="h-xl rv" id="spaceTitle">Sets you don't have to build.</h2>
+      <h2 class="h-xl rv" id="spaceTitle">Sets you don't have to build</h2>
       <p class="lede rv">Face brick, gallery walls, neon, leather lounges and a wall of custom art — five dressed environments you can switch between in minutes, so one booking looks like five different shoots.</p>
       <div class="sets">
         <figure class="set rv"><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-retro-set.jpg" alt="Retro gallery wall set with leather armchairs and vinyl records" loading="lazy"><figcaption>The Gallery Wall</figcaption></figure>
@@ -748,7 +748,7 @@ button{font:inherit;color:inherit}
   <section class="faq" id="faq" aria-labelledby="faqTitle">
     <div class="wrap">
       <p class="eyebrow rv">Good to know</p>
-      <h2 class="h-xl rv" id="faqTitle">Questions we get asked.</h2>
+      <h2 class="h-xl rv" id="faqTitle">Questions we get asked</h2>
       <div class="faq__list rv"><details open><summary>Can I hire the studio without a crew?</summary><p>Yes. Studio-only hire is R1 250 per hour and includes the set of your choice, the lighting rig and power. You bring your own cameras and operator. A technician is on site to help you get set up.</p></details><details><summary>How many people can the space hold?</summary><p>The podcast sets are built for up to four people on camera. For larger shoots, the open floor comfortably takes a crew of twelve plus talent, with a separate lounge area for clients and a green-room corner for talent.</p></details><details><summary>How quickly do we get our files?</summary><p>Photography selects land in an online gallery the same day, with retouched files in three working days. Video and podcast first cuts are typically ready within 48 hours. Campaign work is scheduled against an agreed timeline.</p></details><details><summary>Do you shoot outside the studio?</summary><p>Often. The Hub is the base, not the limit — we shoot on location across Gauteng at no extra travel charge, and elsewhere in South Africa with travel quoted upfront.</p></details><details><summary>What do we need to bring?</summary><p>Yourself, your talking points and anything you want on camera — product, wardrobe, branding. Everything else is here: mics, cameras, lights, backdrops, teleprompter, steamer and wifi.</p></details><details><summary>Can you handle the whole content plan, not just the shoot?</summary><p>That’s the point of the Hub. iNCO is a full design and media agency, so strategy, scripting, branding, editing and distribution can all sit with one team instead of four.</p></details></div>
     </div>
   </section>
@@ -758,7 +758,7 @@ button{font:inherit;color:inherit}
     <div class="wrap">
       <div class="talk" id="contact">
         <p class="eyebrow">Let’s make something</p>
-        <h2 class="h-xl">Book the Hub.</h2>
+        <h2 class="h-xl">Book the Hub</h2>
         <p class="lede">Come see the space before you commit. Bring a brief, or just bring curiosity — the kettle’s on and the sets are lit.</p>
         <div class="visit__btns"><button class="btn btn--orange" type="button" data-enquire="Studio tour" aria-haspopup="dialog">Book a studio tour</button><button class="btn btn--teal" type="button" data-enquire="General enquiry" aria-haspopup="dialog">Email the team</button></div>
         <p class="talk__mail"><a href="mailto:kovan@incocreative.com">kovan@incocreative.com</a><span>Mon–Fri, 08:00–17:00 · Studio bookings subject to availability</span></p>
