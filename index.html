@@ -156,7 +156,7 @@ button{font:inherit;color:inherit}
 .modal.is-open .anim-in{opacity:1;transform:none}
 
 /* ---------- 03 SERVICES BOOK ---------- */
-.services{padding-block:clamp(90px,12vw,150px) clamp(70px,9vw,120px);background:linear-gradient(180deg,var(--ink),#0a1619 60%,var(--ink))}
+.services{padding-block:calc(clamp(90px,12vw,150px) - 20px) clamp(70px,9vw,120px);background:linear-gradient(180deg,var(--ink),#0a1619 60%,var(--ink))}
 .services__grid{display:block;max-width:1480px}
 .services__grid>*{min-width:0}
 .book{position:relative;perspective:2400px;outline:none}
@@ -274,7 +274,7 @@ button{font:inherit;color:inherit}
 
 /* ---------- 06 process ---------- */
 .process .eyebrow,.process .h-xl{text-align:center}
-.process{padding-block:calc(clamp(90px,12vw,150px) - clamp(18px,2.6vw,34px)) 0} /* equal space above (after marquee) and below (services top padding) */
+.process{padding-block:calc(clamp(90px,12vw,150px) - clamp(18px,2.6vw,34px) - 20px) 0} /* equal space above (after marquee) and below (services top padding) */
 .steps{list-style:none;margin:30px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.6vw,20px)}
 .steps li{--c:var(--orange);padding:24px 22px;background:var(--panel);border-top:2px solid var(--c);transition:transform .4s var(--ease),box-shadow .4s}
 .steps li:nth-child(even){--c:var(--teal-hi)}
