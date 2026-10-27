@@ -225,6 +225,12 @@ button{font:inherit;color:inherit}
 .set{position:relative;margin:0;overflow:hidden;background:var(--panel);aspect-ratio:4/3}
 .set img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}
 .set:hover img{transform:scale(1.06)}
+/* photo shine: same sweep as the buttons, softer on images, staggered across the grid */
+.set::after{content:"";position:absolute;inset:-20%;z-index:1;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.22) 50%,transparent 60%);transform:translateX(-70%);animation:btnShine 7s ease-in-out infinite;animation-delay:var(--sd,0s);pointer-events:none}
+.set:nth-child(2){--sd:.5s}.set:nth-child(3){--sd:1s}.set:nth-child(4){--sd:1.5s}.set:nth-child(5){--sd:2s}.set:nth-child(6){--sd:2.5s}
+.set figcaption{z-index:2}
+.paused .set::after{animation:none;opacity:0}
+@media (prefers-reduced-motion:reduce){.set::after{animation:none;opacity:0}}
 .set figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 16px 12px;font-family:var(--display);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;background:linear-gradient(transparent,rgba(7,18,22,.85))}
 .hubintro{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(24px,4vw,60px);align-items:center;margin-top:clamp(36px,5vw,60px);padding-top:clamp(26px,3vw,40px);border-top:1px solid var(--line)}
 .hubintro h3{font-family:var(--display);font-weight:700;font-stretch:112%;text-transform:uppercase;font-size:clamp(1.8rem,3.4vw,2.8rem);line-height:1;margin:.25em 0 .35em}
