@@ -163,6 +163,22 @@ html{scroll-padding-top:72px}
 .services__grid>*{min-width:0}
 .book{--pgpad:clamp(26px,3.6vw,58px);position:relative;perspective:2400px;outline:none} /* --pgpad: page inner spacing; the buttons sit the same distance from the content above as from the page bottom */
 .book__frame{position:relative;background:#000;padding:clamp(10px,1.4vw,18px);box-shadow:0 50px 90px -40px #000,0 0 0 1px rgba(255,255,255,.06)}
+/* page curls: folded corners that say "this is a booklet"; they peel a little every few seconds, lift on hover and turn the page on click */
+.curl{--s:clamp(30px,3vw,42px);--fp:clamp(10px,1.4vw,18px);position:absolute;bottom:var(--fp);width:var(--s);height:var(--s);z-index:8;cursor:pointer;transition:transform .45s var(--ease);animation:curlHint 6s ease-in-out infinite}
+.curl--r{right:var(--fp);transform-origin:100% 100%;background:linear-gradient(135deg,#7d8d91 0%,#4b5b60 36%,#2a383d 48%,#000 50.5%);border-top-left-radius:4px}
+.curl--l{left:var(--fp);transform-origin:0 100%;background:linear-gradient(225deg,#7d8d91 0%,#4b5b60 36%,#2a383d 48%,#000 50.5%);border-top-right-radius:4px;animation-delay:3s}
+.curl::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,transparent 46%,rgba(0,0,0,.55) 49.5%,transparent 50%)}
+.curl--l::after{background:linear-gradient(225deg,transparent 46%,rgba(0,0,0,.55) 49.5%,transparent 50%)}
+.curl:hover{animation:none;transform:scale(1.25)}
+.book__ctrl button{position:relative;z-index:9} /* page buttons stay above the curls */
+@keyframes curlHint{0%,78%,100%{transform:none}86%{transform:scale(1.22)}93%{transform:scale(1.08)}}
+.paused .curl{animation:none}
+@media (prefers-reduced-motion:reduce){.curl{animation:none}}
+@media (max-width:900px){
+  .curl--l{display:none}
+  .curl--r{top:var(--fp);bottom:auto;transform-origin:100% 0;background:linear-gradient(45deg,#7d8d91 0%,#4b5b60 36%,#2a383d 48%,#000 50.5%);border-radius:0 0 0 4px}
+  .curl--r::after{background:linear-gradient(45deg,transparent 46%,rgba(0,0,0,.55) 49.5%,transparent 50%)}
+}
 .book__spine{position:absolute;top:clamp(10px,1.4vw,18px);bottom:clamp(10px,1.4vw,18px);left:50%;width:40px;margin-left:-20px;z-index:6;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(0,0,0,.55) 45%,rgba(255,255,255,.05) 50%,rgba(0,0,0,.45) 55%,transparent)}
 .book__pages{position:relative;display:grid;grid-template-columns:1fr 1fr;min-height:clamp(460px,40vw,640px);transform-style:preserve-3d}
 .half{position:relative;background:var(--panel);min-width:0;overflow:hidden}
@@ -556,6 +572,8 @@ html{scroll-padding-top:72px}
             <button type="button" class="nx" id="bNext">Next &nbsp;&gt;</button>
           </div>
           <div class="book__spine"></div>
+          <span class="curl curl--l" data-turn="-1" aria-hidden="true" title="Previous page"></span>
+          <span class="curl curl--r" data-turn="1" aria-hidden="true" title="Next page"></span>
         </div>
       </div>
     </div>
@@ -1237,6 +1255,7 @@ function turn(to, dir){
 paint(0);
 bPrev.addEventListener("click",function(){turn(pg-1,-1)});
 bNext.addEventListener("click",function(){turn(pg+1,1)});
+$$(".curl").forEach(function(c){ c.addEventListener("click",function(){ var d=+c.dataset.turn; turn(pg+d,d); }); });
 var book=$("#book");
 book.addEventListener("keydown",function(e){ if(e.key==="ArrowRight"){e.preventDefault();turn(pg+1,1)} else if(e.key==="ArrowLeft"){e.preventDefault();turn(pg-1,-1)} });
 var sx0=null, sy0=null;
