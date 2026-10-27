@@ -308,6 +308,12 @@ button{font:inherit;color:inherit}
 .faq details[open] summary::after{transform:rotate(45deg)}
 .faq summary:hover{color:var(--orange)}
 .faq details p{margin:0 0 22px;color:var(--muted);max-width:70ch}
+/* FAQ centred: heading, list block, questions and answers */
+.faq .wrap>.eyebrow,.faq .wrap>.h-xl{text-align:center}
+.faq__list{margin-inline:auto}
+.faq summary{position:relative;justify-content:center;text-align:center;padding-inline:40px}
+.faq summary::after{position:absolute;right:4px;top:50%;margin-top:-.5em}
+.faq details p{margin-inline:auto;text-align:center}
 
 /* ---------- contact: book the hub ---------- */
 .talk .h-xl{margin-top:.2em}
