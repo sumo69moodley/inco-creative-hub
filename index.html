@@ -330,7 +330,7 @@ button{font:inherit;color:inherit}
 
 /* ---------- 05 CLIENTS ---------- */
 .clients{padding-block:clamp(60px,8vw,110px) clamp(40px,6vw,80px);position:relative;overflow:hidden}
-.clients__sticker{position:absolute;right:max(24px,7vw);top:clamp(20px,3vw,40px);width:clamp(150px,20vw,250px);height:auto;transform:rotate(calc(-12deg + var(--spin,0deg)));transition:transform .25s linear;filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))}
+.clients__sticker{position:absolute;right:max(24px,7vw);top:clamp(20px,3vw,40px);width:clamp(150px,20vw,250px);height:auto;transform:rotate(calc(-12deg + var(--spin,0deg)));z-index:3;cursor:grab;will-change:transform;filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))}
 .strip{margin-top:40px;overflow:hidden;padding-block:26px;border-block:1px solid var(--line);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
 .strip__track{display:flex;width:max-content;animation:marquee 110s linear infinite}
 .strip:hover .strip__track,.strip:focus-within .strip__track,.paused .strip__track{animation-play-state:paused}
@@ -1092,14 +1092,32 @@ function onScroll(){
   ids.forEach(function(id){ var el=document.getElementById(id); if(el && el.getBoundingClientRect().top+y<=mid) act=id; });
   if (window.innerHeight + y >= document.documentElement.scrollHeight - 4) act="contact";
   $$(".nav__links a").forEach(function(a){ a.classList.toggle("is-active", a.dataset.spy===act); });
-  // sticker rests tilted 12° to the left when it reaches the middle of the screen and sways gently (±8°) as it scrolls in and out
-  var st=$("#sticker");
-  if(st && !reduce.matches && !motionPaused){
-    var r=st.getBoundingClientRect(), off=(r.top+r.height/2)-window.innerHeight/2;
-    st.style.setProperty("--spin",Math.max(-8,Math.min(8,off*0.02)).toFixed(2)+"deg");
-  }
 }
 window.addEventListener("scroll",onScroll,{passive:true}); onScroll();
+
+/* ---------- sticker: stays still; spins only while the mouse is over it, faster the closer the pointer is to its centre ---------- */
+(function(){
+  var st=$("#sticker"); if(!st) return;
+  var angle=0, speed=0, target=0, last=0, raf=0;
+  var MIN=40, MAX=900; // degrees per second at the rim / at the dead centre
+  function frame(t){
+    var dt=Math.min(0.05,(t-(last||t))/1000); last=t;
+    speed += (target-speed)*Math.min(1,dt*(target>speed?6:3.5)); // quick to speed up, gentle to slow down
+    angle=(angle+speed*dt)%360;
+    st.style.setProperty("--spin",angle.toFixed(2)+"deg");
+    if (target===0 && speed<1){ speed=0; raf=0; last=0; return; }
+    raf=requestAnimationFrame(frame);
+  }
+  function kick(){ if(!raf){ last=0; raf=requestAnimationFrame(frame); } }
+  st.addEventListener("pointermove",function(e){
+    if (reduce.matches || motionPaused || e.pointerType==="touch") return;
+    var r=st.getBoundingClientRect(), rad=st.offsetWidth/2;
+    var d=Math.min(1,Math.hypot(e.clientX-(r.left+r.width/2),e.clientY-(r.top+r.height/2))/rad); // 0 centre → 1 rim
+    var k=1-d; target=MIN+(MAX-MIN)*k*k;
+    kick();
+  });
+  st.addEventListener("pointerleave",function(){ target=0; });
+})();
 
 /* ---------- 02 background: walkthrough video + YouTube (loads when near) ---------- */
 var walk=$("#walk"), bg=$(".work__bg"), yt=null, ytLive=false;
