@@ -63,13 +63,15 @@ button{font:inherit;color:inherit}
 .note{font-size:.72rem;color:var(--muted);letter-spacing:.02em}
 
 /* ---------- NAV ---------- */
-.nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;transition:background .5s,backdrop-filter .5s,box-shadow .5s}
-.nav__in{display:flex;align-items:center;justify-content:space-between;gap:24px;height:72px;max-width:1400px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+/* The nav sits just below the hero video as a floating pill; as it scrolls up to the top it widens
+   (driven by --nx, 0 → 1, set on scroll) into a full-width bar that then sticks above every section. */
+html{scroll-padding-top:72px}
+.nav{--nx:0;--pw:min(900px,calc(100% - 32px));position:sticky;top:0;z-index:50;height:72px}
+.nav__in{display:flex;align-items:center;justify-content:space-between;gap:24px;height:72px;width:calc(var(--pw) + (100% - var(--pw)) * var(--nx));margin:0 auto;padding-inline:max(24px,calc(var(--nx) * (100vw - 1352px) / 2));border-radius:calc((1 - var(--nx)) * 36px);background:rgba(7,18,22,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 0 0 1px rgba(255,255,255,calc((1 - var(--nx)) * .1)),0 1px 0 var(--line),0 18px 40px -24px rgba(0,0,0,calc((1 - var(--nx)) * .9))}
 .nav__logo{display:block;width:96px;transition:opacity .5s,transform .5s var(--ease)}
 .nav__logo img{width:100%;height:auto}
-.nav.is-solid{background:rgba(7,18,22,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
 .nav.is-solid .nav__logo{opacity:1;transform:none;pointer-events:auto}
-.nav__links{display:flex;gap:clamp(18px,3.4vw,52px);list-style:none;margin:0;padding:0}
+.nav__links{display:flex;gap:calc(clamp(14px,1.6vw,22px) + var(--nx) * (clamp(18px,3.4vw,52px) - clamp(14px,1.6vw,22px)));list-style:none;margin:0;padding:0}
 .nav__links a{font-family:var(--display);font-size:.78rem;letter-spacing:.18em;text-decoration:none;color:var(--fg);opacity:.86;position:relative;padding:6px 0;transition:color .25s,opacity .25s}
 .nav__links a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
 .nav__links a:hover,.nav__links a.is-active{color:var(--orange);opacity:1}
@@ -105,7 +107,7 @@ button{font:inherit;color:inherit}
   .work__yt{width:100cqw;height:56.25cqw;transform:translate(-50%,-50%)}
 }
 .work__bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 58%,rgba(7,18,22,.35) 0,rgba(7,18,22,.78) 70%),linear-gradient(180deg,rgba(7,18,22,.75),rgba(7,18,22,.2) 30%,rgba(7,18,22,.35) 70%,var(--ink))}
-.work__head{padding-top:calc(env(safe-area-inset-top,0px) + 112px);text-align:center}
+.work__head{padding-top:40px;text-align:center}
 .work__head .h-lg{font-weight:300}
 .stage{position:relative;flex:1;display:flex;align-items:center;justify-content:center;min-height:clamp(380px,56vh,620px);perspective:1500px;perspective-origin:50% 42%;touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab}
 .stage.is-drag{cursor:grabbing}
@@ -470,21 +472,7 @@ button{font:inherit;color:inherit}
 </head>
 <body>
 
-<header class="nav" id="nav">
-  <div class="nav__in">
-    <a class="nav__logo" href="#home" aria-label="iNCO Creative Hub, back to top"><img src="assets/img/inco-logo-white.png" alt="iNCO Creative" width="421" height="163"></a>
-    <button class="nav__menu" id="menuBtn" aria-expanded="false" aria-controls="navLinks">MENU</button>
-    <ul class="nav__links" id="navLinks">
-      <li><a href="#work" data-spy="work">WORK</a></li>
-      <li><a href="#services" data-spy="services">SERVICES</a></li>
-      <li><a href="#clients" data-spy="clients">CLIENTS</a></li>
-      <li><a href="#spaces" data-spy="spaces">SPACES</a></li>
-      <li><a href="#pricing" data-spy="pricing">PRICING</a></li>
-      <li><a href="#faq" data-spy="faq">FAQ</a></li>
-      <li><a href="#contact" data-spy="contact">CONTACT</a></li>
-    </ul>
-  </div>
-</header>
+
 
 <main>
   <!-- 01 HOME LANDING -->
@@ -503,6 +491,23 @@ button{font:inherit;color:inherit}
       <a class="scrollcue" href="#work">SCROLL TO DISCOVER<i></i></a>
     </div>
   </section>
+
+  <!-- NAV (sits below the hero, sticks to the top once reached) -->
+  <header class="nav" id="nav">
+  <div class="nav__in">
+    <a class="nav__logo" href="#home" aria-label="iNCO Creative Hub, back to top"><img src="assets/img/inco-logo-white.png" alt="iNCO Creative" width="421" height="163"></a>
+    <button class="nav__menu" id="menuBtn" aria-expanded="false" aria-controls="navLinks">MENU</button>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="#work" data-spy="work">WORK</a></li>
+      <li><a href="#services" data-spy="services">SERVICES</a></li>
+      <li><a href="#clients" data-spy="clients">CLIENTS</a></li>
+      <li><a href="#spaces" data-spy="spaces">SPACES</a></li>
+      <li><a href="#pricing" data-spy="pricing">PRICING</a></li>
+      <li><a href="#faq" data-spy="faq">FAQ</a></li>
+      <li><a href="#contact" data-spy="contact">CONTACT</a></li>
+    </ul>
+  </div>
+</header>
 
   <!-- 02 OUR WORK -->
   <section class="work" id="work" aria-labelledby="workTitle">
@@ -1117,6 +1122,9 @@ function onScroll(){
   var y = window.scrollY, h = home.offsetHeight;
   if (!reduce.matches) home.style.setProperty("--hx", Math.min(1, Math.max(0, y/h)).toFixed(3));
   nav.classList.toggle("is-solid", y > h*0.6);
+  // nav grows from a pill into a full-width bar over the last half-screen before it reaches the top
+  var nt=nav.getBoundingClientRect().top;
+  nav.style.setProperty("--nx", (1 - Math.min(1, Math.max(0, nt/(window.innerHeight*0.5)))).toFixed(3));
   var ids=["work","process","services","clients","spaces","faq","contact"], act=null, mid=y+window.innerHeight*0.45;
   ids.forEach(function(id){ var el=document.getElementById(id); if(el && el.getBoundingClientRect().top+y<=mid) act=id; });
   if (window.innerHeight + y >= document.documentElement.scrollHeight - 4) act="contact";
