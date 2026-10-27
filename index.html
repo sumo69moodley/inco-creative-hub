@@ -359,7 +359,12 @@ button{font:inherit;color:inherit}
 .foot img{width:88px;height:auto}
 .foot small{color:var(--muted);font-size:.74rem;letter-spacing:.06em}
 /* Contact + footer centred */
-.talk{text-align:center}
+.talk{text-align:center;position:relative;isolation:isolate}
+/* watermark: the round iNCO values sticker, faded and slowly turning behind "Book the Hub" */
+.talk::before{content:"";position:absolute;left:50%;top:50%;width:clamp(280px,30vw,420px);aspect-ratio:1;margin:calc(clamp(280px,30vw,420px) / -2) 0 0 calc(clamp(280px,30vw,420px) / -2);background:url(assets/img/sticker-integrity.png) center/contain no-repeat;opacity:.07;filter:grayscale(1) brightness(1.6);z-index:-1;pointer-events:none;animation:wmSpin 90s linear infinite}
+@keyframes wmSpin{to{transform:rotate(360deg)}}
+.paused .talk::before{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.talk::before{animation:none}}
 .talk .lede{margin-inline:auto}
 .talk .visit__btns,.talk__mail,.talk__links{justify-content:center}
 .foot{flex-direction:column;justify-content:center;text-align:center;gap:12px}
