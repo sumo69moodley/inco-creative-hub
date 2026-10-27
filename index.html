@@ -363,7 +363,7 @@ html{scroll-padding-top:72px}
 .talk{padding-block:calc(var(--sec) / 2) 60px;margin-top:calc(var(--sec) / 2)}
 .talk__links{display:flex;gap:14px;align-items:center;font-family:var(--display);letter-spacing:.12em;font-size:.82rem;color:var(--muted)}
 .talk__links span[aria-hidden]{opacity:.5}
-.foot{border-top:1px solid var(--line);padding-block:26px calc(env(safe-area-inset-bottom,0px) + 84px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.foot{padding-block:26px calc(env(safe-area-inset-bottom,0px) + 84px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
 .foot img{width:88px;height:auto}
 .foot small{color:var(--muted);font-size:.74rem;letter-spacing:.06em}
 /* Contact + footer centred */
@@ -375,7 +375,6 @@ html{scroll-padding-top:72px}
 @media (prefers-reduced-motion:reduce){.talk::before{animation:none}}
 .talk .lede{margin-inline:auto}
 .talk .visit__btns,.talk__mail,.talk__links{justify-content:center}
-.foot{flex-direction:column;justify-content:center;text-align:center;gap:12px}
 
 /* ---------- ENQUIRY DRAWER ---------- */
 .drawer{position:fixed;inset:0;z-index:90}
