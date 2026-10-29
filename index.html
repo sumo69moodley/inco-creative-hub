@@ -342,6 +342,19 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
 .seg__btn:hover{color:var(--fg)}
 .seg__btn:focus-visible{outline:none;box-shadow:inset 0 0 0 1.5px var(--teal-hi)}
 .seg__btn[aria-pressed="true"]{background:var(--teal);color:#fff}
+/* Studio Hire tab: section heading, picked card, gear link, booking panel (the Events booking form moves in here) */
+.phead{margin:0 0 clamp(18px,2.4vw,26px)}
+.phead__title{font-family:var(--display);font-weight:700;font-stretch:108%;text-transform:uppercase;font-size:clamp(1.4rem,2.4vw,1.9rem);line-height:1.1;margin:0}
+.phead__sub{color:var(--muted);margin:.45em 0 0;font-size:.95rem;max-width:62ch}
+.tier.is-picked{box-shadow:inset 0 0 0 2px var(--teal)}
+.gear{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:clamp(18px,2.4vw,26px)}
+.gear__help{margin:0;color:var(--muted);font-size:.88rem}
+.sbook{display:flex;flex-direction:column;margin-top:clamp(18px,2.4vw,26px);background:var(--panel);box-shadow:inset 0 0 0 1px var(--line);border-radius:3px;padding:clamp(22px,2.4vw,32px);scroll-margin-top:96px}
+.sbook__title{font-family:var(--display);font-weight:700;font-stretch:108%;text-transform:uppercase;font-size:1.25rem;line-height:1.15;margin:.4em 0 18px}
+@media (max-width:520px){
+  .rates .ptabs[role=tablist]{margin-right:0;padding-right:52px}   /* five tabs wrap to three rows: keep the sticky bar solid edge to edge */
+  .sbook{scroll-margin-top:170px}
+}
 .bk__cal{position:absolute;top:calc(100% + 8px);left:0;z-index:5;width:300px;max-width:calc(100vw - 64px);background:var(--panel-2);box-shadow:0 0 0 1px var(--line),0 24px 48px -16px rgba(0,0,0,.85);border-radius:18px;padding:14px}
 .bk__calhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
 .bk__month{margin:0;font-family:var(--display);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase}
@@ -725,7 +738,7 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
       <h2 class="rates__title" id="priceTitle">Straight pricing, no surprises</h2>
       <p class="lede">Pick a discipline below. Every package includes the studio, the crew to run it and your finished files — nothing hidden in the small print.</p>
         </header>
-      <div class="ptabs" role="tablist" aria-label="Disciplines"><button type="button" role="tab" id="tab-pod" aria-controls="panel-pod" aria-selected="true">Podcasting</button><button type="button" role="tab" id="tab-vid" aria-controls="panel-vid" aria-selected="false" tabindex="-1">Videography</button><button type="button" role="tab" id="tab-pho" aria-controls="panel-pho" aria-selected="false" tabindex="-1">Photography</button><button type="button" role="tab" id="tab-evt" aria-controls="panel-evt" aria-selected="false" tabindex="-1">Events</button></div>
+      <div class="ptabs" role="tablist" aria-label="Disciplines"><button type="button" role="tab" id="tab-pod" aria-controls="panel-pod" aria-selected="true">Podcasting</button><button type="button" role="tab" id="tab-vid" aria-controls="panel-vid" aria-selected="false" tabindex="-1">Videography</button><button type="button" role="tab" id="tab-pho" aria-controls="panel-pho" aria-selected="false" tabindex="-1">Photography</button><button type="button" role="tab" id="tab-evt" aria-controls="panel-evt" aria-selected="false" tabindex="-1">Events</button><button type="button" role="tab" id="tab-std" aria-controls="panel-std" aria-selected="false" tabindex="-1">Studio Hire</button></div>
       <div class="ppanel" id="panel-pod" role="tabpanel" aria-labelledby="tab-pod">
         <div class="tiers">
           <article class="tier">
@@ -864,6 +877,31 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
             </form>
           </article></div>
         <div class="addons addons--pick"><h4>Add-ons</h4><p class="addons__intro">Tell us what you need from us and what you&rsquo;re bringing yourself.</p><dl><div><dt id="ao-catering">Catering</dt><dd><span class="seg" role="group" aria-labelledby="ao-catering" data-addon="catering"><button class="seg__btn" type="button" data-val="required" aria-pressed="false">Required</button><button class="seg__btn" type="button" data-val="self_supplied" aria-pressed="false">Supplying myself</button></span></dd></div><div><dt id="ao-seating_tables">Seating / tables</dt><dd><span class="seg" role="group" aria-labelledby="ao-seating_tables" data-addon="seating_tables"><button class="seg__btn" type="button" data-val="required" aria-pressed="false">Required</button><button class="seg__btn" type="button" data-val="self_supplied" aria-pressed="false">Supplying myself</button></span></dd></div><div><dt id="ao-entertainment">Entertainment</dt><dd><span class="seg" role="group" aria-labelledby="ao-entertainment" data-addon="entertainment"><button class="seg__btn" type="button" data-val="required" aria-pressed="false">Required</button><button class="seg__btn" type="button" data-val="self_supplied" aria-pressed="false">Supplying myself</button></span></dd></div><div><dt id="ao-sound">Sound</dt><dd><span class="seg" role="group" aria-labelledby="ao-sound" data-addon="sound"><button class="seg__btn" type="button" data-val="required" aria-pressed="false">Required</button><button class="seg__btn" type="button" data-val="self_supplied" aria-pressed="false">Supplying myself</button></span></dd></div><div><dt id="ao-videography_photography">Videography / photography</dt><dd><span class="seg" role="group" aria-labelledby="ao-videography_photography" data-addon="videography_photography"><button class="seg__btn" type="button" data-val="required" aria-pressed="false">Required</button><button class="seg__btn" type="button" data-val="self_supplied" aria-pressed="false">Supplying myself</button></span></dd></div><div><dt id="ao-lighting">Lighting</dt><dd><span class="seg" role="group" aria-labelledby="ao-lighting" data-addon="lighting"><button class="seg__btn" type="button" data-val="required" aria-pressed="false">Required</button><button class="seg__btn" type="button" data-val="self_supplied" aria-pressed="false">Supplying myself</button></span></dd></div><div><dt id="ao-decor">Decor</dt><dd><span class="seg" role="group" aria-labelledby="ao-decor" data-addon="decor"><button class="seg__btn" type="button" data-val="required" aria-pressed="false">Required</button><button class="seg__btn" type="button" data-val="self_supplied" aria-pressed="false">Supplying myself</button></span></dd></div><div><dt id="ao-security">Security</dt><dd><span class="seg" role="group" aria-labelledby="ao-security" data-addon="security"><button class="seg__btn" type="button" data-val="required" aria-pressed="false">Required</button><button class="seg__btn" type="button" data-val="self_supplied" aria-pressed="false">Supplying myself</button></span></dd></div></dl></div>
+      </div>
+      <div class="ppanel" id="panel-std" role="tabpanel" aria-labelledby="tab-std" hidden>
+        <header class="phead"><h3 class="phead__title">Studio Hire</h3><p class="phead__sub">For photographers and videographers with their own gear – all you need is the space.</p></header>
+        <div class="tiers">
+          <article class="tier">
+            <h3>Plug &amp; Play</h3>
+            <p class="tier__price">R999<small>per hour</small></p>
+            <ul><li>1 hour in studio</li><li>1 set-up</li></ul>
+            <button class="btn btn--ghost" type="button" data-book="Plug &amp; Play" data-price="999" data-duration="Per hour" aria-controls="stdBook" aria-expanded="false">Book this</button>
+          </article>
+          <article class="tier">
+            <h3>Lil&rsquo; Extra</h3>
+            <p class="tier__price">R2 499<small>3 hour session</small></p>
+            <ul><li>3 hours in studio</li><li>3 set-ups</li></ul>
+            <button class="btn btn--ghost" type="button" data-book="Lil' Extra" data-price="2499" data-duration="3 hour session" aria-controls="stdBook" aria-expanded="false">Book this</button>
+          </article>
+          <article class="tier">
+            <h3>The Keys</h3>
+            <p class="tier__price">R5 999<small>6 hour shoot</small></p>
+            <ul><li>6-hour shoot</li><li>Unlimited set-ups</li></ul>
+            <button class="btn btn--ghost" type="button" data-book="The Keys" data-price="5999" data-duration="6 hour shoot" aria-controls="stdBook" aria-expanded="false">Book this</button>
+          </article></div>
+        <!-- gear rental: replace #gear-app with the Camera Equipment app URL (until then the button opens the enquiry form) -->
+        <div class="gear"><a class="btn btn--ghost" id="gearBtn" href="#gear-app" target="_blank" rel="noopener">Need any gear?<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></a><p class="gear__help">Don&rsquo;t have everything? Rent it for your session.</p></div>
+        <section class="sbook" id="stdBook" aria-labelledby="stdBookTitle" hidden><p class="eyebrow">Your booking</p><h3 class="sbook__title" id="stdBookTitle"></h3><div id="stdSlot"></div></section>
       </div>
       <p class="note pricing__note">All prices are in South African Rand and exclude VAT. Travel outside Gauteng, talent fees, licensed music beyond our standard library and paid-media spend are quoted separately. Rates are indicative — send us the brief and we’ll price it properly.</p>
       </div>
@@ -1504,7 +1542,7 @@ rates.addEventListener("cancel",function(e){ if(!cal.hidden){ e.preventDefault()
 info.addEventListener("input",function(){ count.textContent=info.value.length+" / 500"; });
 var HUBS_URL="";                          // HUBS booking endpoint: paste the URL here (it must accept cross-origin JSON POSTs)
 var BOOKINGS_TO=ENQ_TO, BK_MAIL_URL="https://formsubmit.co/ajax/"+BOOKINGS_TO;   // bookings address for the e-mailed copy
-var SOURCE=location.origin+location.pathname.replace(/(index\.html)?$/,"").replace(/\/?$/,"/")+"events";
+var SITE=location.origin+location.pathname.replace(/(index\.html)?$/,"").replace(/\/?$/,"/");   // + "events" / "studio-hire" as the booking source
 var ADDON_KEYS=["catering","seating_tables","videography_photography","security","sound","decor","entertainment","lighting"],
     ADDON_LABELS={required:"Required",self_supplied:"Supplying myself",not_needed:"Not needed"};
 /* add-on toggles: tap to highlight, tap again to clear, one option per item; nothing selected = not needed */
@@ -1516,9 +1554,68 @@ $$(".seg").forEach(function(g){
   });
 });
 function addOns(){
-  var o={}; ADDON_KEYS.forEach(function(k){ var g=$('.seg[data-addon="'+k+'"]'), a=g&&g.querySelector('[aria-pressed="true"]'); o[k]=a?a.dataset.val:"not_needed"; });
+  var o={}; ADDON_KEYS.forEach(function(k){ var g=mode==="evt"&&$('.seg[data-addon="'+k+'"]'), a=g&&g.querySelector('[aria-pressed="true"]'); o[k]=a?a.dataset.val:"not_needed"; });
   return o;
 }
+/* one booking form, two homes: inline on the Event Package card, or under the Studio Hire cards once one is picked */
+var MODES={
+  evt:{ label:"Book the event space", dateErr:"Choose a date for your event.", typeLbl:"Event type", typePh:"Select event type", typeErr:"Choose the type of event.",
+        types:["Corporate function","Product launch","Conference / seminar","Workshop / training","Networking event","Brand activation","Private celebration","Other"],
+        paxLbl:"Expected pax", paxPh:"Select guest count", paxErr:"Choose how many guests you expect.", help:"Maximum 80 guests",
+        pax:["10–20","21–30","31–40","41–50","51–60","61–70","71–80"], source:"events" },
+  std:{ label:"Book the studio", dateErr:"Choose a date for your shoot.", typeLbl:"Shoot type", typePh:"Select shoot type", typeErr:"Choose the type of shoot.",
+        types:["Photography","Videography","Photo + video","Content creation","Other"],
+        paxLbl:"People on set", paxPh:"Select number of people", paxErr:"Choose how many people will be on set.", help:"",
+        pax:["1–5","6–10","11–15","16–20"], source:"studio-hire" } };
+var mode="evt", doneMsg=null, evtHome=bk.parentNode,
+    EVT={ name:bk.dataset.package, price:bk.dataset.priceZar, duration:bk.dataset.duration },
+    stdPanel=$("#panel-std"), stdBook=$("#stdBook"), stdSlot=$("#stdSlot"), stdTitle=$("#stdBookTitle");
+function fillSel(el,ph,list){ el.innerHTML='<option value="" disabled selected>'+ph+'</option>'+list.map(function(t){ return "<option>"+t+"</option>"; }).join(""); }
+function setMode(m,pkg){
+  var M=MODES[m];
+  if (mode!==m){
+    mode=m; fillSel($("#bkType"),M.typePh,M.types); fillSel($("#bkPax"),M.paxPh,M.pax);
+    $('label[for="bkType"]').textContent=M.typeLbl; $('label[for="bkPax"]').textContent=M.paxLbl;
+    var h=$("#bkPaxHelp"); h.textContent=M.help; h.hidden=!M.help;
+    $("#bkDateErr").textContent=M.dateErr; $("#bkTypeErr").textContent=M.typeErr; $("#bkPaxErr").textContent=M.paxErr; setErr("bkType",false); setErr("bkPax",false);
+    bk.setAttribute("aria-label",M.label);
+  }
+  bk.dataset.package=pkg.name; bk.dataset.priceZar=pkg.price; bk.dataset.duration=pkg.duration;
+  $("#bkMsg").hidden=true;
+}
+function freshForm(){   // after a sent booking, moving the form brings back a clean copy
+  if (!doneMsg) return;
+  doneMsg.remove(); doneMsg=null; bk.reset(); bk.hidden=false;
+  sel=null; dTxt.textContent="Choose a date"; dBtn.classList.remove("has-val"); count.textContent="0 / 500"; started=0;
+}
+function goHome(){
+  if (bk.parentNode===evtHome && mode==="evt") return;
+  closeCal(false); freshForm(); evtHome.appendChild(bk); setMode("evt",EVT);
+  if (stdBook) stdBook.hidden=true;
+  $$(".tier",stdPanel||document.createElement("i")).forEach(function(t){ t.classList.remove("is-picked"); });
+  $$("[data-book]").forEach(function(b){ b.setAttribute("aria-expanded","false"); });
+}
+$$("[data-book]").forEach(function(b){
+  b.addEventListener("click",function(){
+    var card=b.closest(".tier"), price=card.querySelector(".tier__price").firstChild.textContent.trim();
+    closeCal(false); freshForm();
+    $$(".tier",stdPanel).forEach(function(t){ t.classList.toggle("is-picked",t===card); });
+    $$("[data-book]").forEach(function(x){ x.setAttribute("aria-expanded",x===b?"true":"false"); });
+    setMode("std",{ name:b.dataset.book, price:b.dataset.price, duration:b.dataset.duration });
+    stdTitle.textContent=b.dataset.book+" – "+price+" · "+b.dataset.duration.toLowerCase();
+    if (bk.parentNode!==stdSlot) stdSlot.appendChild(bk);
+    stdBook.hidden=false;
+    stdBook.scrollIntoView({ behavior:reduce.matches?"auto":"smooth", block:"start" });
+    dBtn.focus({preventScroll:true});
+  });
+});
+var tabSelect=selectTab; selectTab=function(k,f){ tabSelect(k,f); if(k==="evt") goHome(); };   // Events tab always shows its own form
+var gear=$("#gearBtn");
+if (gear) gear.addEventListener("click",function(e){   // until the gear app URL is in, ask through the enquiry form instead
+  if (gear.getAttribute("href")!=="#gear-app") return;
+  e.preventDefault(); ratesOpener=null; closeRates(); openDrawer("General enquiry");
+  $("#fMsg").value="I'd like to rent some gear for my studio session.";
+});
 var started=0, sendingBk=false, sendBtn=$("#bkSend"), bkMsgEl=$("#bkMsg");
 bk.addEventListener("focusin",function(){ if(!started) started=Date.now(); });
 function bkMsg(html,err){ bkMsgEl.hidden=false; bkMsgEl.classList.toggle("is-err",!!err); bkMsgEl.innerHTML=html; }
@@ -1529,7 +1626,7 @@ function postJSON(url,body){
     .then(function(r){ clearTimeout(t); return r; },function(err){ clearTimeout(t); throw err; });
 }
 function emailCopy(p){
-  var f={ _subject:"New event booking: "+p.event_date+" ("+p.contact.name+")", _template:"table", _captcha:"false", _honey:"", _replyto:p.contact.email,
+  var f={ _subject:"New booking: "+p.package+" on "+p.event_date+" ("+p.contact.name+")", _template:"table", _captcha:"false", _honey:"", _replyto:p.contact.email,
     package:p.package+" (R"+p.price_zar+", "+p.duration+")", event_date:p.event_date, event_type:p.event_type, expected_pax:p.expected_pax,
     name:p.contact.name, email:p.contact.email, phone:p.contact.phone||"Not given", other_info:p.other_info||"None" };
   ADDON_KEYS.forEach(function(k){ f["add_on_"+k]=ADDON_LABELS[p.add_ons[k]]; });
@@ -1556,7 +1653,7 @@ bk.addEventListener("submit",function(e){
   var payload={ package:bk.dataset.package, price_zar:+bk.dataset.priceZar, duration:bk.dataset.duration,
     event_date:isoDate(sel), event_type:d.type, expected_pax:d.pax, other_info:d.other,
     contact:{ name:d.name, email:d.email, phone:d.phone },
-    add_ons:addOns(), source:SOURCE, submitted_at:new Date().toISOString() };
+    add_ons:addOns(), source:SITE+MODES[mode].source, submitted_at:new Date().toISOString() };
   sendingBk=true; bk.setAttribute("aria-busy","true"); sendBtn.disabled=true;
   sendBtn.innerHTML='<span class="bk__spin" aria-hidden="true"></span>Sending…';
   var done=function(){ sendingBk=false; bk.removeAttribute("aria-busy"); sendBtn.disabled=false; sendBtn.textContent="Book this"; };
@@ -1568,7 +1665,7 @@ bk.addEventListener("submit",function(e){
       try{ sessionStorage.setItem("incoBkSent", String(Date.now())); }catch(x){}
       var ok=document.createElement("p"); ok.className="bk__msg bk__done"; ok.setAttribute("role","status"); ok.tabIndex=-1;
       ok.textContent="Booking request sent. The Hub team will be in touch to confirm availability.";
-      bk.replaceWith(ok); ok.focus({preventScroll:true}); ok.scrollIntoView({block:"nearest"});
+      bk.hidden=true; bk.parentNode.insertBefore(ok,bk.nextSibling); doneMsg=ok; ok.focus({preventScroll:true}); ok.scrollIntoView({block:"nearest"});
       $$(".seg__btn").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
     })
     .catch(function(){
