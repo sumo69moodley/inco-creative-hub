@@ -298,7 +298,7 @@ html{scroll-padding-top:72px}
 .addons dl div{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);font-size:.9rem}
 .addons dt{color:var(--fg)}
 .addons dd{margin:0;color:var(--teal-hi);font-family:var(--display);white-space:nowrap;text-align:right}
-/* event booking form (Events card): pickers only, Book this checks the required fields and hands over to the enquiry drawer */
+/* event booking form (Events card): booking pickers + contact details; Book this checks the required fields and sends the booking */
 .bk{margin-top:auto;padding-top:20px;border-top:1px solid var(--line)}
 .bk__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 16px}
 .bk__f{display:flex;flex-direction:column;gap:8px;min-width:0}
@@ -315,6 +315,8 @@ select.bk__ctl:invalid{color:var(--muted)}
 .bk__date{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-right:18px}
 .bk__date svg{flex:none;color:var(--teal-hi)}
 .bk__date:not(.has-val) span{color:var(--muted)}
+input.bk__ctl{padding:0 20px;cursor:text}
+input.bk__ctl::placeholder{color:var(--muted);opacity:.8}
 textarea.bk__ctl{display:block;border-radius:22px;padding:14px 20px;min-height:96px;resize:vertical;cursor:text;line-height:1.5}
 textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
 .bk__help{margin:0;font-size:.76rem;color:var(--teal-hi);letter-spacing:.02em}
@@ -324,6 +326,9 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
 .bk__foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:22px}
 .bk__foot .note{margin:0}
 .tier .bk__foot .btn{margin-top:0}
+.bk__msg{margin:16px 0 0;background:rgba(29,141,137,.15);border-left:2px solid var(--teal);padding:12px 14px;font-size:.88rem}
+.bk__msg.is-err{background:rgba(226,98,43,.14);border-left-color:var(--orange)}
+.bk__msg a{color:var(--fg)}
 .bk__cal{position:absolute;top:calc(100% + 8px);left:0;z-index:5;width:300px;max-width:calc(100vw - 64px);background:var(--panel-2);box-shadow:0 0 0 1px var(--line),0 24px 48px -16px rgba(0,0,0,.85);border-radius:18px;padding:14px}
 .bk__calhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
 .bk__month{margin:0;font-family:var(--display);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase}
@@ -815,6 +820,23 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
                   <p class="bk__help" id="bkPaxHelp">Maximum 80 guests</p>
                   <p class="bk__err" id="bkPaxErr" hidden>Choose how many guests you expect.</p>
                 </div>
+                <div class="bk__f" id="bkNameF">
+                  <label class="bk__lbl" for="bkName">Name</label>
+                  <input class="bk__ctl" id="bkName" autocomplete="name" maxlength="80" required aria-describedby="bkNameErr" placeholder="Your full name">
+                  <p class="bk__err" id="bkNameErr" hidden>Add your name so we know who&rsquo;s booking.</p>
+                </div>
+                <div class="bk__f" id="bkEmailF">
+                  <label class="bk__lbl" for="bkEmail">Email</label>
+                  <input class="bk__ctl" id="bkEmail" type="email" autocomplete="email" maxlength="120" required aria-describedby="bkEmailErr" placeholder="name@example.com">
+                  <p class="bk__err" id="bkEmailErr" hidden>Enter an email address like name@example.com.</p>
+                </div>
+                <div class="bk__f" id="bkPhoneF">
+                  <label class="bk__lbl" for="bkPhone">Phone <span class="bk__opt">(optional)</span></label>
+                  <input class="bk__ctl" id="bkPhone" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" aria-describedby="bkPhoneErr" placeholder="e.g. 082 123 4567">
+                  <p class="bk__err" id="bkPhoneErr" hidden>Check the number (digits, spaces, + and - only).</p>
+                </div>
+                <!-- spam trap: hidden from people, bots fill it in -->
+                <div class="hp" aria-hidden="true"><label for="bkWeb">Leave this empty</label><input id="bkWeb" type="text" tabindex="-1" autocomplete="off"></div>
                 <div class="bk__f bk__f--full">
                   <label class="bk__lbl" for="bkInfo">Other info <span class="bk__opt">(optional)</span></label>
                   <textarea class="bk__ctl" id="bkInfo" rows="3" maxlength="500" aria-describedby="bkCount" placeholder="Anything else we should know – setup time, access, special requirements"></textarea>
@@ -823,8 +845,9 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
               </div>
               <div class="bk__foot">
                 <button class="btn btn--ghost" type="submit" id="bkSend">Book this</button>
-                <p class="note">Next, add your contact details and we&rsquo;ll confirm availability.</p>
+                <p class="note">Sent straight to the iNCO team. We&rsquo;ll confirm availability, and your details are only used to reply.</p>
               </div>
+              <p class="bk__msg" id="bkMsg" role="status" aria-live="polite" hidden></p>
             </form>
           </article></div>
         <div class="addons"><h4>Add-ons</h4><p class="addons__intro">Optional add-ons for your event.</p><dl><div><dt>Catering</dt><dd>Optional</dd></div><div><dt>Seating / tables</dt><dd>Optional</dd></div><div><dt>Entertainment</dt><dd>Optional</dd></div><div><dt>Sound</dt><dd>Optional</dd></div><div><dt>Videography / photography</dt><dd>Optional</dd></div><div><dt>Lighting</dt><dd>Optional</dd></div><div><dt>Decor</dt><dd>Optional</dd></div><div><dt>Security</dt><dd>Optional</dd></div></dl></div>
@@ -1398,8 +1421,9 @@ document.addEventListener("click",function(e){
 });
 
 /* ---------- EVENT BOOKING form (Events card) ----------
-   Pickers only. Book this checks the required fields (inline errors), then closes the pop-up and opens
-   the enquiry drawer on "Events" with the booking filled into the message, so the visitor only adds contact details. */
+   Date / event type / pax are pickers; name, email and phone are typed. Book this checks the required fields
+   (inline errors) and e-mails the booking to the iNCO team through FormSubmit, like the enquiry form:
+   honeypot, minimum fill time, one send per minute, and a pre-filled e-mail fallback if the service can't be reached. */
 (function(){
 var bk=$("#bkForm"); if(!bk) return;
 var MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"],
@@ -1462,19 +1486,46 @@ cal.addEventListener("keydown",function(e){
 document.addEventListener("click",function(e){ if(!cal.hidden && e.target.isConnected && !e.target.closest(".bk__dwrap")) closeCal(false); });
 rates.addEventListener("cancel",function(e){ if(!cal.hidden){ e.preventDefault(); closeCal(true); } });   // Esc closes the calendar first, not the pop-up
 ["bkType","bkPax"].forEach(function(id){ $("#"+id).addEventListener("change",function(){ setErr(id,false); }); });
+["bkName","bkEmail","bkPhone"].forEach(function(id){ $("#"+id).addEventListener("input",function(){ setErr(id,false); }); });
 info.addEventListener("input",function(){ count.textContent=info.value.length+" / 500"; });
+var started=0, sendingBk=false, sendBtn=$("#bkSend"), bkMsgEl=$("#bkMsg");
+bk.addEventListener("focusin",function(){ if(!started) started=Date.now(); });
+function bkMsg(html,err){ bkMsgEl.hidden=false; bkMsgEl.classList.toggle("is-err",!!err); bkMsgEl.innerHTML=html; }
+function bkMailto(d){
+  var body="Event booking request\nDate: "+d.date+"\nEvent type: "+d.type+"\nExpected pax: "+d.pax+"\n\nName: "+d.name+"\nEmail: "+d.email+(d.phone?"\nPhone: "+d.phone:"")+(d.other?"\n\nOther info: "+d.other:"");
+  return "mailto:"+ENQ_TO+"?subject="+encodeURIComponent("Event booking: "+d.date)+"&body="+encodeURIComponent(body);
+}
 bk.addEventListener("submit",function(e){
   e.preventDefault(); closeCal(false);
-  var type=$("#bkType").value, pax=$("#bkPax").value, bad=[];
-  setErr("bkDate",!sel); if(!sel) bad.push(dBtn);
-  setErr("bkType",!type); if(!type) bad.push($("#bkType"));
-  setErr("bkPax",!pax); if(!pax) bad.push($("#bkPax"));
-  if (bad.length){ bad[0].focus(); return; }
-  var other=info.value.trim().slice(0,500);
-  var msg="Event booking request\nDate: "+longDate(sel)+"\nEvent type: "+type+"\nExpected pax: "+pax+(other?"\nOther info: "+other:"");
-  ratesOpener=null; closeRates();
-  openDrawer("Events");
-  $("#fMsg").value=msg;
+  if (sendingBk) return;
+  var d={ date:sel?longDate(sel):"", type:$("#bkType").value, pax:$("#bkPax").value,
+          name:$("#bkName").value.trim().slice(0,80), email:$("#bkEmail").value.trim().slice(0,120),
+          phone:$("#bkPhone").value.trim().slice(0,30), other:info.value.trim().slice(0,500) };
+  var checks=[["bkDate",!sel,dBtn],["bkType",!d.type],["bkPax",!d.pax],["bkName",!d.name],
+              ["bkEmail",!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)],["bkPhone",!!d.phone && !/^[+()\d\s-]{7,30}$/.test(d.phone)]], first=null;
+  checks.forEach(function(c){ setErr(c[0],c[1]); if(c[1] && !first) first=c[2]||$("#"+c[0]); });
+  bkMsgEl.hidden=true;
+  if (first){ first.focus(); return; }
+  if ($("#bkWeb").value){ bkMsg("Thanks, your booking request has been sent."); return; }   // bot: pretend success, send nothing
+  if (Date.now()-started < 3000){ bkMsg("That was quick! Please check your details and press Book this again.",1); return; }
+  var last=0; try{ last=+sessionStorage.getItem("incoBkSent")||0; }catch(x){}
+  if (Date.now()-last < 60000){ bkMsg("Your booking request is already on its way. Please wait a minute before sending another.",1); return; }
+  sendingBk=true; sendBtn.disabled=true; sendBtn.textContent="Sending…";
+  var payload={ event_date:d.date, event_type:d.type, expected_pax:d.pax, name:d.name, email:d.email, phone:d.phone||"Not given",
+    other_info:d.other||"None", _subject:"New event booking: "+d.date+" ("+d.name+")", _template:"table", _captcha:"false", _honey:"" };
+  var done=function(){ sendingBk=false; sendBtn.disabled=false; sendBtn.textContent="Book this"; };
+  var fail=function(why){ bkMsg(why+" <a href=\""+bkMailto(d)+"\">Email it to "+ENQ_TO+" instead</a> (your booking is already filled in).",1); };
+  fetch(ENQ_URL,{ method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"}, body:JSON.stringify(payload) })
+    .then(function(r){ return r.json().catch(function(){ return {success:r.ok?"true":"false"}; }); })
+    .then(function(res){
+      done();
+      if (String(res.success)==="true"){
+        try{ sessionStorage.setItem("incoBkSent", String(Date.now())); }catch(x){}
+        bk.reset(); sel=null; dTxt.textContent="Choose a date"; dBtn.classList.remove("has-val"); count.textContent="0 / 500"; started=0;
+        bkMsg("Thanks, "+esc(d.name.split(" ")[0])+". Your booking request for "+esc(d.date)+" has been sent to the iNCO team. We&rsquo;ll confirm availability at "+esc(d.email)+" soon.");
+      } else fail("Sorry, the booking couldn&rsquo;t be sent just now.");
+    })
+    .catch(function(){ done(); fail("Sorry, we couldn&rsquo;t reach the server."); });
 });
 })();
 
