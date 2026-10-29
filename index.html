@@ -298,6 +298,52 @@ html{scroll-padding-top:72px}
 .addons dl div{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);font-size:.9rem}
 .addons dt{color:var(--fg)}
 .addons dd{margin:0;color:var(--teal-hi);font-family:var(--display);white-space:nowrap;text-align:right}
+/* event booking form (Events card): pickers only, Book this checks the required fields and hands over to the enquiry drawer */
+.bk{margin-top:auto;padding-top:20px;border-top:1px solid var(--line)}
+.bk__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 16px}
+.bk__f{display:flex;flex-direction:column;gap:8px;min-width:0}
+.bk__f--full{grid-column:1/-1}
+.bk__lbl{font-family:var(--display);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.bk__opt{text-transform:none;letter-spacing:.02em}
+.bk__ctl{width:100%;min-height:48px;margin:0;font:inherit;font-size:.92rem;color:var(--fg);background-color:transparent;border:0;box-shadow:inset 0 0 0 1px var(--line);border-radius:999px;padding:0 44px 0 20px;text-align:left;cursor:pointer;transition:box-shadow .25s;-webkit-appearance:none;appearance:none}
+.bk__ctl:hover{box-shadow:inset 0 0 0 1px rgba(238,242,241,.4)}
+.bk__ctl:focus-visible,.bk__date[aria-expanded="true"]{outline:none;box-shadow:inset 0 0 0 1.5px var(--teal-hi)}
+select.bk__ctl{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%2336b9b2' stroke-width='1.6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 20px center;background-size:12px 8px}
+select.bk__ctl:invalid{color:var(--muted)}
+.bk__ctl option{color:var(--fg);background:var(--panel)}
+.bk__dwrap{position:relative}
+.bk__date{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-right:18px}
+.bk__date svg{flex:none;color:var(--teal-hi)}
+.bk__date:not(.has-val) span{color:var(--muted)}
+textarea.bk__ctl{display:block;border-radius:22px;padding:14px 20px;min-height:96px;resize:vertical;cursor:text;line-height:1.5}
+textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
+.bk__help{margin:0;font-size:.76rem;color:var(--teal-hi);letter-spacing:.02em}
+.bk__count{margin:0;font-size:.72rem;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.bk__err{margin:0;font-size:.78rem;color:var(--orange-hi)}
+.bk__f.is-err .bk__ctl{box-shadow:inset 0 0 0 1.5px var(--orange)}
+.bk__foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:22px}
+.bk__foot .note{margin:0}
+.tier .bk__foot .btn{margin-top:0}
+.bk__cal{position:absolute;top:calc(100% + 8px);left:0;z-index:5;width:300px;max-width:calc(100vw - 64px);background:var(--panel-2);box-shadow:0 0 0 1px var(--line),0 24px 48px -16px rgba(0,0,0,.85);border-radius:18px;padding:14px}
+.bk__calhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.bk__month{margin:0;font-family:var(--display);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase}
+.bk__nav{width:34px;height:34px;border:0;border-radius:50%;background:transparent;box-shadow:inset 0 0 0 1px var(--line);color:var(--fg);cursor:pointer;display:grid;place-items:center;transition:box-shadow .25s,color .25s}
+.bk__nav:hover:not(:disabled),.bk__nav:focus-visible{outline:none;box-shadow:inset 0 0 0 1px var(--teal-hi);color:var(--teal-hi)}
+.bk__nav:disabled{opacity:.3;cursor:default}
+.bk__wd,.bk__days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+.bk__wd span{font-family:var(--display);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:4px 0}
+.bk__day{aspect-ratio:1;width:100%;border:0;border-radius:50%;background:transparent;color:var(--fg);font:inherit;font-size:.84rem;cursor:pointer;font-variant-numeric:tabular-nums;transition:background-color .2s}
+.bk__day:hover:not(:disabled){background:rgba(54,185,178,.16)}
+.bk__day:focus-visible{outline:none;box-shadow:inset 0 0 0 1.5px var(--teal-hi)}
+.bk__day.is-today{box-shadow:inset 0 0 0 1px var(--line)}
+.bk__day[aria-pressed="true"]{background:var(--teal);color:#fff}
+.bk__day:disabled{color:rgba(238,242,241,.22);cursor:not-allowed}
+.bk__day.is-closed{text-decoration:line-through}
+.bk__calnote{margin:10px 0 0;padding-top:10px;border-top:1px solid var(--line);font-size:.72rem;color:var(--muted)}
+@media (max-width:600px){
+  .bk__grid{grid-template-columns:1fr}
+  .bk__cal{width:100%;max-width:none}
+}
 .pricing__note{margin-top:22px;max-width:90ch;font-size:.78rem}
 
 /* ---------- 06 process ---------- */
@@ -744,7 +790,42 @@ html{scroll-padding-top:72px}
             <p class="tier__sub">For events of 80–100 pax.</p>
             <p class="tier__price">R6 000<small>6–8 hour event</small></p>
             <ul><li>80–100 pax</li><li>6–8 hours</li></ul>
-            <a class="btn btn--ghost" href="mailto:kovan@incocreative.com?subject=Booking%20enquiry">Book this</a>
+            <form class="bk" id="bkForm" novalidate aria-label="Book the event space">
+              <div class="bk__grid">
+                <div class="bk__f" id="bkDateF">
+                  <span class="bk__lbl" id="bkDateLbl">Date</span>
+                  <div class="bk__dwrap">
+                    <button class="bk__ctl bk__date" id="bkDate" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="bkCal" aria-labelledby="bkDateLbl bkDateTxt" aria-describedby="bkDateErr"><span id="bkDateTxt">Choose a date</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></button>
+                    <div class="bk__cal" id="bkCal" role="dialog" aria-label="Choose an event date" hidden></div>
+                  </div>
+                  <p class="bk__err" id="bkDateErr" hidden>Choose a date for your event.</p>
+                </div>
+                <div class="bk__f" id="bkTypeF">
+                  <label class="bk__lbl" for="bkType">Event type</label>
+                  <select class="bk__ctl" id="bkType" required aria-describedby="bkTypeErr">
+                    <option value="" disabled selected>Select event type</option><option>Corporate function</option><option>Product launch</option><option>Conference / seminar</option><option>Workshop / training</option><option>Networking event</option><option>Brand activation</option><option>Private celebration</option><option>Other</option>
+                  </select>
+                  <p class="bk__err" id="bkTypeErr" hidden>Choose the type of event.</p>
+                </div>
+                <div class="bk__f" id="bkPaxF">
+                  <label class="bk__lbl" for="bkPax">Expected pax</label>
+                  <select class="bk__ctl" id="bkPax" required aria-describedby="bkPaxHelp bkPaxErr">
+                    <option value="" disabled selected>Select guest count</option><option>10–20</option><option>21–30</option><option>31–40</option><option>41–50</option><option>51–60</option><option>61–70</option><option>71–80</option>
+                  </select>
+                  <p class="bk__help" id="bkPaxHelp">Maximum 80 guests</p>
+                  <p class="bk__err" id="bkPaxErr" hidden>Choose how many guests you expect.</p>
+                </div>
+                <div class="bk__f bk__f--full">
+                  <label class="bk__lbl" for="bkInfo">Other info <span class="bk__opt">(optional)</span></label>
+                  <textarea class="bk__ctl" id="bkInfo" rows="3" maxlength="500" aria-describedby="bkCount" placeholder="Anything else we should know – setup time, access, special requirements"></textarea>
+                  <p class="bk__count" id="bkCount">0 / 500</p>
+                </div>
+              </div>
+              <div class="bk__foot">
+                <button class="btn btn--ghost" type="submit" id="bkSend">Book this</button>
+                <p class="note">Next, add your contact details and we&rsquo;ll confirm availability.</p>
+              </div>
+            </form>
           </article></div>
         <div class="addons"><h4>Add-ons</h4><p class="addons__intro">Optional add-ons for your event.</p><dl><div><dt>Catering</dt><dd>Optional</dd></div><div><dt>Seating / tables</dt><dd>Optional</dd></div><div><dt>Entertainment</dt><dd>Optional</dd></div><div><dt>Sound</dt><dd>Optional</dd></div><div><dt>Videography / photography</dt><dd>Optional</dd></div><div><dt>Lighting</dt><dd>Optional</dd></div><div><dt>Decor</dt><dd>Optional</dd></div><div><dt>Security</dt><dd>Optional</dd></div></dl></div>
       </div>
@@ -1315,6 +1396,87 @@ document.addEventListener("click",function(e){
   var l = e.target.closest('a[href="#pricing"]');
   if (l){ e.preventDefault(); openRates(BOOK_KEYS[pg] || "pod", l); }
 });
+
+/* ---------- EVENT BOOKING form (Events card) ----------
+   Pickers only. Book this checks the required fields (inline errors), then closes the pop-up and opens
+   the enquiry drawer on "Events" with the booking filled into the message, so the visitor only adds contact details. */
+(function(){
+var bk=$("#bkForm"); if(!bk) return;
+var MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"],
+    DAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+var dBtn=$("#bkDate"), dTxt=$("#bkDateTxt"), cal=$("#bkCal"), info=$("#bkInfo"), count=$("#bkCount");
+function day0(d){ return new Date(d.getFullYear(),d.getMonth(),d.getDate()); }
+var today=day0(new Date()), maxD=new Date(today.getFullYear(),today.getMonth()+19,0);   // bookable up to ~18 months ahead
+function closed(d){ var m=d.getMonth(), x=d.getDate(); return (m===11&&x>=18)||(m===0&&x<=6); }   // studio closed 18 Dec – 6 Jan
+function blocked(d){ return d<today || d>maxD || closed(d); }
+function same(a,b){ return !!a && !!b && a.getTime()===b.getTime(); }
+function longDate(d){ return DAYS[d.getDay()]+", "+d.getDate()+" "+MONTHS[d.getMonth()]+" "+d.getFullYear(); }
+function shortDate(d){ return DAYS[d.getDay()].slice(0,3)+", "+d.getDate()+" "+MONTHS[d.getMonth()].slice(0,3)+" "+d.getFullYear(); }
+var sel=null, view=new Date(today.getFullYear(),today.getMonth(),1), focusD=null;
+var arrow=function(p){ return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="'+p+'"/></svg>'; };
+function render(){
+  var y=view.getFullYear(), m=view.getMonth(), first=new Date(y,m,1), n=new Date(y,m+1,0).getDate(), lead=(first.getDay()+6)%7;
+  var h='<div class="bk__calhead"><button class="bk__nav" type="button" data-nav="-1" aria-label="Previous month"'+(y===today.getFullYear()&&m===today.getMonth()?" disabled":"")+'>'+arrow("M15 5l-7 7 7 7")+'</button>'
+       +'<p class="bk__month" aria-live="polite">'+MONTHS[m]+' '+y+'</p>'
+       +'<button class="bk__nav" type="button" data-nav="1" aria-label="Next month"'+(new Date(y,m+1,1)>maxD?" disabled":"")+'>'+arrow("M9 5l7 7-7 7")+'</button></div>'
+       +'<div class="bk__wd" aria-hidden="true"><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span></div><div class="bk__days">';
+  for (var i=0;i<lead;i++) h+='<span></span>';
+  var tab=null;
+  if (focusD && focusD.getMonth()===m && focusD.getFullYear()===y && !blocked(focusD)) tab=focusD;
+  else if (sel && sel.getMonth()===m && sel.getFullYear()===y) tab=sel;
+  for (var x=1;x<=n;x++){ var d=new Date(y,m,x); if(!tab && !blocked(d)) tab=d; }
+  for (x=1;x<=n;x++){
+    d=new Date(y,m,x); var off=blocked(d);
+    h+='<button class="bk__day'+(same(d,today)?" is-today":"")+(closed(d)?" is-closed":"")+'" type="button" data-d="'+x+'"'
+      +' aria-label="'+longDate(d)+(closed(d)?" (studio closed)":"")+'" aria-pressed="'+(same(d,sel)?"true":"false")+'"'
+      +' tabindex="'+(same(d,tab)?0:-1)+'"'+(off?" disabled":"")+'>'+x+'</button>';
+  }
+  h+='</div><p class="bk__calnote">Studio closed 18 Dec – 6 Jan.</p>';
+  cal.innerHTML=h;
+}
+function focusDay(){ var b=cal.querySelector('.bk__day[tabindex="0"]'); if(b) b.focus(); }
+function openCal(){ if(sel) view=new Date(sel.getFullYear(),sel.getMonth(),1); focusD=null; render(); cal.hidden=false; dBtn.setAttribute("aria-expanded","true"); focusDay(); }
+function closeCal(back){ if(cal.hidden) return; cal.hidden=true; dBtn.setAttribute("aria-expanded","false"); if(back) dBtn.focus(); }
+function setErr(id,on){
+  var f=$("#"+id+"F"), e=$("#"+id+"Err"), c=$("#"+id);
+  f.classList.toggle("is-err",on); e.hidden=!on;
+  if(on) c.setAttribute("aria-invalid","true"); else c.removeAttribute("aria-invalid");
+}
+function pick(d){ sel=d; dTxt.textContent=shortDate(d); dBtn.classList.add("has-val"); setErr("bkDate",false); closeCal(true); }
+dBtn.addEventListener("click",function(){ if(cal.hidden) openCal(); else closeCal(true); });
+cal.addEventListener("click",function(e){
+  var nb=e.target.closest(".bk__nav"); if(nb){ view=new Date(view.getFullYear(),view.getMonth()+(+nb.dataset.nav),1); focusD=null; render(); var again=cal.querySelector('[data-nav="'+nb.dataset.nav+'"]'); (again&&!again.disabled?again:cal.querySelector('.bk__day[tabindex="0"]')||dBtn).focus(); return; }
+  var b=e.target.closest(".bk__day"); if(b && !b.disabled) pick(new Date(view.getFullYear(),view.getMonth(),+b.dataset.d));
+});
+cal.addEventListener("keydown",function(e){
+  if (e.key==="Escape"){ e.preventDefault(); e.stopPropagation(); closeCal(true); return; }
+  var b=e.target.closest(".bk__day"); if(!b) return;
+  var step={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7}[e.key]; if(!step) return;
+  e.preventDefault();
+  var d=new Date(view.getFullYear(),view.getMonth(),+b.dataset.d), s=step>0?1:-1;
+  d.setDate(d.getDate()+step);
+  for (var i=0;i<60 && d>=today && d<=maxD && blocked(d);i++) d.setDate(d.getDate()+s);   // skip the closed period
+  if (blocked(d)) return;
+  focusD=d; view=new Date(d.getFullYear(),d.getMonth(),1); render(); focusDay();
+});
+document.addEventListener("click",function(e){ if(!cal.hidden && e.target.isConnected && !e.target.closest(".bk__dwrap")) closeCal(false); });
+rates.addEventListener("cancel",function(e){ if(!cal.hidden){ e.preventDefault(); closeCal(true); } });   // Esc closes the calendar first, not the pop-up
+["bkType","bkPax"].forEach(function(id){ $("#"+id).addEventListener("change",function(){ setErr(id,false); }); });
+info.addEventListener("input",function(){ count.textContent=info.value.length+" / 500"; });
+bk.addEventListener("submit",function(e){
+  e.preventDefault(); closeCal(false);
+  var type=$("#bkType").value, pax=$("#bkPax").value, bad=[];
+  setErr("bkDate",!sel); if(!sel) bad.push(dBtn);
+  setErr("bkType",!type); if(!type) bad.push($("#bkType"));
+  setErr("bkPax",!pax); if(!pax) bad.push($("#bkPax"));
+  if (bad.length){ bad[0].focus(); return; }
+  var other=info.value.trim().slice(0,500);
+  var msg="Event booking request\nDate: "+longDate(sel)+"\nEvent type: "+type+"\nExpected pax: "+pax+(other?"\nOther info: "+other:"");
+  ratesOpener=null; closeRates();
+  openDrawer("Events");
+  $("#fMsg").value=msg;
+});
+})();
 
 /* ---------- motion: paused automatically when the visitor's device asks for reduced motion ---------- */
 function applyMotion(){
