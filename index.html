@@ -1557,7 +1557,8 @@ function addOns(){
   var o={}; ADDON_KEYS.forEach(function(k){ var g=mode==="evt"&&$('.seg[data-addon="'+k+'"]'), a=g&&g.querySelector('[aria-pressed="true"]'); o[k]=a?a.dataset.val:"not_needed"; });
   return o;
 }
-/* one booking form, two homes: inline on the Event Package card, or under the Studio Hire cards once one is picked */
+/* one booking form, many homes: inline on the Event Package card, or in a "Your booking" panel under the cards
+   of whichever tab's Book this was pressed (Podcasting, Videography, Photography, Studio Hire). Each tab has its own wording. */
 var MODES={
   evt:{ label:"Book the event space", dateErr:"Choose a date for your event.", typeLbl:"Event type", typePh:"Select event type", typeErr:"Choose the type of event.",
         types:["Corporate function","Product launch","Conference / seminar","Workshop / training","Networking event","Brand activation","Private celebration","Other"],
@@ -1566,10 +1567,22 @@ var MODES={
   std:{ label:"Book the studio", dateErr:"Choose a date for your shoot.", typeLbl:"Shoot type", typePh:"Select shoot type", typeErr:"Choose the type of shoot.",
         types:["Photography","Videography","Photo + video","Content creation","Other"],
         paxLbl:"People on set", paxPh:"Select number of people", paxErr:"Choose how many people will be on set.", help:"",
-        pax:["1–5","6–10","11–15","16–20"], source:"studio-hire" } };
+        pax:["1–5","6–10","11–15","16–20"], source:"studio-hire" },
+  pod:{ label:"Book a podcast session", dateErr:"Choose a date for your recording.", typeLbl:"Podcast format", typePh:"Select podcast format", typeErr:"Choose the podcast format.",
+        types:["Solo","Interview (1 guest)","Panel discussion","Live stream","Other"],
+        paxLbl:"People on mic", paxPh:"Select number of people", paxErr:"Choose how many people will be on mic.", help:"",
+        pax:["1","2","3","4"], source:"podcasting" },
+  vid:{ label:"Book a video shoot", dateErr:"Choose a date for your shoot.", typeLbl:"Video type", typePh:"Select video type", typeErr:"Choose the type of video.",
+        types:["Brand / corporate film","Interview","Social content","Event coverage","Music video","Other"],
+        paxLbl:"People on camera", paxPh:"Select number of people", paxErr:"Choose how many people will be on camera.", help:"",
+        pax:["1–2","3–5","6–10","11–20","20+"], source:"videography" },
+  pho:{ label:"Book a photo shoot", dateErr:"Choose a date for your shoot.", typeLbl:"Shoot type", typePh:"Select shoot type", typeErr:"Choose the type of shoot.",
+        types:["Headshots / portraits","Product","Team / corporate","Fashion / lifestyle","Content library","Other"],
+        paxLbl:"People in the shoot", paxPh:"Select number of people", paxErr:"Choose how many people will be photographed.", help:"",
+        pax:["None (product only)","1","2–5","6–10","11–20","20+"], source:"photography" } };
+var BOOK_TRIGGER='.tier [data-book], .tier a[href^="mailto:"]';   // the card buttons (mailto links stay as the no-script fallback)
 var mode="evt", doneMsg=null, evtHome=bk.parentNode,
-    EVT={ name:bk.dataset.package, price:bk.dataset.priceZar, duration:bk.dataset.duration },
-    stdPanel=$("#panel-std"), stdBook=$("#stdBook"), stdSlot=$("#stdSlot"), stdTitle=$("#stdBookTitle");
+    EVT={ name:bk.dataset.package, price:bk.dataset.priceZar, duration:bk.dataset.duration };
 function fillSel(el,ph,list){ el.innerHTML='<option value="" disabled selected>'+ph+'</option>'+list.map(function(t){ return "<option>"+t+"</option>"; }).join(""); }
 function setMode(m,pkg){
   var M=MODES[m];
@@ -1577,7 +1590,8 @@ function setMode(m,pkg){
     mode=m; fillSel($("#bkType"),M.typePh,M.types); fillSel($("#bkPax"),M.paxPh,M.pax);
     $('label[for="bkType"]').textContent=M.typeLbl; $('label[for="bkPax"]').textContent=M.paxLbl;
     var h=$("#bkPaxHelp"); h.textContent=M.help; h.hidden=!M.help;
-    $("#bkDateErr").textContent=M.dateErr; $("#bkTypeErr").textContent=M.typeErr; $("#bkPaxErr").textContent=M.paxErr; setErr("bkType",false); setErr("bkPax",false);
+    $("#bkDateErr").textContent=M.dateErr; $("#bkTypeErr").textContent=M.typeErr; $("#bkPaxErr").textContent=M.paxErr;
+    setErr("bkType",false); setErr("bkPax",false);
     bk.setAttribute("aria-label",M.label);
   }
   bk.dataset.package=pkg.name; bk.dataset.priceZar=pkg.price; bk.dataset.duration=pkg.duration;
@@ -1588,28 +1602,50 @@ function freshForm(){   // after a sent booking, moving the form brings back a c
   doneMsg.remove(); doneMsg=null; bk.reset(); bk.hidden=false;
   sel=null; dTxt.textContent="Choose a date"; dBtn.classList.remove("has-val"); count.textContent="0 / 500"; started=0;
 }
+function clearPicks(panel){   // a tab the form has left: no picked card, booking panel closed
+  if (!panel) return;
+  var sb=panel.querySelector(".sbook"); if (sb && !sb.contains(bk)) sb.hidden=true;
+  $$(".tier",panel).forEach(function(t){ t.classList.remove("is-picked"); });
+  $$(BOOK_TRIGGER,panel).forEach(function(x){ x.setAttribute("aria-expanded","false"); });
+}
 function goHome(){
   if (bk.parentNode===evtHome && mode==="evt") return;
-  closeCal(false); freshForm(); evtHome.appendChild(bk); setMode("evt",EVT);
-  if (stdBook) stdBook.hidden=true;
-  $$(".tier",stdPanel||document.createElement("i")).forEach(function(t){ t.classList.remove("is-picked"); });
-  $$("[data-book]").forEach(function(b){ b.setAttribute("aria-expanded","false"); });
+  var from=bk.closest(".ppanel");
+  closeCal(false); freshForm(); evtHome.appendChild(bk); setMode("evt",EVT); clearPicks(from);
 }
-$$("[data-book]").forEach(function(b){
-  b.addEventListener("click",function(){
-    var card=b.closest(".tier"), price=card.querySelector(".tier__price").firstChild.textContent.trim();
-    closeCal(false); freshForm();
-    $$(".tier",stdPanel).forEach(function(t){ t.classList.toggle("is-picked",t===card); });
-    $$("[data-book]").forEach(function(x){ x.setAttribute("aria-expanded",x===b?"true":"false"); });
-    setMode("std",{ name:b.dataset.book, price:b.dataset.price, duration:b.dataset.duration });
-    stdTitle.textContent=b.dataset.book+" – "+price+" · "+b.dataset.duration.toLowerCase();
-    if (bk.parentNode!==stdSlot) stdSlot.appendChild(bk);
-    stdBook.hidden=false;
-    stdBook.scrollIntoView({ behavior:reduce.matches?"auto":"smooth", block:"start" });
-    dBtn.focus({preventScroll:true});
-  });
+function slotFor(panel,key){
+  var sb=panel.querySelector(".sbook");
+  if (!sb){
+    sb=document.createElement("section"); sb.className="sbook"; sb.id="book-"+key; sb.hidden=true; sb.setAttribute("aria-labelledby","book-"+key+"-title");
+    sb.innerHTML='<p class="eyebrow">Your booking</p><h3 class="sbook__title" id="book-'+key+'-title"></h3><div></div>';
+    var t=panel.querySelector(".tiers"); t.parentNode.insertBefore(sb,t.nextSibling);
+  }
+  return sb;
+}
+rates.addEventListener("click",function(e){
+  var b=e.target.closest(BOOK_TRIGGER), panel=b&&b.closest(".ppanel"), key=panel&&panel.id.replace("panel-","");
+  if (!b || !MODES[key] || key==="evt") return;
+  e.preventDefault();
+  var card=b.closest(".tier"), pr=card.querySelector(".tier__price"), sm=pr.querySelector("small"), priceTxt=pr.firstChild.textContent.trim(),
+      dur=b.dataset.duration || (sm?sm.textContent.trim():"");
+  dur=dur.charAt(0).toUpperCase()+dur.slice(1);
+  var pkg={ name:b.dataset.book || card.querySelector("h3").textContent.trim().replace(/’/g,"'"),
+            price:b.dataset.price || priceTxt.replace(/\D/g,""), duration:dur };
+  var from=bk.closest(".ppanel");
+  closeCal(false); freshForm();
+  $$(".tier",panel).forEach(function(t){ t.classList.toggle("is-picked",t===card); });
+  $$(BOOK_TRIGGER,panel).forEach(function(x){ x.setAttribute("aria-expanded",x===b?"true":"false"); });
+  setMode(key,pkg);
+  var sb=slotFor(panel,key), slot=sb.querySelector("div");
+  sb.querySelector(".sbook__title").textContent=pkg.name+" – "+priceTxt+" · "+dur.toLowerCase();
+  if (bk.parentNode!==slot) slot.appendChild(bk);
+  if (from && from!==panel) clearPicks(from);
+  sb.hidden=false;
+  sb.scrollIntoView({ behavior:reduce.matches?"auto":"smooth", block:"start" });
+  dBtn.focus({preventScroll:true});
 });
-var tabSelect=selectTab; selectTab=function(k,f){ tabSelect(k,f); if(k==="evt") goHome(); };   // Events tab always shows its own form
+var tabSelect=selectTab;
+selectTab=function(k,f){ tabSelect(k,f); if(k==="evt") goHome(); else { var p=$("#panel-"+k); if(p && !p.contains(bk)) clearPicks(p); } };   // Events tab always shows its own form
 var gear=$("#gearBtn");
 if (gear) gear.addEventListener("click",function(e){   // until the gear app URL is in, ask through the enquiry form instead
   if (gear.getAttribute("href")!=="#gear-app") return;
