@@ -303,7 +303,7 @@ html{scroll-padding-top:72px}
 .tier .btn{margin-top:auto;align-self:flex-start}
 .addons{margin-top:clamp(22px,3vw,34px);padding:clamp(20px,2.4vw,30px);background:var(--panel-2);border-radius:3px}
 .addons h4{font-family:var(--display);font-weight:500;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin:0 0 12px}
-.addons dl{margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));column-gap:clamp(20px,3vw,48px)}
+.addons dl{margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));column-gap:clamp(20px,3vw,48px)}
 .addons dl div{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);font-size:.9rem}
 .addons dt{color:var(--fg)}
 .addons dd{margin:0;color:var(--teal-hi);font-family:var(--display);white-space:nowrap;text-align:right}
@@ -351,6 +351,9 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
 .addons.addons--pick dl div{flex-direction:column;align-items:stretch;gap:10px;padding:14px 0}
 .addons.addons--pick dd{text-align:left;white-space:normal}
 .bk__addons{margin-top:4px;gap:0}   /* add-ons inside the booking form, above Other info */
+.bk__addons dl{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.bk__addons .seg__btn{white-space:normal;line-height:1.25}
+@media (max-width:520px){.bk__addons{padding:16px 14px}.bk__addons .seg__btn{letter-spacing:.1em;padding:.85em .4em}}
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:3px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line)}
 .seg__btn{border:0;border-radius:999px;background:transparent;color:var(--muted);font-family:var(--display);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;padding:.9em .6em;cursor:pointer;white-space:nowrap;transition:background-color .2s,color .2s}
 .seg__btn:hover{color:var(--fg)}
