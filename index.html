@@ -852,9 +852,9 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
                 <div class="bk__f" id="bkPaxF">
                   <label class="bk__lbl" for="bkPax">Expected pax</label>
                   <select class="bk__ctl" id="bkPax" required aria-describedby="bkPaxHelp bkPaxErr">
-                    <option value="" disabled selected>Select guest count</option><option>10–20</option><option>21–30</option><option>31–40</option><option>41–50</option><option>51–60</option><option>61–70</option><option>71–80</option>
+                    <option value="" disabled selected>Select guest count</option><option>10–20</option><option>21–30</option><option>31–40</option><option>41–50</option><option>51–60</option><option>61–70</option><option>71–80</option><option>81–90</option><option>91–100</option>
                   </select>
-                  <p class="bk__help" id="bkPaxHelp">Maximum 80 guests</p>
+                  <p class="bk__help" id="bkPaxHelp">Maximum 100 guests</p>
                   <p class="bk__err" id="bkPaxErr" hidden>Choose how many guests you expect.</p>
                 </div>
                 <div class="bk__f" id="bkNameF">
@@ -1573,8 +1573,8 @@ function addOns(){
 var MODES={
   evt:{ label:"Book the event space", dateErr:"Choose a date for your event.", typeLbl:"Event type", typePh:"Select event type", typeErr:"Choose the type of event.",
         types:["Corporate function","Product launch","Conference / seminar","Workshop / training","Networking event","Brand activation","Private celebration","Other"],
-        paxLbl:"Expected pax", paxPh:"Select guest count", paxErr:"Choose how many guests you expect.", help:"Maximum 80 guests",
-        pax:["10–20","21–30","31–40","41–50","51–60","61–70","71–80"], source:"events" },
+        paxLbl:"Expected pax", paxPh:"Select guest count", paxErr:"Choose how many guests you expect.", help:"Maximum 100 guests",
+        pax:["10–20","21–30","31–40","41–50","51–60","61–70","71–80","81–90","91–100"], source:"events" },
   std:{ label:"Book the studio", dateErr:"Choose a date for your shoot.", typeLbl:"Shoot type", typePh:"Select shoot type", typeErr:"Choose the type of shoot.",
         types:["Photography","Videography","Photo + video","Content creation","Other"],
         paxLbl:"People on set", paxPh:"Select number of people", paxErr:"Choose how many people will be on set.", help:"",
