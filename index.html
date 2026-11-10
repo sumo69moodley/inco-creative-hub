@@ -153,6 +153,7 @@ html{scroll-padding-top:72px}
 .modal__box.is-flip{overflow:visible}
 .modal__media{position:relative;z-index:2;background:#000;min-height:300px;aspect-ratio:16/10}
 .modal__media img,.modal__media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.modal__media{overflow:hidden}.modal__media .m-bg{filter:blur(28px) brightness(.45) saturate(1.2);transform:scale(1.2)}.modal__media .m-fit{object-fit:contain}
 .modal__body{padding:clamp(22px,3vw,40px);display:flex;flex-direction:column;gap:14px;min-width:0}
 .modal__body h3{font-family:var(--display);font-weight:400;font-stretch:104%;text-transform:uppercase;font-size:clamp(1.5rem,2.6vw,2.2rem);line-height:1.05;margin:0}
 .modal__body p{margin:0;color:var(--muted)}
@@ -1053,18 +1054,18 @@ $("#yr").textContent = new Date().getFullYear();
 
 /* ---------- PROJECTS (illustrative, from supplied footage) ---------- */
 var P = [
- {img:"work-01.jpg",title:"Studio Stories",kind:"Still",desc:"A lounge session captured in the studio."},
- {img:"work-02.jpg",title:"Brand Film",kind:"Film",video:"paint-film.mp4",desc:"Paint falls, moves toward the viewer and rises into iNCO."},
- {img:"work-03.jpg",title:"Studio Shoot",kind:"Still",desc:"A shoot in front of the paint wall."},
- {img:"work-04.jpg",title:"Studio Crew",kind:"Still",desc:"The crew at work on the studio floor."},
- {img:"work-05.jpg",title:"The Paint Wall",kind:"Still",desc:"The studio's signature paint wall set."},
- {img:"work-06.jpg",title:"Studio Walkthrough",kind:"Film",video:"walkthrough.mp4",desc:"A walk through the iNCO studio spaces."},
- {img:"work-07.jpg",title:"Portrait Session",kind:"Still",desc:"A portrait set-up on the white backdrop."},
- {img:"work-08.jpg",title:"Vodcast Set",kind:"Still",desc:"A conversation recorded on the mural set."},
- {img:"work-09.jpg",title:"Interview Corner",kind:"Still",desc:"An interview recorded against the art wall."},
- {img:"work-10.jpg",title:"On Set",kind:"Still",desc:"Behind the scenes during a studio booking."},
- {img:"work-11.jpg",title:"Behind the Scenes",kind:"Still",desc:"Lighting and crew between takes."},
- {img:"work-12.jpg",title:"Product Detail",kind:"Still",desc:"Close product work on the tabletop set."}
+ {img:"hub-01.jpg",title:"Vodcast Set",kind:"Still",pos:"54% 50%",desc:"The mural set framed up on the Osmo, ready to roll."},
+ {img:"hub-02.jpg",title:"Guest Portrait",kind:"Still",pos:"58% 50%",desc:"A candid moment between takes in the lounge."},
+ {img:"hub-03.jpg",title:"Coffee Bar",kind:"Still",pos:"65% 50%",desc:"The crew catching up at the Hub coffee bar."},
+ {img:"hub-04.jpg",title:"Between Takes",kind:"Still",tall:1,desc:"Off-camera laughs over coffee."},
+ {img:"hub-05.jpg",title:"Content Creator",kind:"Still",tall:1,desc:"Shooting social content on the studio floor."},
+ {img:"hub-06.jpg",title:"The Africa Wall",kind:"Still",tall:1,desc:"The lit Africa map on our brick feature wall."},
+ {img:"hub-07.jpg",title:"Boardroom",kind:"Still",tall:1,desc:"The meeting room, set for planning sessions."},
+ {img:"hub-08.jpg",title:"Mural Wall",kind:"Still",tall:1,desc:"One of the Hub’s signature murals."},
+ {img:"hub-09.jpg",title:"Lounge Corner",kind:"Still",tall:1,desc:"The hanging chair in the studio lounge."},
+ {img:"hub-10.jpg",title:"Mobile Capture",kind:"Still",tall:1,desc:"Recording on phone with wireless mics."},
+ {img:"hub-11.jpg",title:"The Paint Wall",kind:"Still",tall:1,desc:"A photographer at work in front of the paint wall."},
+ {img:"hub-12.jpg",title:"Behind the Scenes",kind:"Still",tall:1,desc:"Gimbal set up and rolling on the studio floor."}
 ];
 var N = P.length, STEP = 360/N;
 var ring = $("#ring"), stage = $("#stage"), hint = $("#hint");
@@ -1073,7 +1074,7 @@ P.forEach(function(p,i){
   b.type = "button"; b.className = "reel"; b.style.setProperty("--a",(i*STEP)+"deg");
   b.setAttribute("aria-label","Project "+(i+1)+" of "+N+": "+p.title+". Open project.");
   b.dataset.i = i;
-  b.innerHTML = '<img class="reel__img" src="assets/img/'+p.img+'" alt="" loading="'+(i<5||i>N-3?"eager":"lazy")+'" draggable="false">'+
+  b.innerHTML = '<img class="reel__img" src="assets/img/'+p.img+'"'+(p.pos?' style="object-position:'+p.pos+'"':'')+' alt="" loading="'+(i<5||i>N-3?"eager":"lazy")+'" draggable="false">'+
     '<span class="reel__num">'+String(i+1).padStart(2,"0")+'</span>'+
     '<span class="reel__cap"><b>'+p.title+'</b><span>View this project</span></span>';
   ring.appendChild(b);
@@ -1171,7 +1172,9 @@ function fill(i){
   $("#mDesc").textContent = p.desc;
   mMedia.innerHTML = p.video
     ? '<video poster="assets/img/'+p.img+'" muted playsinline controls autoplay loop><source src="assets/video/'+p.video+'" type="video/mp4"><source src="assets/video/'+p.video.replace('.mp4','.webm')+'" type="video/webm"></video>'
-    : '<img src="assets/img/'+p.img+'" alt="'+p.title+'">';
+    : p.tall
+      ? '<img class="m-bg" src="assets/img/'+p.img+'" alt="" aria-hidden="true"><img class="m-fit" src="assets/img/'+p.img+'" alt="'+p.title+'">'
+      : '<img src="assets/img/'+p.img+'" alt="'+p.title+'"'+(p.pos?' style="object-position:'+p.pos+'"':'')+'>';
 }
 function openProject(i, fromEl){
   opener = fromEl || document.activeElement;
