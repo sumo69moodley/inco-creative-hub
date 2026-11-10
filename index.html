@@ -462,7 +462,7 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
 
 /* ---------- 05 CLIENTS ---------- */
 .clients{padding-block:var(--sec) 0;position:relative;overflow:hidden}
-.clients__sticker{position:relative;display:block;margin:0 auto clamp(26px,3.4vw,44px);width:clamp(140px,18vw,230px);height:auto;transform:rotate(calc(-12deg + var(--spin,0deg)));z-index:3;cursor:grab;will-change:transform;filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))}
+.clients__sticker{position:relative;display:block;margin:clamp(64px,8vw,110px) auto clamp(72px,9vw,120px);width:clamp(200px,26vw,340px);height:auto;transform:rotate(calc(-12deg + var(--spin,0deg)));z-index:3;cursor:grab;will-change:transform;filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))}
 .clients__head{text-align:center}
 .clients__head .lede{margin-inline:auto}
 .strip{margin-top:40px;overflow:hidden;padding-block:var(--strip-pad);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
@@ -731,7 +731,7 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
   <!-- 04 CLIENTS -->
   <section class="clients" id="clients" aria-labelledby="clientTitle">
     <div class="wrap clients__head">
-      <img class="clients__sticker" id="sticker" src="assets/img/sticker-integrity.png" alt="iNCO values: Innovation, Integrity, Interact" width="335" height="336" loading="lazy">
+      <img class="clients__sticker" id="sticker" src="assets/img/inco-logo-colour.png" alt="iNCO" width="720" height="310" loading="lazy">
       <p class="eyebrow rv">Our clients</p>
       <h2 class="h-xl rv" id="clientTitle">Created together</h2>
       <p class="lede rv">Selected brands and collaborators</p>
@@ -1347,7 +1347,13 @@ window.addEventListener("scroll",onScroll,{passive:true}); onScroll();
     var k=1-d; target=MIN+(MAX-MIN)*k*k;
     kick();
   });
-  st.addEventListener("pointerleave",function(){ target=0; });
+  st.addEventListener("pointerleave",function(){ target=autoSpin(); kick(); });
+  /* phones/tablets (no hover): turn slowly on its own while it's on screen */
+  var noHover=window.matchMedia("(hover: none), (max-width: 760px)"), stIn=false, AUTO=50;
+  function autoSpin(){ return (noHover.matches && stIn && !reduce.matches && !motionPaused) ? AUTO : 0; }
+  function syncAuto(){ target=autoSpin(); if(target) kick(); }
+  if ("IntersectionObserver" in window) new IntersectionObserver(function(es){ stIn=es[0].isIntersecting; syncAuto(); }).observe(st);
+  window.__stickerSync=syncAuto;
 })();
 
 /* ---------- 02 background: walkthrough video + YouTube (loads when near) ---------- */
@@ -1735,6 +1741,7 @@ bk.addEventListener("submit",function(e){
 /* ---------- motion: paused automatically when the visitor's device asks for reduced motion ---------- */
 function applyMotion(){
   doc.classList.toggle("paused",motionPaused);
+  if (window.__stickerSync) window.__stickerSync();
   if (!motionPaused) heroPlay();
   if (motionPaused){ walk.pause(); ytCmd("pauseVideo"); film.pause(); }
   else if (inView){ if (ytLive) ytCmd("playVideo"); else { var pp=walk.play(); if(pp&&pp.catch) pp.catch(function(){}); } startYT(); }
