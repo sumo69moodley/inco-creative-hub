@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..700&family=DM+Sans:opsz,wght@9..40,300..600&display=swap">
 <style>
 /* Layout: one-page cinematic scroll in five sections (Home, Work ring, Services book, Spaces, Clients) on a dark studio ground. */
-:root{--strip-pad:26px;--sec:100px; /* space between sections *//* one gap between every section */
+:root{--strip-pad:26px;--sec:100px; /* space between sections (200px on bigger screens, see below) *//* one gap between every section */
   --ink:#071216;          /* page ground (brief dark) */
   --panel:#10191d;        /* book pages, panels */
   --panel-2:#192428;      /* raised surface */
@@ -31,6 +31,7 @@
   --ease:cubic-bezier(.22,.8,.24,1);
   color-scheme:dark;
 }
+@media (min-width:1024px){:root{--sec:200px}}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;background:var(--ink)}
@@ -147,11 +148,11 @@ html{scroll-padding-top:72px}
 .paused .work__mq-track{animation-play-state:paused}
 /* slow services band above "Our work": each service alternates orange / teal */
 .work__mq--svc{margin-top:0;padding:clamp(22px,3.2vw,44px) 0 clamp(4px,1vw,10px)}
-.work__mq--svc .work__mq-track{animation-duration:50s}
-.work__mq--svc .work__mq-set>span{font-size:clamp(1.6rem,4.2vw,3.6rem);text-transform:uppercase}
+.work__mq--svc .work__mq-track{animation-duration:38s}
+.work__mq--svc .work__mq-set>span{font-size:clamp(1.2rem,3.15vw,2.7rem);text-transform:uppercase}
 .work__mq--svc .work__mq-set>span:nth-child(4n+1){color:var(--orange)}
 .work__mq--svc .work__mq-set>span:nth-child(4n+3){color:var(--teal);-webkit-text-stroke:0}
-.work__mq--svc .work__mq-set i,.work__mq--svc .work__mq-set i:nth-of-type(even){font-size:clamp(1.6rem,4.2vw,3.6rem);width:.28em;height:.28em;background:var(--fg)}
+.work__mq--svc .work__mq-set i,.work__mq--svc .work__mq-set i:nth-of-type(even){font-size:clamp(1.2rem,3.15vw,2.7rem);width:.28em;height:.28em;background:var(--fg)}
 .work__swipe{display:none;font-family:var(--display);font-size:.75rem;letter-spacing:.18em;color:var(--fg)}
 
 /* ---------- MODAL (project) ---------- */
@@ -742,7 +743,6 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
   <!-- 04 CLIENTS -->
   <section class="clients" id="clients" aria-labelledby="clientTitle">
     <div class="wrap clients__head">
-      <img class="clients__sticker" id="sticker" src="assets/img/inco-logo-colour.png" alt="iNCO" width="720" height="310" loading="lazy">
       <p class="eyebrow rv">Our clients</p>
       <h2 class="h-xl rv" id="clientTitle">Created together</h2>
       <p class="lede rv">Selected brands and collaborators</p>
