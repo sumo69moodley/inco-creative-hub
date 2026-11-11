@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sumo69moodley.github.io/inco-creative-hub/sitemap.xml
+Sitemap: https://incocreativehub.co.za/sitemap.xml
