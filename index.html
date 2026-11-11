@@ -145,6 +145,13 @@ html{scroll-padding-top:72px}
 .work__mq-set i{flex:none;width:.5em;height:.5em;font-size:clamp(2.6rem,8vw,6.8rem);border-radius:50%;background:var(--orange)}
 .work__mq-set i:nth-of-type(even){background:var(--teal)}
 .paused .work__mq-track{animation-play-state:paused}
+/* slow services band above "Our work": each service alternates orange / teal */
+.work__mq--svc{margin-top:0;padding:clamp(22px,3.2vw,44px) 0 clamp(4px,1vw,10px)}
+.work__mq--svc .work__mq-track{animation-duration:90s}
+.work__mq--svc .work__mq-set>span{font-size:clamp(2rem,5.6vw,4.8rem);text-transform:uppercase}
+.work__mq--svc .work__mq-set>span:nth-child(4n+1){color:var(--orange)}
+.work__mq--svc .work__mq-set>span:nth-child(4n+3){color:var(--teal);-webkit-text-stroke:0}
+.work__mq--svc .work__mq-set i,.work__mq--svc .work__mq-set i:nth-of-type(even){font-size:clamp(2rem,5.6vw,4.8rem);width:.28em;height:.28em;background:var(--fg)}
 .work__swipe{display:none;font-family:var(--display);font-size:.75rem;letter-spacing:.18em;color:var(--fg)}
 
 /* ---------- MODAL (project) ---------- */
@@ -635,6 +642,7 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
       </video>
       <!-- YouTube background is injected here when the section comes into view -->
     </div>
+    <div class="work__mq work__mq--svc" aria-label="Our services: Vodcasting, Videography, Photography, Events, Studio Hire, Editing"><div class="work__mq-track" aria-hidden="true"><div class="work__mq-set"><span>Vodcasting</span><i></i><span>Videography</span><i></i><span>Photography</span><i></i><span>Events</span><i></i><span>Studio Hire</span><i></i><span>Editing</span><i></i></div><div class="work__mq-set"><span>Vodcasting</span><i></i><span>Videography</span><i></i><span>Photography</span><i></i><span>Events</span><i></i><span>Studio Hire</span><i></i><span>Editing</span><i></i></div></div></div>
     <div class="wrap work__head">
       <p class="eyebrow">Our work</p>
       <h2 class="h-lg" id="workTitle">A world of creative possibilities</h2>
