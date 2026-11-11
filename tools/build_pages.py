@@ -94,7 +94,7 @@ for fname, name, key, pk_title, tab_title, colour in PAGES:
           <h1 id="svcTitle">{h}</h1>
           {intro}
           {lst}
-          <div class="pg-foot">{price}<div class="svcpage__btns"><a class="btn btn--{colour}" href="#packages">See packages</a><button class="btn btn--ghost" type="button" data-enquire="{name}" aria-haspopup="dialog">Make an enquiry</button></div></div>
+          <div class="pg-foot">{price}</div>
         </div>
         <figure class="svcpage__img">{img_html}</figure>
       </div>
