@@ -9,7 +9,7 @@ Run it from the repo root after changing any of those in index.html, then commit
 """
 import html, os, re, sys
 
-BASE = "https://sumo69moodley.github.io/inco-creative-hub/"   # live address (update when the site moves to its own domain)
+BASE = "https://incocreativehub.co.za/"   # live address
 PAGES = [  # file, booklet name, packages panel key, packages heading, browser-tab title, button colour
     ("vodcasting.html",  "Vodcasting",  "pod", "Vodcast packages", "Vodcast Studio in Durban",        "orange"),
     ("videography.html", "Videography", "vid", "Video packages",   "Video Production in Durban",      "teal"),
