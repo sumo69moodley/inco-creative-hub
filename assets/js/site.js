@@ -420,7 +420,7 @@ function onScroll(){
   var nt=nav.getBoundingClientRect().top;
   nav.style.setProperty("--nx", (1 - Math.min(1, Math.max(0, nt/(window.innerHeight*0.5)))).toFixed(3));
   if (!home) return;   // service pages keep their own "current page" highlight
-  var ids=["work","process","services","clients","spaces","pricing","faq","contact"], act=null, mid=y+window.innerHeight*0.45;
+  var ids=["home","process","services","clients","spaces","pricing","faq","contact"], act=null, mid=y+window.innerHeight*0.45;
   ids.forEach(function(id){ var el=document.getElementById(id); if(el && el.offsetParent && el.getBoundingClientRect().top+y<=mid) act=id; });
   if (window.innerHeight + y >= document.documentElement.scrollHeight - 4) act="contact";
   $$(".nav__links a").forEach(function(a){ a.classList.toggle("is-active", a.dataset.spy===act); });
