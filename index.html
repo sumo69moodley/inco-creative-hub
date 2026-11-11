@@ -282,6 +282,28 @@ html{scroll-padding-top:72px}
 .spaces .wrap>.lede,.hubintro p{margin-inline:auto}
 .hubintro .visit__btns{justify-content:center}
 
+/* ---------- service pages ---------- */
+.on-svc main>section:not(.svcpage):not(.closing){display:none!important}
+.svcpage{padding:clamp(36px,5vw,72px) 0 0}
+.svcpage__back{display:inline-block;font-family:var(--display);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:6px 0;transition:color .25s}
+.svcpage__back:hover{color:var(--orange)}
+.svcpage__hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(28px,4vw,64px);align-items:center;margin-top:clamp(18px,2.4vw,30px)}
+.svcpage .pg-text{height:auto;padding:0;gap:18px}
+.svcpage .pg-text h1{font-family:var(--display);font-weight:400;font-stretch:104%;text-transform:uppercase;font-size:clamp(2.4rem,5vw,4.4rem);line-height:1.02;margin:0}
+.svcpage .pg-text>p{font-size:1.08rem}
+.svcpage .pg-list{font-size:.98rem;gap:10px}
+.svcpage .pg-foot{margin-top:10px;align-items:center;justify-content:flex-start;gap:22px 28px}
+.svcpage__btns{display:flex;flex-wrap:wrap;gap:12px}
+.svcpage__img{margin:0;position:relative;aspect-ratio:4/5;overflow:hidden;box-shadow:0 0 0 1px var(--line),0 40px 80px -40px rgba(0,0,0,.9)}
+.svcpage__img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.svcpage__pk{margin-top:var(--sec);scroll-margin-top:90px}
+.svcpage__pk>.h-lg{margin:8px 0 clamp(22px,3vw,36px)}
+.svcpage__pk .ppanel{display:block}
+@media (max-width:860px){
+  .svcpage__hero{grid-template-columns:1fr}
+  .svcpage__img{aspect-ratio:16/10;order:-1}
+}
+
 /* ---------- 05 rates & packages ---------- */
 /* ---------- RATES & PACKAGES pop-up ---------- */
 .rates{padding:0;border:0;background:transparent;color:var(--fg);width:min(1180px,calc(100vw - 32px));max-width:none;max-height:calc(100dvh - 32px);overflow:visible}
@@ -635,6 +657,24 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
   </div>
 </header>
 
+  <!-- SERVICE PAGES (#vodcasting, #videography, #photography, #events): the booklet's text and image for that
+       service, with its packages panel shown on the page (borrowed from the rates pop-up while the page is open) -->
+  <section class="svcpage" id="svcpage" aria-labelledby="svcTitle" hidden>
+    <div class="wrap">
+      <a class="svcpage__back" href="#services">&lt;&nbsp; All services</a>
+      <div class="svcpage__hero">
+        <div class="pg-text svcpage__text" id="svcText"></div>
+        <figure class="svcpage__img" id="svcImg"></figure>
+      </div>
+      <div class="svcpage__pk" id="svcPk">
+        <p class="eyebrow">Packages</p>
+        <h2 class="h-lg" id="svcPkTitle">Packages</h2>
+        <div id="svcPanel"></div>
+        <p class="note pricing__note">All prices are in South African Rand and exclude VAT. Rates are indicative — send us the brief and we’ll price it properly.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- 02 OUR WORK -->
   <section class="work" id="work" aria-labelledby="workTitle">
     <div class="work__bg" aria-hidden="true">
@@ -696,7 +736,7 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
           <h3>Vodcast Studio</h3>
           <p>Purpose-built, acoustically treated sets with broadcast mics and a live four-camera switch. You talk, we run the room — and you leave with the episode already cut together.</p>
           <ul class="pg-list"><li>Multi-camera capture with live vision mixing and ISO recordings</li><li>Broadcast condenser &amp; dynamic mics with individual audio tracks</li><li>Choice of dressed sets — gallery wall, art backdrop or lounge</li><li>Remote guest dial-in and live streaming to social platforms</li><li>Vertical shorts cut for Reels, TikTok and YouTube Shorts</li><li>Episode artwork, intro stings and distribution support</li></ul>
-          <div class="pg-foot"><p class="pg-from"><small>From</small>R1 499</p><button type="button" class="btn btn--orange" data-tab="pod" aria-haspopup="dialog">Vodcast packages</button></div>
+          <div class="pg-foot"><p class="pg-from"><small>From</small>R1 499</p><a class="btn btn--orange" href="#vodcasting">View more</a></div>
         </div>
         <div class="pg-img">
           <figure><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-podcasting-1024x1016.jpg" alt="iNCO Hub vodcast set with two chairs, art backdrop and a live multi-camera monitor" loading="lazy"></figure>
@@ -708,7 +748,7 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
           <h3>Video Production</h3>
           <p>From a single founder interview to a full campaign shoot. Concept, crew, cameras, lighting and edit under one roof — so the brief never gets lost between three suppliers.</p>
           <ul class="pg-list"><li>Brand films, founder stories and customer testimonials</li><li>Product and promo shoots with cinema-grade lighting</li><li>Training, internal comms and explainer video</li><li>Event and live-stream capture, on site or in studio</li><li>Scripting, storyboards, teleprompter and direction</li><li>Full post: edit, grade, sound mix, motion graphics, subtitles</li></ul>
-          <div class="pg-foot"><p class="pg-from"><small>From</small>R6 999</p><button type="button" class="btn btn--teal" data-tab="vid" aria-haspopup="dialog">Video packages</button></div>
+          <div class="pg-foot"><p class="pg-from"><small>From</small>R6 999</p><a class="btn btn--teal" href="#videography">View more</a></div>
         </div>
         <div class="pg-img">
           <figure><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-videography-1341x1536.jpg" alt="Wide view of the iNCO Hub video floor with lighting, tripods and a dressed backdrop" loading="lazy"></figure>
@@ -720,7 +760,7 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
           <h3>Photo Studio</h3>
           <p>Controlled light, real backdrops and no rushing. Shoot a full brand library in a day and stop borrowing stock photos that look like everyone else’s.</p>
           <ul class="pg-list"><li>Team headshots and executive portraits</li><li>Product, packaging and flat-lay photography</li><li>Brand lifestyle libraries shot against dressed sets</li><li>Fashion, lookbook and editorial work</li><li>Event coverage and behind-the-scenes stills</li><li>Professional retouching, colour grading and web-ready exports</li></ul>
-          <div class="pg-foot"><p class="pg-from"><small>From</small>R2 200</p><button type="button" class="btn btn--orange" data-tab="pho" aria-haspopup="dialog">Photo packages</button></div>
+          <div class="pg-foot"><p class="pg-from"><small>From</small>R2 200</p><a class="btn btn--orange" href="#photography">View more</a></div>
         </div>
         <div class="pg-img">
           <figure><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-control.jpg" alt="Live vision-mixing station showing four camera feeds" loading="lazy"></figure>
@@ -732,7 +772,7 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
           <h3>Events at the Hub</h3>
           <p>Bring your people into the space. Launches, talks, screenings and brand gatherings for 80–100 guests, with the extras arranged by the same team that runs the studio.</p>
           <ul class="pg-list"><li>Hosts 80–100 guests across the Hub floor and dressed sets</li><li>6–8 hour event bookings</li><li>Catering, seating and tables arranged for you</li><li>Sound, lighting and entertainment</li><li>Decor and on-site security</li><li>Videography and photography coverage of the day</li></ul>
-          <div class="pg-foot"><p class="pg-from"><small>From</small>R6 000</p><button type="button" class="btn btn--teal" data-tab="evt" aria-haspopup="dialog">Event packages</button></div>
+          <div class="pg-foot"><p class="pg-from"><small>From</small>R6 000</p><a class="btn btn--teal" href="#events">View more</a></div>
         </div>
         <div class="pg-img">
           <figure><img src="https://incocreative.com/wp-content/uploads/2026/09/inco-hub-space.jpg" alt="Wide view across the iNCO Creative Hub studio floor" loading="lazy"></figure>
@@ -1333,7 +1373,7 @@ function onScroll(){
   var nt=nav.getBoundingClientRect().top;
   nav.style.setProperty("--nx", (1 - Math.min(1, Math.max(0, nt/(window.innerHeight*0.5)))).toFixed(3));
   var ids=["work","process","services","clients","spaces","faq","contact"], act=null, mid=y+window.innerHeight*0.45;
-  ids.forEach(function(id){ var el=document.getElementById(id); if(el && el.getBoundingClientRect().top+y<=mid) act=id; });
+  ids.forEach(function(id){ var el=document.getElementById(id); if(el && el.offsetParent && el.getBoundingClientRect().top+y<=mid) act=id; });
   if (window.innerHeight + y >= document.documentElement.scrollHeight - 4) act="contact";
   $$(".nav__links a").forEach(function(a){ a.classList.toggle("is-active", a.dataset.spy===act); });
 }
@@ -1507,7 +1547,7 @@ document.addEventListener("click",function(e){
   var a = e.target.closest("[data-tab]");
   if (a){ e.preventDefault(); openRates(a.dataset.tab, a); return; }
   var l = e.target.closest('a[href="#pricing"]');
-  if (l){ e.preventDefault(); openRates(BOOK_KEYS[pg] || "pod", l); }
+  if (l){ e.preventDefault(); if (svcOn){ $("#svcPk").scrollIntoView({behavior:reduce.matches?"auto":"smooth"}); return; } openRates(BOOK_KEYS[pg] || "pod", l); }
 });
 
 /* ---------- EVENT BOOKING form (Events card) ----------
@@ -1662,7 +1702,8 @@ function slotFor(panel,key){
   }
   return sb;
 }
-rates.addEventListener("click",function(e){
+document.addEventListener("click",function(e){
+  if (!e.target.closest) return;
   var b=e.target.closest(BOOK_TRIGGER), panel=b&&b.closest(".ppanel"), key=panel&&panel.id.replace("panel-","");
   if (!b || !MODES[key] || key==="evt") return;
   e.preventDefault();
@@ -1769,6 +1810,56 @@ toTop.addEventListener("click",function(){
   window.scrollTo({top:0, behavior: reduce.matches ? "auto" : "smooth"});
   var skip=$(".nav__logo")||$("#home"); if (skip && skip.focus) setTimeout(function(){ skip.focus({preventScroll:true}); }, reduce.matches?0:700);
 });
+
+/* ---------- SERVICE PAGES: #vodcasting, #videography, #photography, #events ----------
+   "View more" in the booklet opens the service's own page: its booklet text and image, then its packages
+   panel (moved in from the rates pop-up, so Book this and the booking forms work as before). Any other
+   link (nav, logo, "All services") or the browser's Back button returns to the main page. */
+var SVC={ vodcasting:{key:"pod",i:0,pk:"Vodcast packages"}, videography:{key:"vid",i:1,pk:"Video packages"},
+          photography:{key:"pho",i:2,pk:"Photo packages"}, events:{key:"evt",i:3,pk:"Event packages"} };
+var svcPage=$("#svcpage"), svcText=$("#svcText"), svcImg=$("#svcImg"), svcSlot=$("#svcPanel"),
+    lent=null, lentMark=null, svcOn=null, svcFromY=0, TITLE=document.title;
+function giveBack(){ if (!lent) return; lentMark.parentNode.replaceChild(lent,lentMark); lent=null; lentMark=null; }
+function showSvc(name){
+  var s=SVC[name], sp=spreads[s.i];
+  if (rates.open) closeRates();
+  if (!svcOn) svcFromY=window.scrollY;
+  var w=document.createElement("div"); w.innerHTML=sp.l;
+  var src=w.firstElementChild, h=src.querySelector("h3"), h1=document.createElement("h1");
+  h1.id="svcTitle"; h1.innerHTML=h.innerHTML; h.parentNode.replaceChild(h1,h);
+  var foot=src.querySelector(".pg-foot"), old=foot.querySelector("a,button"); if (old) old.remove();
+  foot.insertAdjacentHTML("beforeend",'<div class="svcpage__btns"><button class="btn btn--orange" type="button" data-svc-pk>See packages</button>'+
+    '<button class="btn btn--ghost" type="button" data-enquire="'+sp.name+'" aria-haspopup="dialog">Make an enquiry</button></div>');
+  svcText.innerHTML=src.innerHTML;
+  w.innerHTML=sp.r; var img=w.querySelector("img"); svcImg.innerHTML=""; if (img){ img.loading="eager"; svcImg.appendChild(img); }
+  $("#svcPkTitle").textContent=s.pk;
+  giveBack();
+  var p=$("#panel-"+s.key); lentMark=document.createComment("panel-"+s.key); p.parentNode.insertBefore(lentMark,p); svcSlot.appendChild(p); lent=p;
+  selectTab(s.key); p.hidden=false;
+  pg=s.i; paint(pg);   // the booklet waits on this service for when they come back
+  document.title=sp.name+" | "+TITLE;
+  doc.classList.add("on-svc"); svcPage.hidden=false; svcOn=name;
+  window.scrollTo(0,0); onScroll(); toTopState();
+}
+function hideSvc(){
+  giveBack(); svcPage.hidden=true; doc.classList.remove("on-svc"); svcOn=null; document.title=TITLE;
+  window.dispatchEvent(new Event("resize"));   // the work carousel re-measures now it's visible again
+}
+function route(){
+  var h=decodeURIComponent(location.hash.slice(1));
+  if (SVC[h]){ showSvc(h); return; }
+  if (!svcOn) return;
+  hideSvc();
+  var el=h && document.getElementById(h);
+  if (el) el.scrollIntoView(); else window.scrollTo(0,svcFromY);
+  onScroll(); toTopState();
+}
+window.addEventListener("hashchange",route);
+document.addEventListener("click",function(e){
+  var b=e.target.closest && e.target.closest("[data-svc-pk]");
+  if (b) $("#svcPk").scrollIntoView({behavior:reduce.matches?"auto":"smooth"});
+});
+route();
 })();
 </script>
 
