@@ -15,6 +15,7 @@ PAGES = [  # file, booklet name, packages panel key, packages heading, browser-t
     ("videography.html", "Videography", "vid", "Video packages",   "Video Production in Durban",      "teal"),
     ("photography.html", "Photography", "pho", "Photo packages",   "Photo Studio in Durban",          "orange"),
     ("events.html",      "Events",      "evt", "Event packages",   "Event Venue in Durban",           "teal"),
+    ("studio-hire.html", "Studio Hire", "std", "Studio Hire packages", "Studio Hire in Durban",       "orange"),
 ]
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -64,6 +65,7 @@ for fname, name, key, pk_title, tab_title, colour in PAGES:
     if len(desc) > 158: desc = desc[:155].rsplit(" ", 1)[0].rstrip(",.;:—–-") + "…"
     panel = block(src, r'<div class="ppanel" id="panel-%s"' % key)
     panel = re.sub(r'(<div class="ppanel" id="panel-%s") role="tabpanel" aria-labelledby="tab-%s"( hidden)?' % (key, key), r"\1", panel)
+    panel = re.sub(r'\s*<header class="phead">.*?</header>', "", panel, flags=re.S)   # the page has its own heading
     park = "" if key == "evt" else '\n  <!-- booking form: moves under the package you pick -->\n  <div class="bk-park" hidden>\n    %s\n  </div>\n' % form
     page = f'''<!doctype html>
 <html lang="en">
