@@ -1,0 +1,127 @@
+#!/usr/bin/env python3
+"""Builds the service pages (vodcasting.html, videography.html, photography.html, events.html) from index.html.
+
+index.html stays the single source: each page takes the booklet text and photo for its service, that service's
+packages panel from the Rates & packages section, plus the shared nav, contact section, enquiry drawer and footer.
+Run it from the repo root after changing any of those in index.html, then commit the regenerated pages:
+
+    python3 tools/build_pages.py
+"""
+import html, os, re, sys
+
+BASE = "https://sumo69moodley.github.io/inco-creative-hub/"   # live address (update when the site moves to its own domain)
+PAGES = [  # file, booklet name, packages panel key, packages heading, browser-tab title, button colour
+    ("vodcasting.html",  "Vodcasting",  "pod", "Vodcast packages", "Vodcast Studio in Durban",        "orange"),
+    ("videography.html", "Videography", "vid", "Video packages",   "Video Production in Durban",      "teal"),
+    ("photography.html", "Photography", "pho", "Photo packages",   "Photo Studio in Durban",          "orange"),
+    ("events.html",      "Events",      "evt", "Event packages",   "Event Venue in Durban",           "teal"),
+]
+
+root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+src = open(os.path.join(root, "index.html"), encoding="utf-8").read()
+
+def block(text, start_pat, tag="div"):
+    """Return the element that starts at the first match of start_pat, up to its matching close tag."""
+    m = re.search(start_pat, text)
+    if not m: sys.exit("not found: " + start_pat)
+    i, depth = m.start(), 0
+    for t in re.finditer(r"<(/?)%s\b[^>]*>" % tag, text[i:]):
+        depth += -1 if t.group(1) else 1
+        if depth == 0: return text[i:i + t.end()]
+    sys.exit("unclosed: " + start_pat)
+
+def between(text, a, b):
+    i = text.index(a); return text[i:text.index(b, i)]
+
+head_common = between(src, '<meta name="viewport"', '<link rel="canonical"')
+head_common = re.sub(r'<title>.*?</title>\n<meta name="description"[^>]*>\n', "", head_common, flags=re.S)
+nav = block(src, r'<header class="nav" id="nav">', "header")
+closing = block(src, r'<section class="closing"', "section")
+drawer = between(src, "<!-- Enquiry drawer -->", "<button class=\"totop\"")
+totop = block(src, r'<button class="totop"', "button")
+form = block(src, r'<form class="bk" id="bkForm"', "form")
+spreads = {m.group(1): m.group(2) for m in re.finditer(r'<div data-spread data-name="([^"]+)">(.*?)\n      </div>\n(?=      <div data-spread|    </template>)', src, re.S)}
+
+def page_nav(current):
+    n = nav.replace('href="#home"', 'href="index.html"').replace('aria-label="iNCO Creative Hub, back to top"', 'aria-label="iNCO Creative Hub home"')
+    n = re.sub(r'href="#([a-z]+)"', r'href="index.html#\1"', n)
+    n = n.replace('href="index.html#services" data-spy="services">', 'href="index.html#services" data-spy="services" class="is-active">')
+    n = n.replace('<li><a href="%s">' % current, '<li><a href="%s" aria-current="page">' % current)
+    return n
+
+for fname, name, key, pk_title, tab_title, colour in PAGES:
+    sp = spreads[name]
+    text = block(sp, r'<div class="pg-text">')
+    img_html = re.search(r"<img [^>]*>", block(sp, r'<div class="pg-img">')).group(0).replace(' loading="lazy"', ' loading="eager" fetchpriority="high"')
+    img_url = re.search(r'src="([^"]+)"', img_html).group(1)
+    num = re.search(r'<span class="num">.*?</span>', text).group(0)
+    h = re.search(r"<h3>(.*?)</h3>", text).group(1)
+    intro = re.search(r"<h3>.*?</h3>\s*(<p>.*?</p>)", text, re.S).group(1)
+    lst = re.search(r'<ul class="pg-list">.*?</ul>', text, re.S).group(0)
+    price = re.search(r'<p class="pg-from">.*?</p>', text, re.S).group(0)
+    plain = html.unescape(re.sub(r"<[^>]+>", "", intro)).strip()
+    desc = "%s at iNCO Creative Hub in Durban: %s" % (name, plain)
+    if len(desc) > 158: desc = desc[:155].rsplit(" ", 1)[0].rstrip(",.;:—–-") + "…"
+    panel = block(src, r'<div class="ppanel" id="panel-%s"' % key)
+    panel = re.sub(r'(<div class="ppanel" id="panel-%s") role="tabpanel" aria-labelledby="tab-%s"( hidden)?' % (key, key), r"\1", panel)
+    park = "" if key == "evt" else '\n  <!-- booking form: moves under the package you pick -->\n  <div class="bk-park" hidden>\n    %s\n  </div>\n' % form
+    page = f'''<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{head_common}<title>{tab_title} | iNCO Creative Hub</title>
+<meta name="description" content="{html.escape(desc)}">
+<link rel="canonical" href="{BASE}{fname}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="iNCO Creative Hub">
+<meta property="og:title" content="{tab_title} | iNCO Creative Hub">
+<meta property="og:description" content="{html.escape(desc)}">
+<meta property="og:url" content="{BASE}{fname}">
+<meta property="og:image" content="{img_url}">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body class="page-svc">
+<!-- Generated by tools/build_pages.py from index.html. Edit index.html, then re-run the script. -->
+<main>
+  {page_nav(fname)}
+
+  <section class="svcpage" aria-labelledby="svcTitle">
+    <div class="wrap">
+      <a class="svcpage__back" href="index.html#services">&lt;&nbsp; All services</a>
+      <div class="svcpage__hero">
+        <div class="pg-text svcpage__text">
+          {num}
+          <h1 id="svcTitle">{h}</h1>
+          {intro}
+          {lst}
+          <div class="pg-foot">{price}<div class="svcpage__btns"><a class="btn btn--{colour}" href="#packages">See packages</a><button class="btn btn--ghost" type="button" data-enquire="{name}" aria-haspopup="dialog">Make an enquiry</button></div></div>
+        </div>
+        <figure class="svcpage__img">{img_html}</figure>
+      </div>
+      <div class="svcpage__pk" id="packages">
+        <p class="eyebrow">Packages</p>
+        <h2 class="h-lg">{pk_title}</h2>
+        {panel}
+        <p class="note pricing__note">All prices are in South African Rand and exclude VAT. Rates are indicative — send us the brief and we’ll price it properly.</p>
+      </div>
+    </div>
+  </section>
+{park}
+  {closing}
+</main>
+
+{drawer}{totop}
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>
+'''
+    open(os.path.join(root, fname), "w", encoding="utf-8").write(page)
+    print("wrote", fname)
+
+# search-engine helpers
+urls = [""] + [p[0] for p in PAGES]
+open(os.path.join(root, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+     "".join("  <url><loc>%s%s</loc></url>\n" % (BASE, u) for u in urls) + "</urlset>\n")
+open(os.path.join(root, "robots.txt"), "w").write("User-agent: *\nAllow: /\n\nSitemap: %ssitemap.xml\n" % BASE)
+print("wrote sitemap.xml, robots.txt")
