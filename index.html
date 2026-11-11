@@ -51,7 +51,6 @@
       </li>
       <li><a href="#clients" data-spy="clients">CLIENTS</a></li>
       <li><a href="#spaces" data-spy="spaces">SPACES</a></li>
-      <li><a href="#pricing" data-spy="pricing">PRICING</a></li>
       <li><a href="#faq" data-spy="faq">FAQ</a></li>
       <li><a href="#contact" data-spy="contact">CONTACT</a></li>
     </ul>
@@ -215,23 +214,16 @@
           <p class="eyebrow">Now booking · Studio &amp; crew</p>
           <h3>iNCO Creative Hub</h3>
           <p>A full-service content playground in one building — vodcast sets, multi-camera video and a photography studio, with the crew, kit and coffee already in place. Walk in with an idea. Walk out with content.</p>
-          <div class="visit__btns"><a class="btn btn--orange" href="#pricing">See rates &amp; packages</a><button class="btn btn--ghost" type="button" data-enquire="Studio tour" aria-haspopup="dialog">Book a studio tour</button></div>
+          <div class="visit__btns"><a class="btn btn--orange" href="#services">Explore our services</a><button class="btn btn--ghost" type="button" data-enquire="Studio tour" aria-haspopup="dialog">Book a studio tour</button></div>
         </div>
         <ul class="stats"><li><b>4</b><span>Camera multicam</span></li><li><b>7+</b><span>Dressed sets</span></li><li><b>4</b><span>Disciplines, one roof</span></li><li><b>48h</b><span>Typical first cut</span></li></ul>
       </div>
     </div>
   </section>
 
-  <!-- 06 RATES & PACKAGES (on the page; each service page shows its own panel) -->
-  <section class="pricing" id="pricing" aria-labelledby="priceTitle">
-    <div class="wrap">
-      <header class="pricing__head">
-      <p class="eyebrow">Rates &amp; packages</p>
-      <h2 class="h-xl" id="priceTitle">Straight pricing, no surprises</h2>
-      <p class="lede">Pick a discipline below, or open a service page for the full story. Every package includes the space; our production packages add the crew to run it and your finished files. Nothing hidden in the small print.</p>
-        </header>
-
-      <div class="ptabs" role="tablist" aria-label="Disciplines"><button type="button" role="tab" id="tab-pod" aria-controls="panel-pod" aria-selected="true">Vodcasting</button><button type="button" role="tab" id="tab-vid" aria-controls="panel-vid" aria-selected="false" tabindex="-1">Videography</button><button type="button" role="tab" id="tab-pho" aria-controls="panel-pho" aria-selected="false" tabindex="-1">Photography</button><button type="button" role="tab" id="tab-evt" aria-controls="panel-evt" aria-selected="false" tabindex="-1">Events</button><button type="button" role="tab" id="tab-std" aria-controls="panel-std" aria-selected="false" tabindex="-1">Studio Hire</button></div>
+  <!-- PACKAGES SOURCE: not shown on the home page. tools/build_pages.py copies each panel onto its service page
+       (vodcasting, videography, photography, events, studio-hire). Edit packages and prices here, then re-run it. -->
+  <template id="packageSource">
       <div class="ppanel" id="panel-pod" role="tabpanel" aria-labelledby="tab-pod">
         <div class="tiers">
           <article class="tier">
@@ -396,9 +388,7 @@
         <div class="gear"><a class="btn btn--ghost" id="gearBtn" href="#gear-app" target="_blank" rel="noopener">Need any gear?<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></a><p class="gear__help">Don&rsquo;t have everything? Rent it for your session.</p></div>
         <section class="sbook" id="stdBook" aria-labelledby="stdBookTitle" hidden><p class="eyebrow">Your booking</p><h3 class="sbook__title" id="stdBookTitle"></h3><div id="stdSlot"></div></section>
       </div>
-      <p class="note pricing__note">All prices are in South African Rand and exclude VAT. Rates are indicative — send us the brief and we’ll price it properly.</p>
-    </div>
-  </section>
+  </template>
 
   <!-- 07 FAQ -->
   <section class="faq" id="faq" aria-labelledby="faqTitle">

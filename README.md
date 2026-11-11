@@ -16,6 +16,6 @@ Sections: 01 Home landing (paint film intro), 02 Our work (3D film-reel ring ove
 
 - `index.html` is the main page and the single source for all content. Styles are in `assets/css/site.css`, scripts in `assets/js/site.js` (shared by every page).
 - Service pages `vodcasting.html`, `videography.html`, `photography.html` and `events.html` are generated from `index.html` (booklet text and photo, that service's packages panel, nav, contact, enquiry drawer). **After editing any of those in `index.html`, run `python3 tools/build_pages.py` and commit the regenerated pages.** Don't edit the service pages by hand.
-- Rates & packages sit in the Pricing section of the main page (no pop-up). The booking form moves under whichever package's "Book this" is pressed, on the main page or a service page.
+- Packages and prices live only on the service pages. Their source is the hidden `<template id="packageSource">` in `index.html` (edit there, then run the build script). The booking form moves under whichever package's "Book this" is pressed.
 - `sitemap.xml` and `robots.txt` are written by the same script. Update `BASE` in `tools/build_pages.py` (and the canonical link in `index.html`) when the site moves to its own domain.
 
