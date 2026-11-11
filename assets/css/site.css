@@ -454,7 +454,7 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
 .faq details[open] summary::after{transform:rotate(45deg);background:var(--orange);color:#fff;box-shadow:none}
 .faq details p{margin:0;padding:0 24px 22px;color:var(--muted);font-size:.97rem;line-height:1.65;max-width:62ch;animation:faqIn .4s var(--ease)}
 @keyframes faqIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-.faq__more{margin:clamp(26px,3.4vw,40px) 0 0;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 18px;color:var(--muted);font-size:.95rem}
+.faq__more{margin:clamp(26px,3.4vw,40px) 0 0;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;color:var(--muted);font-size:.95rem}
 @media (prefers-reduced-motion:reduce){.faq details p{animation:none}}
 
 /* ---------- contact: book the hub ---------- */
