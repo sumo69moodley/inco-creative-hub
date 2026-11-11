@@ -213,8 +213,9 @@ html{scroll-padding-top:72px}
 .book__ctrl{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--panel);padding:0 calc(var(--fp) + var(--s) + 14px) var(--pgpad);font-family:var(--display);font-size:.76rem;letter-spacing:.18em;text-transform:uppercase}
 .book__ctrl{--btn:var(--teal);--btn-hover:var(--orange)}
 .book[data-tone="b"] .book__ctrl{--btn:var(--orange);--btn-hover:var(--teal)} /* colours alternate page to page */
-.book__ctrl button{display:inline-flex;white-space:nowrap;align-items:center;gap:6px;background:var(--btn);border:1px solid var(--btn);border-radius:999px;cursor:pointer;padding:10px 18px;letter-spacing:inherit;font-family:inherit;font-size:inherit;text-transform:inherit;color:#fff;transition:color .25s,background-color .25s,border-color .25s}
-.book__ctrl button:hover,.book__ctrl button:focus-visible{border-color:var(--btn-hover);background:var(--btn-hover);color:#fff}
+.book__ctrl button{display:inline-flex;white-space:nowrap;align-items:center;gap:6px;background:transparent;border:0;border-radius:999px;cursor:pointer;padding:10px 4px;letter-spacing:inherit;font-family:inherit;font-size:inherit;text-transform:inherit;color:var(--fg);transition:color .25s}
+.book__ctrl button:hover,.book__ctrl button:focus-visible{color:var(--btn)}
+.book__ctrl button:focus-visible{outline:2px solid var(--btn);outline-offset:4px}
 .book__ctrl button:disabled{opacity:.3;cursor:default}
 .book__ctrl #bPrev{justify-self:start}
 .book__ctrl .nx{justify-self:end}
@@ -559,7 +560,7 @@ textarea.bk__ctl::placeholder{color:var(--muted);opacity:.8}
   .pg-text>p{font-size:1rem}
   .book{--pgpad:clamp(20px,5vw,34px)}
   .book__ctrl{font-size:.7rem;letter-spacing:.1em;gap:8px;padding:0 12px var(--pgpad)}
-  .book__ctrl button{padding:9px 12px}
+  .book__ctrl button{padding:9px 2px}
   .book__ctrl .pgno{font-size:.66rem}
 }
 @media (max-width:860px){
